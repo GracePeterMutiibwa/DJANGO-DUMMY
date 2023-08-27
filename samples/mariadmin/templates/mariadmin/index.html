@@ -1,3 +1,29 @@
 {% extends "mariadmin/home-layout.html" %}
 
-{% blo %}
+{% load static %}
+
+{% block page_css %}
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/dropzone/dropzone.css' %}"
+    />
+
+{% endblock %}
+
+{% block page_content %}
+
+    {% include "mariadmin/sections/event-categories.html" %}
+
+    {% include "mariadmin/sections/about-meta.html" %}
+
+    {% include "mariadmin/sections/about-left-meta.html" %}
+
+{% endblock %}
+
+{% block vendor_js %}
+
+{% endblock %}
+
+
+{% block page_js %}
+{% endblock %}

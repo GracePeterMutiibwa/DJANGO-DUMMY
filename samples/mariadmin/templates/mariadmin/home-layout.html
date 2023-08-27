@@ -34,7 +34,13 @@
     />
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="{% static 'mariadmin/local-update/fonts.googleapis.com/index.html' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+
+    <!-- <link rel="preconnect" href="{% static 'mariadmin/local-update/fonts.googleapis.com/index.html' %}" /> -->
     
     <link
       rel="preconnect"
@@ -141,14 +147,14 @@
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="layouts-collapsed-menu.html" class="menu-link">
-                    <div data-i18n="Navigation Menu Order">
-                      Navigation Menu Order
+                    <div data-i18n="Home Page">
+                      Home Page
                     </div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="layouts-content-navbar.html" class="menu-link">
-                    <div data-i18n="Sliding Images">Sliding Images</div>
+                    <div data-i18n="About Page">About Page</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -156,15 +162,33 @@
                     href="layouts-content-navbar-with-sidebar.html"
                     class="menu-link"
                   >
-                    <div data-i18n="Contact Links">Contact Links</div>
+                    <div data-i18n="Venue Page">Venue Page</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="layouts-blank.html" class="menu-link">
-                    <div data-i18n="Blank">Image Gallery</div>
+                    <div data-i18n="Activities">Activities</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="layouts-blank.html" class="menu-link">
+                    <div data-i18n="Blog">Blog</div>
+                  </a>
+                </li>
+
+                <li class="menu-item">
+                  <a href="layouts-blank.html" class="menu-link">
+                    <div data-i18n="Contact">Contact</div>
                   </a>
                 </li>
               </ul>
+            </li>
+
+            <li class="menu-item">
+              <a href="{% url 'admin_panel:file-manager' %}" class="menu-link">
+                <i class="fa-regular fa-file me-3"></i>
+                <div data-i18n="File Manager">File Manager</div>
+              </a>
             </li>
 
             <!-- Apps & Pages -->
@@ -417,34 +441,14 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <div class="row">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                  tenetur aliquid harum nam amet a maxime dignissimos deserunt
-                  neque ullam eius, quaerat voluptatibus magni doloremque dicta
-                  cupiditate, quo dolorum earum officia. Explicabo iusto
-                  asperiores dicta totam soluta dolores quos. Eligendi porro
-                  quis illum consequuntur inventore asperiores animi laudantium
-                  voluptatem dolorum adipisci dignissimos hic, exercitationem
-                  perspiciatis esse, quidem provident a omnis, voluptate tempore
-                  quibusdam quaerat eos ipsa. Quibusdam fugiat reiciendis non
-                  quo ducimus iusto iste? Dicta non est quisquam esse neque, sit
-                  ad accusantium eligendi id recusandae. Rerum cum repellat
-                  accusamus atque quaerat minus incidunt obcaecati molestiae
-                  asperiores impedit, enim ratione quibusdam, eum perspiciatis
-                  ipsam necessitatibus voluptatem assumenda nobis possimus ex
-                  repudiandae voluptatum, nostrum tempora? Illo natus molestias
-                  ad error doloremque reiciendis quam velit nulla esse fuga
-                  veniam delectus magnam ut, voluptas accusantium, odio fugit
-                  eius cupiditate, deserunt eligendi quo beatae repudiandae
-                  nostrum! Minima totam officia quia nisi doloremque maxime
-                  accusamus atque ipsam architecto, modi enim sed similique
-                  aperiam quibusdam voluptas eaque esse? Accusantium quibusdam
-                  nostrum fugit, est doloremque suscipit velit consequuntur!
-                  Beatae, blanditiis provident iste quis animi quaerat optio
-                  sit! Voluptate reiciendis eaque, exercitationem at cupiditate
-                  quisquam totam quaerat, nam sint perspiciatis delectus.
-                  Reiciendis fuga fugiat expedita ut, ipsum quidem?
-                </p>
+                <div class="col">
+                  {% block page_content %}
+
+                  {% endblock %}
+
+                </div>
+                
+
               </div>
             </div>
             <!-- / Content -->

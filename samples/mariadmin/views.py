@@ -10,3 +10,8 @@ from django.views.decorators.cache import cache_control
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def adminHomePage(request):
     return render(request, "mariadmin/index.html")
+
+@login_required(login_url='messenger:home')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def fileManagerPage(request):
+    return render(request, "mariadmin/sections/upload-section.html")

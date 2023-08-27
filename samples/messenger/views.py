@@ -271,6 +271,7 @@ def homePage(request):
     else:
         return render(request, 'mariadmin/login.html')
 
+
 @login_required(login_url='messenger:home')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logoutUser(request):

@@ -88,9 +88,13 @@
                   <li class="nav-item">
                   <a class="nav-link" data-id="5" href="{% url 'messenger:blog' %}">Blog</a>
                   </li>
-                  <li class="nav-item">
-                  <a class="nav-link" data-id="6" href="{% url 'messenger:contact' %}">Contact</a>
-                  </li>
+
+                  {% if request.user.is_authenticated %}
+                    <li class="nav-item bg-sm-transparent bg-secondary">
+                      <a class="nav-link" data-id="6" href="{% url 'messenger:home' %}">Account</a>
+                    </li>
+
+                  {% endif %}
               </ul>
               </div>
           </div>

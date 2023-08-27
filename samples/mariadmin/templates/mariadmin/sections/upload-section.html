@@ -1,0 +1,128 @@
+{% extends "mariadmin/home-layout.html" %}
+
+{% load static %}
+
+{% block page_css %}
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/dropzone/dropzone.css' %}"
+    />
+
+
+{% endblock %}
+
+
+{% block page_content %}
+
+    <div class="row w-100">
+        <div class="col-12">
+            <div class="row w-100">
+                <div class="d-none">
+                    <div class="card mb-4">
+                        <h5 class="card-header">Basic</h5>
+                        <div class="card-body">
+                        <form action="https://demos.pixinvent.com/upload" class="dropzone needsclick" id="dropzone-basic">
+                            <div class="dz-message needsclick">
+                            Drop files here or click to upload
+                            <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                            </div>
+                            <div class="fallback">
+                            <input name="file" type="file" />
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                    <!-- Multi  -->
+                <div class="">
+                <div class="card">
+                    <h5 class="card-header">Upload One or Multiple Files</h5>
+                    <div class="card-body">
+                    <form action="https://demos.pixinvent.com/upload" class="dropzone needsclick" id="dropzone-multi">
+                        <div class="dz-message needsclick">
+                            Drop files here or click to upload
+                            <span class="note needsclick">Select or Drag and Drop<strong>Any</strong> Number of Files</span>
+                        </div>
+                        <div class="fallback">
+                            <input name="file" type="file" />
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+                <!-- Multi  -->
+            </div>
+
+            <div class="row w-100 justify-content-center mt-3">
+                <button class="btn btn-success w-75" type="button">
+                    <i class="fa-solid fa-floppy-disk me-2"></i> Save
+                </button>
+            </div>
+        
+        </div>
+
+
+
+    </div>
+
+    <div class="row w-100 mt-5">
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header">Event Categories</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <div class="mt-5">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>No.</th>
+                            <th>Image Preview</th>
+                            <th>Category</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                          <tr>
+                            <td>
+                                <strong>1</strong>
+                            </td>
+                            <td>Social Event</td>
+
+                            <td>
+                                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Simple File" data-bs-original-title="Simple Image">
+                                      <img src="https://picsum.photos/200" alt="Avatar" class="rounded-circle">
+                                    </li>
+                                </ul>
+                            </td>
+        
+                            <td>
+                              <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
+
+
+
+{% block vendor_js %}
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/dropzone/dropzone.js' %}"></script>
+
+{% endblock %}
+
+
+{% block page_js %}
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/forms-file-upload.js' %}"></script>
+{% endblock %}

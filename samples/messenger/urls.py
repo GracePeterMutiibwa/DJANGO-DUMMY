@@ -14,4 +14,6 @@ urlpatterns = [
     path('blog/', views.blogPostPage, name='blog'),
     path('contact/', views.contactPage, name='contact'),
     path('logout/', views.logoutUser, name='logout-user'),
+    
+    
 ]
