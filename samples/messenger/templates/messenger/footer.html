@@ -1,0 +1,27 @@
+<div class="simple-footer">
+  <footer class="bg-light text-center text-white">  
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+
+      <span>©  Copyright:</span>
+      <span class="year"></span>
+
+      <script>
+        // select the footer element
+        const yearHolder = document.querySelector('.year');
+
+        // create a new Date object with the current date and time
+        const date = new Date();
+
+        // get the current year using the getFullYear() method
+        const year = date.getFullYear();
+
+        // update the text content of the footer with the year
+        yearHolder.textContent = `${year}`;
+
+      </script>
+      
+      <a class="text-white" href="https://mdbootstrap.com/">Maria Hill Gardens</a>
+    </div>
+  </footer>
+</div>
+

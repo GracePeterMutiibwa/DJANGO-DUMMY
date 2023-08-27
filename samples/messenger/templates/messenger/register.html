@@ -1,0 +1,272 @@
+{% extends 'messenger/base.html' %}
+
+{% load static %}
+
+{% block custom_styles %}
+  <style>
+    body{
+      background-color:#f5f8ed;
+    }
+
+
+    .alert-holder {
+          position: fixed;
+          top: 0;
+          right: 0;
+          padding: 10px;
+          z-index: 9999;
+      }
+
+  </style>
+
+{% endblock %}
+
+{% block custom_css %}
+    <!-- cropper -->
+    <link
+      rel="stylesheet"
+      href="{% static 'messenger/css/cropper.min.css' %}"
+    />
+
+    <!-- own -->
+    <link rel="stylesheet" href="{% static 'messenger/css/custom.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="alert-holder">
+
+  </div>
+
+
+  <div class="section p-5 d-flex justify-content-center align-items-center" style="background-color: #f5f8ed;">
+    <div class="card w-75">
+      <div class="card-header text-center">
+        <i class="fa-solid fa-user mx-2 text-primary"></i>
+        Register
+      </div>
+      <div class="card-body p-0">
+        <ul
+          class="nav nav-tabs mb-3 justify-content-center"
+          id="ex-with-icons"
+          role="tablist"
+        >
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link active"
+              id="ex-with-icons-tab-1"
+              data-mdb-toggle="tab"
+              href="#ex-with-icons-tabs-1"
+              role="tab"
+              aria-controls="ex-with-icons-tabs-1"
+              aria-selected="true"
+              ><i class="fa-solid fa-address-card fa-fw me-2"></i>CREDENTIALS</a
+            >
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              id="ex-with-icons-tab-2"
+              data-mdb-toggle="tab"
+              href="#ex-with-icons-tabs-2"
+              role="tab"
+              aria-controls="ex-with-icons-tabs-2"
+              aria-selected="false"
+              ><i class="fa-solid fa-user-plus fa-fw me-2"></i>PROFILE IMAGE</a
+            >
+          </li>
+        </ul>
+        <form
+          action="#"
+          class="needs-validation"
+          enctype="multipart/form-data"
+          id="signup-form"
+          novalidate
+        >
+          {% csrf_token %}
+          <div class="tab-content px-4" id="ex-with-icons-content">
+            <div
+              class="tab-pane fade show active"
+              id="ex-with-icons-tabs-1"
+              role="tabpanel"
+              aria-labelledby="ex-with-icons-tab-1"
+            >
+              <div class="form-group mb-5">
+                <label class="form-label" for="username">User Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="i.e. mary johns"
+                  name="username"
+                  id="username"
+                  required
+                />
+
+                <div class="invalid-feedback">please provide a user name</div>
+              </div>
+
+              <div class="form-group mb-5">
+                <label class="form-label" for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  id="email"
+                  placeholder="i.e. example@gmail.com"
+                  required
+                />
+
+                <div class="invalid-feedback pb-3">
+                  please provide a valid email address
+                </div>
+              </div>
+
+              <div class="input-group mb-5">
+                <label class="input-group-text" for="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="form-control"
+                  minlength="4"
+                  placeholder="enter access key"
+                  required
+                />
+                <span class="input-group-text cursor-pointer" id="toggle-password"
+                  ><i class="fa-regular fa-eye-slash" id="pass-toggle"> </i
+                ></span>
+                <div class="invalid-feedback">
+                  please provide a valid password, minimum 4 characters
+                </div>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="ex-with-icons-tabs-2"
+              role="tabpanel"
+              aria-labelledby="ex-with-icons-tab-2"
+            >
+              <div class="form-group mb-5">
+                <label class="form-label" for="userimage"
+                  >Select Profile Image From Device</label
+                >
+                <input
+                  type="file"
+                  name="userimage"
+                  class="form-control"
+                  id="userimage"
+                />
+
+                <div class="invalid-feedback">provide an avatar please</div>
+              </div>
+              <div
+                class="card mb-3 d-none"
+                style="max-width: 100%"
+                id="image-resizer"
+              >
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <!-- https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp -->
+                    <img
+                      id="image-viewer"
+                      src=""
+                      alt="Selected User Image"
+                      class="img-fluid rounded-start"
+                    />
+
+                    <div class="text-center mt-2">
+                      <button
+                        type="button"
+                        class="btn btn-success w-50 mb-3"
+                        id="crop-image"
+                      >
+                        CROP
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">Cropped Image</h5>
+                      <p class="card-text">
+                        This is the result cropped image that will be saved as
+                        your profile image.
+                        <strong
+                          ><span class="text-danger"
+                            >Make sure its what you want before you submit</span
+                          ></strong
+                        >
+                      </p>
+                      <div
+                        class="cropped-image-viewer bg-light d-flex justify-content-center align-items-center"
+                      >
+                        <p class="card-text text-muted">No Cropped Image yet</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary w-50 mb-3">
+              SUBMIT
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card-footer">
+        <div class="text-center">
+          <small class="text-muted">Already Have an account?</small>
+          <small> <a href="{% url 'messenger:home' %}">Login Here</a></small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade w-75" id="avatar-modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- id="image-holder" -->
+            <!-- <div></div> -->
+            <!-- image will go here -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              CANCEL
+            </button>
+            <button type="button" class="btn btn-primary" id="crop-image">
+              CROP
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block custom_js %}
+  <script
+  type="module"
+  src="{% static 'messenger/js/modal-control.js' %}"
+  ></script>
+
+  <script src="{% static 'messenger/js/form-validation.js' %}"></script>
+
+  <!-- cropper js -->
+  <script src="{% static 'messenger/js/cropper.min.js' %}"></script>
+{% endblock %}

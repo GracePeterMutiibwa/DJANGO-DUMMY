@@ -1,0 +1,148 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html
+    lang="en"
+    class="light-style customizer-hide"
+    dir="ltr"
+    data-theme="theme-default"
+    data-assets-path="{% static 'mariadmin/local-update/frest/admin/assets/' %}"
+    data-template="vertical-menu-template"
+>
+    <head>
+    <meta charset="utf-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    {% block page_title %}
+    
+    {% endblock %}
+
+
+    <meta name="description" content="Create unforgettable memories with us" />
+    <meta
+        name="keywords"
+        content="unforgettable, memories, maria hill, maria hill gardens, maria hill events, maria hill entebbe"
+    />
+
+    <!-- Favicon -->
+    <link
+        rel="icon"
+        type="image/x-icon"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/img/favicon/mariahill.png' %}"
+    />
+
+    <!-- Google Fonts -->
+    <link
+        rel="preconnect"
+        href="{% static 'mariadmin/local-update/fonts.googleapis.com/index.html' %}"
+    />
+
+    <link
+        rel="preconnect"
+        href="{% static 'mariadmin/local-update/fonts.gstatic.com/index.html' %}"
+        crossorigin
+    />
+    <link
+        href="https://fonts.googleapis.com/css2e40e.css?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/fonts/boxicons.css' %}"
+    />
+    <link
+        rel="stylesheet"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/fonts/fontawesome.css' %}"
+    />
+    <link
+        rel="stylesheet"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/fonts/flag-icons.css' %}"
+    />
+
+    <!-- Core CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/rtl/core.css' %}"
+        class="template-customizer-core-css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/rtl/theme-semi-dark.css' %}"
+        class="template-customizer-theme-css"
+    />
+    <link
+        rel="stylesheet"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/css/demo.css' %}"
+    />
+
+    <!-- core:Vendors CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}"
+    />
+    <link
+        rel="stylesheet"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/typeahead-js/typeahead.css' %}"
+    />
+
+
+    {% block layout_css %}
+
+
+    {% endblock %}
+
+    <!-- to -->
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/toastr/toastr.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/animate-css/animate.css' %}" />
+
+
+    <!-- Helpers -->
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/js/helpers.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/config.js' %}"></script>
+    </head>
+
+    <body>
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- Core: JS -->
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/jquery/jquery.js' %}"></script>
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/hammer/hammer.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/i18n/i18n.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/typeahead-js/typeahead.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/js/menu.js' %}"></script>
+
+    <!-- ven -->
+    {% block vendor_js %}
+
+    {% endblock %}
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/toastr/toastr.js' %}"></script>
+    
+    <!-- main -->
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/main.js' %}"></script>
+
+    <!-- page -->
+    {% block page_js %}
+
+    {% endblock %}
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/ui-toasts.js' %}"></script>
+
+    </body>
+</html>

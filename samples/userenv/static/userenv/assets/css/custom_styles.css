@@ -1,0 +1,14 @@
+body{
+    background-color: #F6F4E0;
+}
+.chat-message-right .chat-message-text{
+    color: white;
+}
+
+.chat-message-left .chat-message-text{
+    background-color: white;
+}
+
+.chat-history-footer{
+    background-color: white;
+}

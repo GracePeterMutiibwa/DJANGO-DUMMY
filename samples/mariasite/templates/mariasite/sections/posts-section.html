@@ -1,0 +1,74 @@
+{% load static %}
+
+<section class="ftco-section bg-light">
+    <div class="container-xl">
+        {% if posts %}
+        <div class="row">
+            {% with blog_counter=1 %}
+
+                {% for eachPost in posts %}
+
+                    <div class="col-md-6 col-lg-3 d-flex">
+                        <div 
+                        class="blog-entry justify-content-end"
+                        data-aos="fade-up"
+                        data-aos-duration="1000"
+
+                        {% if blog_counter >= 3 %}
+                            data-aos-delay="300"
+
+                        {% elif blog_counter == 1 %}
+                            data-aos-delay="100"
+
+                        {% elif blog_counter == 2 %}
+                            data-aos-delay="200"
+
+                        {% with blog_counter=blog_counter|add:1 %}
+                        {% endwith %}
+
+                        {% endif %} >
+
+                            <a 
+                            href="#"
+                            class="block-20 img d-flex align-items-end"
+                            style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/image_1.jpg' %})">
+                            </a>
+                            <div class="text">
+                                <p class="meta">
+                                    <span>Admin</span>
+                                    <span>{{ eachPost.date }}</span>
+                                    &nbsp;
+                                    <a href="#">{{ eachPost.comment_count }} Comments</a></p>
+                                <h3 class="heading mb-3"><a href="#">{{ eachPost.heading.title }}</a></h3>
+                                <p>{{ eachPost.summary.capitalize }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+        </div>
+
+        <div class="row mt-5">
+        <div class="col text-center">
+        <div class="block-27">
+        <ul>
+        <li><a href="#">&lt;</a></li>
+        <li class="active"><span>1</span></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&gt;</a></li>
+        </ul>
+        </div>
+        </div>
+        </div>
+
+        {% else %}
+            <p>No Posts Yet</p>
+        {% endif %}
+    </div>
+</section>

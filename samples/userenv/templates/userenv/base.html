@@ -1,0 +1,158 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Maria Hill Gardens</title>
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
+    <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 admin, bootstrap 5 design, bootstrap 5"/>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="{% static 'userenv/assets/img/mariahill.png" />
+    <link href="{% static 'userenv/assets/img/mariahill.png' %}" rel="icon">
+    <link href="{% static 'userenv/assets/img/mariahill.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+
+    <!-- icons -->
+    <link href="{% static 'userenv/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'userenv/assets/vendor/fonts/fontawesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'userenv/assets/vendor/fonts/flag-icons.css' %}" />
+
+    <link href="{% static 'userenv/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    
+    <link href="{% static 'userenv/assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'userenv/assets/css/style.css' %}" rel="stylesheet">
+
+
+    {% block custom_head_meta %}
+    {% endblock %}
+
+    {% if not avatar %}
+        <style>
+            .avatar {
+                border: 2px solid #fff;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background-color: #212332;
+                text-align: center;
+                line-height: 50px;
+                font-weight: bold;
+                font-size: 20px;
+                color: #00E386
+            }
+        </style>
+
+    {% endif %}
+
+</head>
+
+<body>
+
+    <!-- ======= Mobile nav toggle button ======= -->
+    <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+    <!-- ======= Header ======= -->
+    <header id="header">
+    <div class="d-flex flex-column">
+
+        <div class="profile">
+        {% if avatar %}
+            <img src="{{ request.session.avatar }}" alt="" class="img-fluid rounded-circle">
+
+        {% else %}
+        <div class="d-flex w-100 mt-3 mb-3 justify-content-center">
+            <div class="avatar d-flex justify-content-center align-items-center">
+            <i class="bx bx-user" style="font-size: 30px;"></i>
+            
+            </div>
+        </div>
+
+        
+        {% endif %}
+
+        <h1 class="text-light"><span>{{ request.user.username }}</span></h1>
+        <div class="social-links mt-3 text-center">
+            <a href="mailto:gracepetermutiibwa@gmail.com" class="gmail"><i class="bx bxl-gmail"></i></a>
+            <a href="https://wa.me/+256761664448" class="whatsapp"><i class="bx bxl-whatsapp"></i></a>
+        </div>
+        </div>
+
+        <nav id="navbar" class="nav-menu navbar">
+        <ul>
+            <li><a href="#about" class="nav-link"><i class="bx bx-task"></i> <span>Invoices / Bookings</span></a></li>
+            <li><a href="#services" class="nav-link"><i class="bx bx-dollar-circle"></i> <span>Payments</span></a></li>
+            <li><a href="#contact" class="nav-link"><i class="bx bx-envelope"></i> <span>Notifications</span></a></li>
+            <li><a href="#hero" class="nav-link active"><i class="bx bx-user"></i> <span>Account</span></a></li>
+            <li><a href="{% url 'messenger:logout-user' %}" class="nav-link"><i class="bx bxs-door-open"></i><span>Logout</span></a></li>
+        </ul>
+        </nav>
+    </div>
+    </header>
+
+    <div id="main" class="vh-100">
+
+    {% block content %}
+
+    {% endblock %}
+        
+    </div>
+
+
+
+    <footer id="footer">
+    <div class="container">
+        <div class="copyright">
+        &copy;
+
+        <span id="year-holder"></span>
+
+        <script>
+            // select the footer element
+            const yearHolder = document.querySelector('#year-holder');
+
+            // create a new Date object with the current date and time
+            const date = new Date();
+
+            // get the current year using the getFullYear() method
+            const year = date.getFullYear();
+
+            // update the text content of the footer with the year
+            yearHolder.textContent = `${year}`;
+
+        </script>
+
+        <strong><span class="text-info">Maria Hill Gardens</span></strong>
+        </div>
+        <div class="credits">
+        All rights reserved MH-Gardens
+        </div>
+    </div>
+    </footer>
+
+
+    {% block custom_js %}
+    {% endblock %}
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'userenv/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    
+
+    <script src="{% static 'userenv/assets/js/user-main.js' %}"></script>
+
+
+</body>
+
+</html>

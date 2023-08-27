@@ -1,0 +1,14 @@
+{% if messages %}
+    {% for eachMessage in messages %}
+      <div class="bs-toast toast toast-ex animate__animated my-2 fade animate__fadeInUp show" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
+          <div class="toast-header bg-warning">
+            <div class="me-auto fw-semibold">Alert</div>
+            <small><strong>Maria Hill Management</strong></small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body" id="toastbody">
+            {{ eachMessage.message }}
+          </div>
+      </div>
+    {% endfor %}
+  {% endif %}

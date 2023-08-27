@@ -1,0 +1,47 @@
+{% load static %}
+
+
+<section class="hero-wrap hero-wrap-2"
+
+{% if bg_image %}
+    style="background-image: url('{{ bg_image }}');"
+
+{% else %}
+    style="background-image: url({% static 'mariasite/color/site-core/theme/unwind/images/bg_3.jpg' %});"
+
+{% endif %} >
+
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 pt-5 text-center">
+            <p class="breadcrumbs">
+                <span class="me-2">
+                    <a href="{% url 'messenger:welcome' %}">
+                        Home <i class="fa fa-chevron-right"></i>
+                    </a>
+                </span>
+
+                {% if from_page %}
+                    <span class="me-2">
+                        <a href="{{ from_page.url }}"> {{ from_page.name }} <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </span>
+
+                {% endif %}
+
+                {% if to_page %}
+                    <span>
+                        {{ to_page }} <i class="fa fa-chevron-right"></i>
+                    </span>
+
+                {% endif %}
+
+            </p>
+
+            <h1 class="mb-0 bread">{{ header_name }}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+

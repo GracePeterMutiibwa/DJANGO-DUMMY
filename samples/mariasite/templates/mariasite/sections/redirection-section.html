@@ -1,0 +1,86 @@
+{% load static %}
+
+<section class="ftco-section ftco-no-pb ftco-no-pt ftco-booking">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <form action="#" class="booking-form">
+            <div class="row g-0">
+              <div
+                class="col-md-12 col-lg col-sm flex-md-column form-wrap d-flex py-3 py-lg-5 px-4 justify-content-center"
+              >
+                <p class="w-50">
+                  <a
+                    href="{% url 'messenger:register' %}"
+                    class="btn btn-white btn-outline-white p-4 py-3"
+                  >
+                    REGISTER
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                  </a>
+                </p>
+                <p class="w-50">
+                  <a
+                    href="{% url 'messenger:home' %}"
+                    class="btn btn-white btn-outline-white p-4 py-3"
+                  >
+                    LOGIN
+                    <i class="fa fa-user"></i>
+                  </a>
+                </p>
+              </div>
+              <div class="col-md-6 col-lg form-wrap d-flex py-3 py-lg-5 px-4">
+                <div class="form-group ps-4">
+                  <label for="#">Event Category</label>
+                  <div class="form-field">
+                    <div class="select-wrap">
+                      <div class="icon">
+                        <span class="fa fa-chevron-down"></span>
+                      </div>
+                      <select name id class="form-control">
+                        <option value>Weddings</option>
+                        <option value>Corporate Events</option>
+                        <option value>Social Events</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg form-wrap d-flex py-3 py-lg-5 px-4">
+                <div class="form-group ps-4">
+                  <label for="#">Guests Capacity</label>
+                  <div class="form-field">
+                    <div class="select-wrap">
+                      <div class="icon">
+                        <span class="fa fa-chevron-down"></span>
+                      </div>
+                      <select name id class="form-control">
+                        <option value>1 Person</option>
+                        <option value>up to 10 People</option>
+                        <option value>up to 20 People</option>
+                        <option value>up to 30 People</option>
+                        <option value>up to 40 People</option>
+                        <option value>up to 50 People</option>
+                        <option value>50+ People</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-lg d-flex">
+                <div class="form-group d-flex border-0">
+                  <div class="form-field w-100 align-items-center d-flex">
+                    <a
+                      href="{% url 'messenger:venue' %}"
+                      type="submit"
+                      class="d-flex justify-content-center align-items-center align-self-stretch form-control btn btn-primary py-lg-4 py-xl-0"
+                      ><span>Check Availability</span></a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</section>

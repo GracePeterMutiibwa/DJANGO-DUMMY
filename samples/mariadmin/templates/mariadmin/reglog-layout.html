@@ -1,0 +1,48 @@
+{% extends "mariadmin/base-layout.html" %}
+
+{% load static %}
+
+{% block page_title %}
+
+  <title>Maria Hill Gardens | Where Dreams Come True</title>
+    
+{% endblock %}
+
+
+{% block layout_css %}
+  <link
+  rel="stylesheet"
+  href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css' %}"
+  />
+
+  <link
+  rel="stylesheet"
+  href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/pages/page-auth.css' %}"
+  />
+
+  <link
+  rel="stylesheet"
+  href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/pages/custom-register.css' %}"
+  />
+
+{% endblock %}
+
+
+{% block content %}
+{% endblock %}
+
+    
+<!-- custom:Vendors JS -->
+{% block vendor_js %}
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+{% endblock %}
+    
+
+
+{% block page_js %}
+  <!-- Page JS -->
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/pages-auth.js' %}"></script>
+
+{% endblock %}
