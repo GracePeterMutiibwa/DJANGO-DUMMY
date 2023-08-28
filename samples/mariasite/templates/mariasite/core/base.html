@@ -23,6 +23,11 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
 
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Playfair:wght@300&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
@@ -52,13 +57,36 @@
     <!-- <link rel="stylesheet" href="css/datepicker.min.css" /> -->
     <link rel="stylesheet" href="{% static 'mariasite/color/site-core/theme/unwind/css/style.css' %}" />
   
+    <style>
+      .maria-header{
+        font-family: 'Imperial Script', cursive;
+        font-weight: normal;
+        font-size: 6em;
+        line-height: 1.2em;
+        display: block;
+        color: white;
+      }
+
+      @media (max-width: 767px) {
+        .maria-header {
+          font-size: 4em;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .maria-header {
+          font-size: 6em;
+        }
+      }
+    </style>
 
   </head>
   <body>
         <nav class="navbar navbar-expand-lg ftco-navbar-light">
           <div class="container-xl">
               <a class="navbar-brand align-items-center" href="{% url 'messenger:welcome' %}">
-              <span class>Maria <small>Hill Gardens</small></span>
+              <!-- <span class>MariaHill<small>Gardens</small></span> -->
+              <!-- <img src="{% static 'mariasite/color/site-core/theme/unwind/images/maria-hill.jpeg' %}" style="width: 150px; height:auto;" alt="Logo"> -->
               </a>
               <button
               class="navbar-toggler"
@@ -71,6 +99,7 @@
               >
               <span class="fa fa-bars"></span> Menu
               </button>
+             
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                   <li class="nav-item">
