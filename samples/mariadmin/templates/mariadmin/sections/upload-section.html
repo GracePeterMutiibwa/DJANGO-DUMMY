@@ -8,6 +8,7 @@
     href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/dropzone/dropzone.css' %}"
     />
 
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 
 {% endblock %}
 
@@ -94,11 +95,18 @@
                                 </ul>
                             </td>
                             
-                            <td>
+                            <!-- <td>
                                 <button class="btn bg-transparent text-dark text-center justify-content-center">
                                     <i class="fa-solid fa-expand"></i>
                                 </button>
                                 
+                            </td> -->
+
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" id="my-button">
+                                    Launch demo modal
+                                </button>
                             </td>
         
                             <td>
@@ -119,6 +127,27 @@
 
 
     </div>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" id="closeButton">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
 
 {% endblock %}
@@ -133,4 +162,16 @@
 
 {% block page_js %}
     <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/forms-file-upload.js' %}"></script>
+
+    <script type="text/javascript">
+        $('#my-button').on('click', function(){
+            // display the modal
+            $('#exampleModal').modal('show');       
+        });
+
+        $('#closeButton').on('click', function() {
+            $('#exampleModal').modal('hide');
+        });
+
+    </script>
 {% endblock %}
