@@ -44,7 +44,7 @@
                             <span class="note needsclick">Select or Drag and Drop<strong>Any</strong> Number of Files</span>
                         </div>
                         <div class="fallback">
-                            <input name="file" type="file" />
+                            <input name="file" type="image" accept="image/*" />
                         </div>
                     </form>
                     </div>
@@ -67,15 +67,16 @@
 
     <div class="row w-100 mt-5">
         <div class="card mb-4 mx-2">
-            <h5 class="card-header">Event Categories</h5>
+            <h5 class="card-header">Uploaded Files</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
                 <div class="mt-5">
                     <table class="table">
                         <thead>
                           <tr>
                             <th>No.</th>
+                            <th>Label Or Name</th>
                             <th>Image Preview</th>
-                            <th>Category</th>
+                            <th>Expand Image</th>
                           </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
@@ -92,12 +93,19 @@
                                     </li>
                                 </ul>
                             </td>
+                            
+                            <td>
+                                <button class="btn bg-transparent text-dark text-center justify-content-center">
+                                    <i class="fa-solid fa-expand"></i>
+                                </button>
+                                
+                            </td>
         
                             <td>
                               <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                                 <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit Label</a>
                                   <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
                                 </div>
                               </div>
