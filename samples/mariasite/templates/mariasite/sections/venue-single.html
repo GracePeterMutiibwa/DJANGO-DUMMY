@@ -1,0 +1,216 @@
+<section class="ftco-section ftco-room-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 blog-single">
+
+        <div class="carousel-room">
+          {% for eachImage in venue_details.venue_images %}
+            <div class="item">
+              <div class="room-detail img" style="background-image: url({{ eachImage.url }})">
+                
+              </div>
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+
+        <h2>{{ venue_details.name }}</h2>
+        <p>
+          {{ venue_details.description.capitalize }}
+        </p>
+        <div class="d-md-flex mt-5 mb-5">
+          <ul class="list">
+            <li><span>Hosting Capacity:</span> {{ venue_details.capacity }} Persons</li>
+          </ul>
+          <ul class="list ms-md-5">
+            <li>
+              <div class="text">
+                <p>
+                  <a href="{% url 'messenger:venue-details' venue_details.name %}" class="btn-custom">Book Now</a>
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="properties-single mb-5 mt-4">
+          <h4 class="mb-4">Suitable Categories</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <ul class="list">
+                {% for eachCategory in venue_details.categories %}
+                  <li><span>{{ forloop.counter }}.</span> {{ eachCategory }} </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+          <div
+            class="col-md-12 heading-section"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+          >
+            <h2>Related Venues</h2>
+          </div>
+        </div>
+        <div class="row">
+          {% if venue_details.excluded %}
+            {% for eachVenue in venue_details.excluded %}
+              <div class="col-md-6 d-flex align-items-stretch" data-aos="flip-left" data-aos-delay="200" data-aos-duration="1000">
+                <div class="room-wrap">
+                  <a href="#" class="img img-room" style="background-image: url({{ eachVenue.image }})">
+                  </a>
+                  <div class="text p-5 text-center">
+                    <h3><a href="{% url 'messenger:venue-details' eachVenue.name %}">{{ eachVenue.name }}</a></h3>
+                    <p>
+                      {{ eachVenue.description }}
+                    </p>
+                    <p class="mb-0 mt-2">
+                      <span class="me-3 price">{{ eachVenue.capacity }}</span
+                      ><a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">Book Now</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          
+
+          {% else %}
+            <p> No Venues Yet</p>
+
+          {% endif %}
+
+        </div>
+      </div>
+
+      <!-- <div class="col-lg-4 sidebar ps-md-4">
+        <div class="sidebar-box bg-light rounded">
+          <form action="#" class="search-form">
+            <div class="form-group">
+              <span class="icon fa fa-search"></span>
+              <input type="text" class="form-control" placeholder="Search..." />
+            </div>
+          </form>
+        </div>
+        <div class="sidebar-box">
+          <h3>Hotel Services</h3>
+          <div class="d-md-flex">
+            <ul class="categories me-md-4">
+              <li><a href="#">Free Wifi</a></li>
+              <li><a href="#">Easy Booking</a></li>
+              <li><a href="#">Restaurant</a></li>
+              <li><a href="#">Swimming Pool</a></li>
+            </ul>
+            <ul class="categories ms-md-4">
+              <li><a href="#">Beauty &amp; Health</a></li>
+              <li><a href="#">60" Flatscreen TV</a></li>
+              <li><a href="#">Cold Aircondition</a></li>
+              <li><a href="#">Help &amp; Support</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="sidebar-box">
+          <h3>Recent Blog</h3>
+          <div class="block-21 mb-4 d-flex">
+            <a
+              class="blog-img me-4"
+              style="background-image: url(images/image_1.jpg)"
+            ></a>
+            <div class="text">
+              <h3 class="heading">
+                <a href="#">Far far away, behind the word mountains</a>
+              </h3>
+              <div class="meta">
+                <div>
+                  <a href="#"
+                    ><span class="fa fa-calendar"></span> December 24, 2020</a
+                  >
+                </div>
+                <div>
+                  <a href="#"><span class="fa fa-user"></span> Admin</a>
+                </div>
+                <div>
+                  <a href="#"><span class="fa fa-comment"></span> 19</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="block-21 mb-4 d-flex">
+            <a
+              class="blog-img me-4"
+              style="background-image: url(images/image_2.jpg)"
+            ></a>
+            <div class="text">
+              <h3 class="heading">
+                <a href="#">Far far away, behind the word mountains</a>
+              </h3>
+              <div class="meta">
+                <div>
+                  <a href="#"
+                    ><span class="fa fa-calendar"></span> December 24, 2020</a
+                  >
+                </div>
+                <div>
+                  <a href="#"><span class="fa fa-user"></span> Admin</a>
+                </div>
+                <div>
+                  <a href="#"><span class="fa fa-comment"></span> 19</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="block-21 mb-4 d-flex">
+            <a
+              class="blog-img me-4"
+              style="background-image: url(images/image_3.jpg)"
+            ></a>
+            <div class="text">
+              <h3 class="heading">
+                <a href="#">Far far away, behind the word mountains</a>
+              </h3>
+              <div class="meta">
+                <div>
+                  <a href="#"
+                    ><span class="fa fa-calendar"></span> December 24, 2020</a
+                  >
+                </div>
+                <div>
+                  <a href="#"><span class="fa fa-user"></span> Admin</a>
+                </div>
+                <div>
+                  <a href="#"><span class="fa fa-comment"></span> 19</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-box">
+          <h3>Tag Cloud</h3>
+          <div class="tagcloud">
+            <a href="#" class="tag-cloud-link">hotel</a>
+            <a href="#" class="tag-cloud-link">pool</a>
+            <a href="#" class="tag-cloud-link">tv</a>
+            <a href="#" class="tag-cloud-link">aircon</a>
+            <a href="#" class="tag-cloud-link">relax</a>
+            <a href="#" class="tag-cloud-link">cozzy</a>
+            <a href="#" class="tag-cloud-link">room</a>
+            <a href="#" class="tag-cloud-link">resto</a>
+            <a href="#" class="tag-cloud-link">bar</a>
+          </div>
+        </div>
+        <div class="sidebar-box">
+          <h3>Paragraph</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus
+            itaque, autem necessitatibus voluptate quod mollitia delectus aut,
+            sunt placeat nam vero culpa sapiente consectetur similique,
+            inventore eos fugit cupiditate numquam!
+          </p>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</section>

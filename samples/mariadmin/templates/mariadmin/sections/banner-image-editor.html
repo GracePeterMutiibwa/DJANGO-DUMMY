@@ -1,0 +1,48 @@
+{% load static %}
+
+<div class="row w-100">
+    <section id="heading-image-section">
+
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header">
+                <i class="bx bxs-file-image me-2"></i>
+                Home Page Header Image
+            </h5>
+
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <form action="{% url 'messenger:edit-website' 15 %}" method="post">
+                    {% csrf_token %}
+
+                    <label for="banner-image-holder" class="form-label">Banner Image</label>
+                    
+                    <div class="input-group">
+                        <span class="input-group-text">Image Name</span>
+                        <input type="text" placeholder="Select an Image" name="header-image-url" id="banner-image-holder" class="form-control" required>
+                        
+                        <button class="btn btn-outline-primary image-selectors" type="button" data-output-receiver="banner-image-holder">
+                            <i class="bx bxs-file-image me-2"></i> Choose Image
+                        </button>
+                    </div>
+
+                    <div class="form-text">
+                        {% if banner_image is not None %}
+                            <strong>Current Image:</strong> {{ banner_image }}
+                        {% else %}
+                            Select a banner image for the website heading and ribbon
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-5">
+                        <button class="btn btn-outline-primary w-100" type="submit">
+                            <i class="bx bxs-image-add me-2"></i> 
+                            Save Image
+                        </button>
+                    </div>
+
+                </form>
+                
+            </div>
+        </div>
+
+    </section>
+</div>

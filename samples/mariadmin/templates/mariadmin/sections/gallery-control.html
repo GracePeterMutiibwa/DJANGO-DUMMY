@@ -1,0 +1,94 @@
+{% extends "mariadmin/home-layout.html" %}
+
+{% load static %}
+
+{% block page_content %}
+    <div class="row w-100">
+        <section id="gallery-control">
+            <div class="card mb-4 mx-2">
+                <h5 class="card-header">
+                    <i class='bx bxs-file-image bx-burst-hover me-2'></i>
+                    Gallery Manager
+                </h5>
+                
+                <div class="card-body demo-vertical-spacing demo-only-element">
+
+                    <div class="mt-5">
+                        <table class="table mb-3" id="page-register">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Date Added</th>
+                                    <th>Name</th>
+                                    <th>View</th>
+                                    <th>At Gallery</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody class="table-border-bottom-0">
+                                {% for eachImageObject in all_uploads %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ forloop.counter  }}</strong>
+                                        </td>
+
+                                        <td>{{ eachImageObject.date }}</td>
+            
+                                        <td>{{ eachImageObject.name }}</td>
+
+                                        <td>
+                                            <button class="btn bg-transparent text-dark text-center justify-content-center">
+                                                <i class="fa-solid fa-expand image-preview-trigger" data-image-url="{{ eachImageObject.data }}"></i>
+                                            </button>
+                                        </td>
+
+
+                                        <td>
+                                            <form action="#" data-gallery-form="{{ eachImageObject.id }}">
+                                                {% csrf_token %}
+
+                                                <div class="form-check form-switch mb-md-0 mb-2">                                    
+                                                    <input class="form-check-input image-preview" data-image-tag="{{ eachImageObject.id }}" type="checkbox"
+                                                    {% if eachImageObject.for_gallery is True %}
+                                                        checked
+                                                    {% endif %}
+                                                    >
+                                    
+                                                </div>
+                                            </form>
+                                        </td>
+            
+                                    </tr>
+        
+                                {% empty %}
+        
+                                    <p class="lead">
+                                        No Gallery Image Categories yet 
+                                        <a href="{% url 'messenger:file-manager' %}">
+                                            Add some
+                                            <i class='bx bxs-image-add bx-burst ms-2'></i>
+
+                                        </a>
+
+                                    </p>
+        
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    
+                        <div class="form-text">
+                            <strong>Only Images that are checked</strong> appear at the website gallery 
+                        </div>
+                    </div>
+                
+                </div>
+
+            </div>
+
+        </section>
+        
+    </div>
+
+    {% include "mariadmin/sections/gallery-control-view.html" %}
+
+{% endblock %}

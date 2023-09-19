@@ -1,0 +1,94 @@
+<div class="offcanvas offcanvas-end" id="view-service-details" role="dialog">
+    <div class="offcanvas-header border-bottom">
+
+        <h5 class="offcanvas-title">
+            <i class='bx bxs-data bx-burst me-2' ></i></i> Service Details
+        </h5>
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+
+        <input type="hidden" name="service-to-id" value="" id="service-tag-holder">
+        
+        <div class="col-sm-12">
+            <div class="mb-3">
+                <label class="form-label" for="service-name-input">Service Name</label>
+
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text">
+                        <i class="bx bxs-popsicle bx-burst-hover"></i>
+                    </span>
+    
+                    <input type="text" id="service-name-input" class="form-control" name="service-name-input" readonly>
+                </div>
+    
+                <div class="form-text">
+                    Name of the Service
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="mb-3">
+                <label class="form-label" for="brief-description-input">Brief Description</label>
+
+                <div class="input-group input-group-merge">
+
+                    <span class="input-group-text">
+                        <i class='bx bxs-quote-alt-left bx-burst-hover'></i>
+                    </span>
+
+                    <textarea type="text" id="brief-description-input" name="brief-description-input" class="form-control" readonly></textarea>
+                </div>
+
+                <div class="form-text">
+                    A brief description of the service
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="mb-3">
+                <label class="form-label" for="detailed-description-input">Detailed Description</label>
+
+                <div class="input-group input-group-merge">
+
+                    <span class="input-group-text">
+                        <i class='bx bxs-quote-left bx-burst-hover'></i>
+                    </span>
+
+                    <textarea type="text" id="detailed-description-input" name="detailed-description-input" class="form-control" readonly></textarea>
+                </div>
+
+                <div class="form-text">
+                    A detailed description of the service
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="mb-3">
+                <label class="form-label" for="service-image-input">Service Image</label>
+
+                <div class="p-2" style="max-width: auto; max-height:auto;">
+                    <img src="" alt="" class="img-fluid rounded" id="service-image-holder">
+                </div>
+    
+                <div class="form-text">
+                    Image of the service or product
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-info me-sm-3 me-1" id="edit-service-trigger">
+                <i class="fa fa-pencil me-2"></i> Edit Service
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+        </div>
+
+    </div>
+</div>

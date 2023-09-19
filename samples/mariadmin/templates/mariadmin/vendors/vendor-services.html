@@ -1,0 +1,35 @@
+{% load static %}
+
+{% for eachService in present_services %}
+
+    <div class="col-lg-4 col-md-6">
+        <div class="room-item">
+
+            <img src="{{ eachService.image }}" alt="{{ eachService.name }}" data-image-for="{{ eachService.name }}" />
+            
+            <div class="ri-text">
+                <h4>{{ eachService.name }}</h4>
+
+                <p data-brief-for="{{ eachService.name }}">
+                    {{ eachService.brief }}
+                </p>
+
+                <input type="hidden" name="{{ eachService.name }}" value="{{ eachService.detail }}">
+
+                <a href="#" class="primary-btn more-details-toggler" data-service-name="{{ eachService.name }}">More Details</a>
+            </div>
+
+        </div>
+    </div>
+
+{% empty %}
+
+    <div class="d-flex justify-content-center p-5 m-5">
+        <p class="lead p-5 m-5">
+            No Services Yet 😢!
+        </p>
+        
+    </div>
+
+
+{% endfor %}

@@ -1,0 +1,147 @@
+<div class="offcanvas offcanvas-end" id="admin-permissions-manager" aria-modal="true" role="dialog">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="exampleModalLabel">
+            <i class="bx bx-support me-2"></i> Admin Permissions
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+        <div class="col-sm-12">
+            <div class="mb-3">
+                <label class="form-label" for="admin-user-name-input">USERNAME</label>
+
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text">
+                        <i class="bx bx-user"></i>
+                    </span>
+    
+                    <input type="text" id="admin-user-name-input" class="form-control" placeholder=".i.e John Doe" readonly>
+                </div>
+    
+                <div class="form-text">
+                    Name of the administrator
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="mb-4">
+                <label class="form-label" for="admin-user-email-input">USER EMAIL</label>
+
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text">
+                        <i class='bx bxs-envelope' ></i>
+                    </span>
+
+                    <input type="email" id="admin-user-email-input" class="form-control" placeholder=".i.e JohnDoe@mail.com" readonly>
+
+                </div>
+                        
+                <div class="form-text">
+                    Email address of the administrator
+                </div>
+            </div>
+        </div>
+
+        <form action="{% url 'messenger:alter-admin-profile' %}" method="post" class="add-new-record pt-0 row g-2" id="form-add-new-record">
+            {% csrf_token %}
+    
+            <input type="hidden" name="admin-id-tag" value="" id="id-tag-hold">
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <div class="form-check form-switch mb-md-0 mb-2">
+                        <label class="form-check-label" for="website-access-input">
+                            <div style="white-space: nowrap;">
+                                Website Permissions
+                            </div>
+                            
+                        </label>
+        
+                        <input class="form-check-input" name="website-editor" id="website-access-input" type="checkbox">
+        
+                    </div>
+
+                    <div class="form-text">
+                        <strong>Including:</strong>
+                        Home Page & Gallery Editor
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <div class="form-check form-switch mb-md-0 mb-2">
+                        <label class="form-check-label" for="website-blog-input">
+                            <div style="white-space: nowrap;">
+                                Site Blog
+                            </div>
+                            
+                        </label>
+        
+                        <input class="form-check-input" name="blog-editor" id="website-blog-input" type="checkbox">
+        
+                    </div>
+
+                    <div class="form-text">
+                        <strong>Including:</strong>
+                        Editing the Blog and accessing the Gallery Editor to add images
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <div class="form-check form-switch mb-md-0 mb-2">
+                        <label class="form-check-label" for="third-parties-input">
+                            <div style="white-space: nowrap;">
+                                Third Party Pages
+                            </div>
+                            
+                        </label>
+        
+                        <input class="form-check-input" name="pages-editor" id="third-parties-input" type="checkbox">
+        
+                    </div>
+
+                    <div class="form-text">
+                        <strong>Including:</strong>
+                        Adding & Managing Third Party Pages
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <div class="form-check form-switch mb-md-0 mb-2">
+                        <label class="form-check-label" for="site-comms-input">
+                            <div style="white-space: nowrap;">
+                                Communications
+                            </div>
+                            
+                        </label>
+        
+                        <input class="form-check-input" name="comms-panel" id="site-comms-input" type="checkbox">
+        
+                    </div>
+
+                    <div class="form-text">
+                        <strong>Including:</strong>
+                        Access to Mail & Chat Features Of the site
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">
+                    <i class="bx bxs-edit-alt bx-burst me-2"></i> Save Changes
+                </button>
+
+                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+            </div>
+    
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'Tangerine'; 
+    src: url('Tangerine_Regular.ttf') format('opentype');
+    src: url('Tangerine_Bold.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}

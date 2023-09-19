@@ -7,5 +7,6 @@ app_name = 'admin_panel'
 
 urlpatterns = [
     path("", view=views.adminHomePage, name='admin-home'),
-    path('uploads/', views.fileManagerPage, name='file-manager'),
+    path('addcategory/', views.registerCategory, name='insert-category'),
+    path('deletecategory/<int:categoryId>', views.deleteCategory, name='delete-category'),
 ]

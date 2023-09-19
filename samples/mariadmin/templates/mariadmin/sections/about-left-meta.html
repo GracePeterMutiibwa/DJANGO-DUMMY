@@ -1,31 +1,112 @@
+{% load static %}
 <div class="row w-100">
-    <div class="card mb-4 mx-2">
-        <h5 class="card-header">Information Cards: About section</h5>
-        <div class="card-body demo-vertical-spacing demo-only-element">
-            <div class="input-group">
-                <span class="input-group-text">New About</span>
-                <textarea class="form-control" aria-label="About Maria Hill" placeholder="Information about Maria Hill Gardens"></textarea>
-                <button class="btn btn-outline-primary" type="button">
-                    <i class="fa-solid fa-circle-plus me-2"></i></i> Save
-                </button>
-            </div>
+    <section id="about-left">
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header"><i class="fa-solid fa-circle-info me-2"></i> Information Cards At About Section</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <div class="mb-4">
+                    <form action="{% url 'messenger:edit-website' 3 %}" method="post">
+                        {% csrf_token %}
+                        <label for="left-heading" class="form-label">Left Card</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Heading and Text</span>
+                            <input type="text" id="left-heading" placeholder="Left Card Heading" name="left-heading" class="form-control" required>
+                            <input type="text" placeholder="Left Card Text" name="left-text" class="form-control" required>
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa-solid fa-circle-plus me-2"></i></i> Save
+                            </button>
+                        </div>
 
-            <div class="form-group">
-                <label class="form-label lead">Current Information</label>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <p class="card-text">
-                        This is some text within a card body.
-                        Jelly lemon drops tiramisu chocolate cake cotton candy soufflé oat cake sweet roll. Sugar plum marzipan dragée
-                        topping cheesecake chocolate bar. Danish muffin icing donut.
-                        </p>
+                    </form>
+
+                    <div class="form-text">
+                        {% if left_card_data %}
+                        <span>{{ left_card_data.heading }} </span> : <span> {{ left_card_data.text }}</span>
+                        
+                        {% else %}
+                            The above information will appear on the left card at the about section
+                        {% endif %}
                     </div>
                 </div>
 
-            </div>
+                <div class="mb-4">
+                    <form action="{% url 'messenger:edit-website' 4 %}" method="post">
+                        {% csrf_token %}
+                        <label for="left-card-image" class="form-label">Left Card Image</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Image Name</span>
+                            <input type="text" placeholder="Select an Image" name="selected-left-image" id="left-card-image" class="form-control" required>
+                            <button class="btn btn-outline-primary image-selectors" type="button" data-output-receiver="left-card-image">
+                                <i class="fa-solid fa-file-image me-2"></i> Choose Image
+                            </button>
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa-solid fa-circle-plus me-2"></i> Save
+                            </button>
+                        </div>
+                    
+                        <div class="form-text">
+                            {% if left_card_data and left_card_data.image %}
+                                <a href="#" data-image-url="{{ left_card_data.image }}" class="image-display-trigger">{{ left_card_data.image }}</a>        
+                            {% else %}
+                                Missing Left card Image, please add one
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+    
+                <div class="mb-4">
+                    <form action="{% url 'messenger:edit-website' 5 %}" method="post">
+                        {% csrf_token %}
+                        <label for="right-heading" class="form-label">Right Card</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Heading and Text</span>
+                            <input type="text" name="right-heading" id="right-heading" placeholder="Right Card Heading" class="form-control" required>
+                            <input type="text" name="right-text" placeholder="Right Card Text" class="form-control" required>
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa-solid fa-circle-plus me-2"></i></i> Save
+                            </button>
+                        </div>
+                        
+                        <div class="form-text">
+                            {% if right_card_data %}
+                            <span>{{ right_card_data.heading }} </span> : <span> {{ right_card_data.text }}</span>
+                            
+                            {% else %}
+                                The above information will appear on the right card at the about section
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
 
-            
+                <div class="mb-4">
+                    <form action="{% url 'messenger:edit-website' 6 %}" method="post">
+                        {% csrf_token %}
+                        <label for="defaultFormControlInput" class="form-label">Right Card Image</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Image Name</span>
+                            <input type="text" placeholder="Select an Image" id="right-card-image" name="selected-right-image" class="form-control" required>
+                            <button class="btn btn-outline-primary image-selectors" type="button" data-output-receiver="right-card-image">
+                                <i class="fa-solid fa-file-image me-2"></i> Choose Image
+                            </button>
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa-solid fa-circle-plus me-2"></i> Save
+                            </button>
+                        </div>
+                        
+                        <div class="form-text">
+                            {% if right_card_data and right_card_data.image %}
+                                <a href="#" data-image-url="{{ right_card_data.image }}" class="image-display-trigger">{{ right_card_data.image }}</a>
+                            {% else %}
+                                Missing Right card Image, please add one
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
+
+    </section>
+
+
 </div>
 

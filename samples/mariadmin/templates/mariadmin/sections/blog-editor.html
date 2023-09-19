@@ -1,0 +1,548 @@
+{% extends "mariadmin/home-layout.html" %}
+
+{% load static %}
+
+{% block page_css %}
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bs-stepper/bs-stepper.css' %}"
+    />
+
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-select/bootstrap-select.css' %}"
+    />
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/select2/select2.css' %}"
+    />
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/swiper/swiper.css' %}"
+    />
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/pages/ui-carousel.css' %}"
+    />
+
+{% endblock %}
+
+
+{% block page_content %}
+    <div class="row w-100">
+        <section id="post-category-section">
+            <div class="card mb-4 mx-2">
+                <h5 class="card-header"><i class="fa fa-plus-circle me-2"></i>Post Categories</h5>
+                <div class="card-body demo-vertical-spacing demo-only-element">
+                    <form action="{% url 'messenger:edit-website' 13 %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                        <input type="text" class="form-control" name="post-category-name" placeholder="i.e. Travel or Business" required>
+                        <button class="btn btn-outline-primary" type="submit">
+                            <i class="fa-solid fa-floppy-disk me-2"></i> Save Category
+                        </button>
+                    </div>
+                    </form>
+                    
+                    <div class="mt-5">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Post Category</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                {% for eachPostCategory in present_post_categories %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ forloop.counter  }}</strong>
+                                    </td>
+        
+                                    <td>{{ eachPostCategory.name }}</td>
+        
+                                    <td>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                        <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{% url 'messenger:delete-post' eachPostCategory.id %}"><i class="bx bx-trash me-1"></i> Delete Category Name</a>
+                                        </div>
+                                    </div>
+                                    </td>
+                                </tr>
+        
+                                {% empty %}
+        
+                                <p class="lead">No Post Categories yet</p>
+        
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>        
+    </div>
+
+
+    <div class="row w-100 mb-4">
+        <section id="post-editor-section">
+            <div class="bs-stepper wizard-vertical vertical wizard-vertical-icons-example">
+                <div class="bs-stepper-header" id="change-color-holder">
+                    <div class="step active" data-target="#post-header-image-section">
+                    <button type="button" class="step-trigger" id="first-section" aria-selected="true">
+                        <span class="bs-stepper-circle">
+                        <i class="fa fa-header"></i>
+                        <!-- <i class="bx bx-detail"></i> -->
+                        </span>
+                        <span class="bs-stepper-label">
+                            <span class="bs-stepper-title">Post Heading</span>
+                            <span class="bs-stepper-subtitle">Setup Heading & Background</span>
+                        </span>
+                    </button>
+                    </div>
+
+                    <div class="line"></div>
+
+                    <div class="step" data-target="#post-top-details">
+                        <button type="button" class="step-trigger" aria-selected="false">
+                        <span class="bs-stepper-circle">
+                            <i class="fa fa-list"></i>
+                        </span>
+                        <span class="bs-stepper-label">
+                            <span class="bs-stepper-title">Top Post Content</span>
+                            <span class="bs-stepper-subtitle">Add upper post details</span>
+                        </span>
+                        </button>
+                    </div>
+
+                    <div class="line"></div>
+
+                    <div class="step" data-target="#post-image-section">
+                        <button type="button" class="step-trigger" aria-selected="false">
+                        <span class="bs-stepper-circle">
+                            <i class="fa fa-camera-retro"></i>
+                        </span>
+                        <span class="bs-stepper-label">
+                            <span class="bs-stepper-title">Post Images</span>
+                            <span class="bs-stepper-subtitle">Add images to your post</span>
+                        </span>
+                        </button>
+                    </div>
+
+                    <div class="line"></div>
+
+                    <div class="step" data-target="#post-bottom-details">
+                        <button type="button" class="step-trigger" aria-selected="false">
+                        <span class="bs-stepper-circle">
+                            <i class="fa fa-list"></i>
+                        </span>
+                        <span class="bs-stepper-label">
+                            <span class="bs-stepper-title">Bottom Post Content</span>
+                            <span class="bs-stepper-subtitle">Add lower post details</span>
+                        </span>
+                        </button>
+                    </div>
+
+                    <div class="line"></div>
+
+                    <div class="step" data-target="#category-section-selector">
+                        <button type="button" class="step-trigger" aria-selected="false">
+                        <span class="bs-stepper-circle">
+                            <i class="fa fa-object-group"></i>
+                        </span>
+                        <span class="bs-stepper-label">
+                            <span class="bs-stepper-title">Post Category</span>
+                            <span class="bs-stepper-subtitle">Add tags and categories</span>
+                        </span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bs-stepper-content">
+
+                    <form action="{% url 'messenger:edit-website' 14 %}" method="post">
+                        {% csrf_token %}
+                        <div id="operation-category">
+                        </div>
+
+                        <!-- Post heading and background image -->
+                        <div id="post-header-image-section" class="content dstepper-block active">
+                            <div class="content-header mb-3">
+                                <h6 class="mb-0">Post Heading & Post Background Image</h6>
+                                <small>Provide heading and also select image</small>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-sm-12">
+                                    <div class="mb-1">
+                                        <label for="post-heading" class="form-label">POST HEADING</label>
+                                        
+                                        <input type="text" class="form-control" name="post-heading" id="post-heading" placeholder="i.e. Don’t assume your user data in the cloud is safe" required>
+                                        
+                                        <div class="form-text">
+                                            The heading provided will appear as the post main heading, its a required field
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="defaultFormControlInput" class="form-label">Post Header Image</label>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">Image Name</span>
+
+                                        <input type="text" placeholder="Select an Image" id="post-header-image" name="selected-header-image" class="form-control" required>
+                                        
+                                        <button class="btn btn-outline-primary image-selectors" type="button" data-output-receiver="post-header-image">
+                                            <i class="fa-solid fa-file-image me-2"></i> Choose Image
+                                        </button>
+                                    </div>
+
+                                    <div class="form-text">
+                                        The image will appear behind post main heading
+                                    </div>
+
+                                </div>
+
+                                <!-- next-previous -->
+                                <div class="col-12 d-flex justify-content-between">
+                                    <button class="btn btn-label-secondary btn-prev" type="button" disabled="">
+                                        <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                        <span class="d-sm-inline-block d-none">Previous</span>
+                                    </button>
+
+                                    <button class="btn btn-primary btn-next" type="button">
+                                        <span class="d-sm-inline-block d-none me-sm-1">Next</span>
+                                        <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- post top body -->
+                        <div id="post-top-details" class="content dstepper-block">
+                            <div class="content-header mb-3">
+                                <h6 class="mb-0">Post Body: Top Section</h6>
+                                <small>Provide Top Post Details</small>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-sm-12">
+                                    <label for="post-top-body" class="form-label">POST TOP BODY</label>
+                                    <textarea class="form-control" id="post-top-body" name="post-top-body" placeholder="Details here appear at the top section of the post body" required></textarea>
+                                    <div class="form-text mb-3">
+                                        The details provided here appear on post but at the top section
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-between">
+                                    <button class="btn btn-primary btn-prev" type="button">
+                                        <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                        <span class="d-sm-inline-block d-none">Previous</span>
+                                    </button>
+                                    <button class="btn btn-primary btn-next" type="button">
+                                        <span class="d-sm-inline-block d-none me-sm-1">Next</span>
+                                        <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- post images -->
+                        <div id="post-image-section" class="content dstepper-block">
+                            <div class="content-header mb-3">
+                                <h6 class="mb-0">Post Images</h6>
+                                <small>Select images for the post</small>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-sm-12">
+                                    <label for="main-post-image" class="form-label">Post Main Image</label>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">Image Name</span>
+
+                                        <input type="text" placeholder="Select an Image" id="main-post-image" name="main-post-image" class="form-control" required>
+                                        
+                                        <button class="btn btn-outline-primary image-selectors" type="button" data-output-receiver="main-post-image">
+                                            <i class="fa-solid fa-file-image me-2"></i> Choose Image
+                                        </button>
+                                    </div>
+
+                                    <div class="form-text">
+                                        This image is <strong>strictly required</strong>, it will appear as main post image
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="left-sub-image" class="form-label">Post Left Sub Image</label>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">Image Name</span>
+
+                                        <input type="text" placeholder="Select an Image" id="left-sub-image" name="left-sub-image" class="form-control">
+                                        
+                                        <button class="btn btn-outline-primary image-selectors" type="button" data-output-receiver="left-sub-image">
+                                            <i class="fa-solid fa-file-image me-2"></i> Choose Image
+                                        </button>
+                                    </div>
+
+                                    <div class="form-text">
+                                        Optional, it will appear as a smaller image (on the left) below the main image
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="right-sub-image" class="form-label">Post Right Sub Image</label>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">Image Name</span>
+
+                                        <input type="text" placeholder="Select an Image" id="right-sub-image" name="right-sub-image" class="form-control">
+                                        
+                                        <button class="btn btn-outline-primary image-selectors" type="button" data-output-receiver="right-sub-image">
+                                            <i class="fa-solid fa-file-image me-2"></i> Choose Image
+                                        </button>
+                                    </div>
+
+                                    <div class="form-text">
+                                        Optional, it will appear as a smaller image (on the right) below the main image
+                                    </div>
+
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-between">
+                                    <button class="btn btn-primary btn-prev" type="button">
+                                        <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                        <span class="d-sm-inline-block d-none">Previous</span>
+                                    </button>
+                                    <button class="btn btn-primary btn-next" type="button">
+                                        <span class="d-sm-inline-block d-none me-sm-1">Next</span>
+                                        <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- bottom lower body -->
+                        <div id="post-bottom-details" class="content dstepper-block">
+                            <div class="content-header mb-3">
+                                <h6 class="mb-0">Post Body: Bottom Section</h6>
+                                <small>Provide Lower Post Details</small>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-sm-12">
+                                    <label for="post-lower-body" class="form-label">POST BOTTOM BODY</label>
+                                    <textarea class="form-control" id="post-lower-body" name="post-lower-body" placeholder="Details here appear at the bottom section of the post body" required></textarea>
+                                    <div class="form-text mb-3">
+                                        The details provided here appear on post but at the lower section
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-between">
+                                    <button class="btn btn-primary btn-prev" type="button">
+                                        <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                        <span class="d-sm-inline-block d-none">Previous</span>
+                                    </button>
+                                    <button class="btn btn-primary btn-next" type="button">
+                                        <span class="d-sm-inline-block d-none me-sm-1">Next</span>
+                                        <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- categories -->
+                        <div id="category-section-selector" class="content dstepper-block">
+                            <div class="content-header mb-3">
+                                <h6 class="mb-0">Categories & Post Tags</h6>
+
+                                <small>Check Categories & Tags For Post</small>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <div class="form-check form-switch mb-md-0 mb-2">
+                                        <input class="form-check-input" checked="checked" disabled="disabled" id="general-category" name="general-category" type="checkbox">
+                                        <label class="form-check-label" for="general-category">
+                                            <div style="white-space: nowrap;">
+                                                General Category
+                                            </div>
+                                            
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {% for eachPostCategory in present_post_categories %}
+                                    <div class="col-sm-6">
+                                        <div class="form-check form-switch mb-md-0 mb-2">
+                                            <input class="form-check-input" id="{{ eachPostCategory.name }}" name="{{ eachPostCategory.name }}" type="checkbox">
+                                            
+                                            <label class="form-check-label" for="{{ eachPostCategory.name }}">
+                                                <div style="white-space: nowrap;">
+                                                    {{ eachPostCategory.name }}
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                                <div class="col-sm-12 mb-3">
+                                    <div class="form-text">
+                                        Without a category, any post is given a <strong>general</strong> category Or <a href="#post-category-section">Add One</a>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-between mt-2">
+                                    <button class="btn btn-primary btn-prev" type="button">
+                                        <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                        <span class="d-sm-inline-block d-none">Previous</span>
+                                    </button>
+
+                                    <button type="button" class="btn rounded-pill btn-label-slack d-none" id="edit-cancel-button">
+                                        <span class="btn-close me-1"></span>Cancel Edit 
+                                    </button>
+
+                                    <button class="btn btn-success btn-submit" type="submit" id="post-form-submitter">
+                                        <i class="fa-solid fa-floppy-disk me-2"></i>
+                                        <span id="post-button-text">Save</span>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <div class="row w-100">
+        <section id="posts-entry-section">
+            <div class="card mb-4 mx-2">
+                <h5 class="card-header"><i class="fa fa-table me-2"></i>Present Post Entries</h5>
+                <div class="card-body demo-vertical-spacing demo-only-element">
+                    <div class="mt-5">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>DATE</th>
+                                <th>Post Details</th>
+                                <th>Featured</th>
+                                <th>Controls</th>
+                            </tr>
+                            </thead>
+
+                            <tbody class="table-border-bottom-0">
+                                {% for eachPostMeta in post_previews %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ forloop.counter }}</strong>
+                                        </td>
+
+                                        <td>
+                                            {{ eachPostMeta.date }}
+                                        </td>
+            
+                                        <td>
+                                            <button class="btn bg-transparent text-dark text-center justify-content-center">
+                                                <i class="fa-solid fa-expand" data-get-tag="{{ eachPostMeta.id }}" data-bs-toggle="modal" data-bs-target="#postDataModal">
+
+                                                </i>
+                                            </button>
+                                        </td>
+
+                                        <td>
+                                            <form action="#" data-post-form="{{ eachPostMeta.id }}">
+                                                {% csrf_token %}
+                                                <div class="d-flex justify-content-center">
+                                                    <input
+                                                    data-post-tag="{{ eachPostMeta.id }}"
+                                                    class="form-check-input mt-0 post-featured"
+                                                    type="checkbox"
+                                                    {% if eachPostMeta.featured is True %}
+                                                        checked
+                                                    {% endif %}
+                                                    >
+                                                </div>
+                                            </form>
+                                        </td>
+
+            
+                                        <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item post-editors" href="#" data-post-edit="{{ eachPostMeta.id }}"><i class="fa fa-pencil me-1"></i> Edit Post</a>
+                                                
+                                                <hr class="dropdown-divider">
+
+                                                <a class="dropdown-item" href="{% url 'messenger:delete-comments' eachPostMeta.id %}"><i class="bx bx-trash me-1"></i> Delete Comments</a>
+
+                                                <hr class="dropdown-divider">
+
+                                                <a class="dropdown-item" href="{% url 'messenger:delete-post-data' eachPostMeta.id %}"><i class="bx bx-trash me-1"></i> Delete Post</a>
+                                            </div>
+                                        </div>
+                                        </td>
+                                    </tr>
+
+                                {% empty %}
+                                    <p class="lead">No Posts Yet</p>
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <div class="form-text" id="feature-update-alert">
+                            Post Entries appear in the above table listing
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    {% include "mariadmin/sections/image-section.html" %}
+
+    {% include "mariadmin/sections/post-viewer.html" %}
+{% endblock %}
+
+
+{% block vendor_js %}
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/swiper/swiper.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bs-stepper/bs-stepper.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-select/bootstrap-select.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/select2/select2.js' %}"></script>
+
+
+{% endblock %}
+
+
+{% block page_js %}
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/ui-carousel.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/minimal-modal.js' %}"></script>
+
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/form-wizard-icons.js' %}"></script>
+    
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/image-control.js' %}"></script>
+
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/detail-fetch.js' %}"></script>
+
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/post-featured.js' %}"></script>
+
+{% endblock %}

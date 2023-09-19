@@ -1,0 +1,82 @@
+{% load static %}
+
+<section class="ftco-section">
+    <div class="container-fluid">
+      <div class="row justify-content-center pb-4">
+        <div
+          class="col-md-7 text-center heading-section"
+          data-aos="fade-up"
+          data-aos-duration="1000"
+        >
+          <span class="subheading">OUR SERVICE PROVIDERS</span>
+          <h2 class="mb-3">Other Services Providers</h2>
+        </div>
+      </div>
+
+      <div class="row g-md-5">
+        <div class="col-md-12 ps-xl-5">
+          <div class="row g-md-2">
+
+            
+              {% for eachPagePreview in home_page_previews %}
+                <div class="col-md-6">
+                  <div class="pricing-entry d-flex align-items-center" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1000">
+                    <div class="img" style="background-image: url({{ eachPagePreview.image }})"></div>
+                    
+                    <div class="desc ps-3">
+                      <div class="d-flex text">
+                        <div class="col">
+                          <div class="row">
+                            <h3><span>{{ eachPagePreview.name }}</span></h3>
+                          </div>
+                          <div class="row">
+                            <div class="col-7">
+                              <p>{{ eachPagePreview.description }}</p>
+                            </div>
+
+                            <div class="col-5">
+                              
+
+                              <a href="{% url 'messenger:vendor-page' eachPagePreview.actual_name %}">
+                                <span class="price">
+                                  <i class="fa fa-eye"></i>
+                                </span>
+                              </a>
+                              
+
+                            </div>
+                          </div>
+
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              {% empty %}
+                <div class="d-flex justify-content-center" style="padding: 30px;">
+                  
+                  <p class="lead m-5">
+                    {% if referer == "home" %}
+                      There are no vendors Yet
+                    {% else %}
+                      There are no vendors that match such criteria
+                    {% endif %}
+                  </p>
+                </div>
+
+              {% endfor %}
+
+            
+<!-- 
+            <div class="col-md-6">
+
+            </div> -->
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+</section>

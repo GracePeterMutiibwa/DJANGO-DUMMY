@@ -1,0 +1,43 @@
+{% extends "mariadmin/home-layout.html" %}
+
+{% load static %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/quill/katex.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/quill/katex.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/quill/katex.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/select2/select2.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/pages/app-email.css' %}" />
+
+{% endblock %}
+
+{% block page_content %}
+    
+        {% include 'mariadmin/sections/email-loader.html' %}
+
+        {% include 'mariadmin/sections/replies-section.html' %}
+    </div>
+
+{% endblock %}
+
+
+{% block vendor_js %}
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/quill/katex.js' %}"></script>
+
+    <!-- <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/quill/quill.js' %}"></script> -->
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/select2/select2.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/block-ui/block-ui.js' %}"></script>
+
+{% endblock %}
+
+
+{% block page_js %}
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/app-email.js' %}"></script>
+
+{% endblock %}

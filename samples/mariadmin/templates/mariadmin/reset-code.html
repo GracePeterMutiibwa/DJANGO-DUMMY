@@ -1,0 +1,71 @@
+{% extends "mariadmin/reglog-layout.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="authentication-wrapper authentication-basic px-4">
+
+        {% include "mariadmin/alert-toast.html" %}
+
+        <div class="authentication-inner py-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="app-brand justify-content-center">
+                        <a href="#" class="app-brand-link gap-2">
+                        <span class="app-brand-logo demo">
+                        </span>
+                        <span class="app-brand-text demo h3 mb-0 fw-bold">Maria Hill Gardens <i class='bx bxs-check-shield ms-1'></i> </span>
+                        </a>
+                    </div>
+
+                    <h4 class="mb-2">Enter Reset Code 💬</h4>
+
+
+                    <p class="text-start mb-4">
+                        We sent a reset code to your email address. Enter the code from the email in the field below.
+                        <span class="fw-bold d-block mt-2">{{ reset_email }}</span>
+                    </p>
+
+                    <p class="mb-0 fw-semibold">Type your 6 digit reset code</p>
+
+                    <form action="#" method="post" class="fv-plugins-bootstrap5 fv-plugins-framework">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="user-email" value="{{ reset_email }}">
+
+                        <div class="mb-3 fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
+                        
+                            <div class="auth-input-wrapper d-flex align-items-center justify-content-sm-between numeral-mask-wrapper">
+                                <input type="number" min="0" name="first-digit" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1" autofocus="" required>
+                                <input type="number" min="0" name="second-digit" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1" required>
+                                <input type="number" min="0" name="third-digit" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1" required>
+                                <input type="number" min="0" name="fourth-digit" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1" required>
+                                <input type="number" min="0" name="fifth-digit" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1" required>
+                                <input type="number" min="0" name="sixth-digit" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1" required>
+                            </div>
+                        
+
+                        </div>
+
+                        <button class="btn btn-primary d-grid w-100 mb-3" type="submit">
+                            Submit Reset Code
+                        </button>
+
+                        <div class="text-center">Didn't get the code?
+                            <a href="{% url 'messenger:start-reset' %}">
+                                Resend
+                            </a>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+{% endblock %}

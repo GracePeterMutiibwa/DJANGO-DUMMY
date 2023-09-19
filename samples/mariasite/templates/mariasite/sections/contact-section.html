@@ -10,60 +10,91 @@
                                 <p class="mb-4">We're open for any suggestion or just to have a chat</p>
                             
                                 <div class="row mb-4">
-                                    <div class="col-md-6">
-                                        <div class="dbox w-100 d-flex align-items-start">
-                                            <div class="text">
-                                                <p><span>Address:</span> Entebbe, Uganda Africa</p>
+                                    {% if contacts.location %}
+                                        <div class="col-md-6">
+                                            <div class="dbox w-100 d-flex align-items-start">
+                                                <div class="text">
+                                                    <p><span>Address:</span> {{ contacts.location }}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="dbox w-100 d-flex align-items-start">
-                                            <div class="text">
-                                                <p><span>Phone:</span> <a href="tel://1234567920">+256 7613 98</a></p>
+                                    {% endif %}
+
+                                    {% if contacts.telephone %}
+                                        <div class="col-md-6">
+                                            <div class="dbox w-100 d-flex align-items-start">
+                                                <div class="text">
+                                                    <p><span>Phone:</span> {{ contacts.telephone }}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                                 </div>
 
-                                <form id="contactForm" name="contactForm" class="contactForm">
+                                <form id="contactForm" action="{% url 'messenger:submit-message' %}" method="post" class="contactForm">
+                                    {% csrf_token %}
                                     <div class="row">
+
                                         <div class="col-md-12">
-                                        <div class="form-group">
-                                        <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="user-name" placeholder="Name" required>
+                                            </div>
                                         </div>
-                                        </div>
+
                                         <div class="col-md-12">
-                                        <div class="form-group">
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" name="user-email" id="email" placeholder="Email" required>
+                                            </div>
                                         </div>
-                                        </div>
+
                                         <div class="col-md-12">
-                                        <div class="form-group">
-                                        <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="message-subject" id="subject" placeholder="Subject" required>
+                                            </div>
                                         </div>
-                                        </div>
+
                                         <div class="col-md-12">
-                                        <div class="form-group">
-                                        <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Create a message here"></textarea>
+                                            <div class="form-group">
+                                                <textarea name="actual-message" class="form-control" id="message" cols="30" rows="4" placeholder="Create a message here" required></textarea>
+                                            </div>
                                         </div>
-                                        </div>
+
                                         <div class="col-md-12">
-                                        <div class="form-group">
-                                        <input type="submit" value="Send Message" class="btn btn-primary">
-                                        <div class="submitting"></div>
-                                        </div>
+                                            <div class="form-group">
+                                                <input type="submit" value="Send Message" class="btn btn-primary">
+                                                
+                                                {% if messages %}
+                                                    <div class="submitting">
+                                                        {% for eachMessage in messages %}
+                                                            <span>{{ eachMessage }}</span>
+
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
 
                                 <div class="w-100 social-media mt-5">
                                 <h3>Follow us here</h3>
-                                <p>
-                                    <a href="#"><span class="fa fa-twitter" style="font-size: 12px;"></span></a>
-                                    <a href="#"><span class="fa fa-facebook" style="font-size: 12px;"></span></a>
-                                    <a href="#"><span class="fa fa-instagram" style="font-size: 12px;"></span></a>
-                                </p>
+                                    <p>
+                                        {% if contacts.twitter %}
+                                            <a href="{{ contacts.twitter }}"><span class="fa fa-twitter" style="font-size: 12px;"></span></a>
+                                        {% endif %}
+
+                                        {% if contacts.facebook %}
+                                            <a href="{{ contacts.facebook }}"><span class="fa fa-facebook" style="font-size: 12px;"></span></a>
+                                        {% endif %}
+
+                                        {% if contacts.instagram %}
+                                            <a href="{{ contacts.instagram }}"><span class="fa fa-instagram" style="font-size: 12px;"></span></a>
+                                        {% endif %}
+
+                                        {% if contacts.whatsapp %}
+                                            <a href="{{ contacts.whatsapp }}"><span class="fa fa-whatsapp" style="font-size: 12px;"></span></a>
+                                        {% endif %}
+                                    </p>
                                 </div>
                             </div>
                         </div>

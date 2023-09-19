@@ -1,0 +1,141 @@
+<div class="offcanvas offcanvas-end" id="add-new-page-record" aria-modal="true" role="dialog">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="exampleModalLabel">
+            <i class="fa fa-plus-circle me-2"></i> New Vendor Page
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+        <form action="{% url 'messenger:save-page' %}" method="post" class="add-new-record pt-0 row g-2" id="form-add-page-record">
+            {% csrf_token %}
+        
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <label class="form-label" for="page-name">Page Name</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class="fa fa-window-maximize"></i>
+                        </span>
+        
+                        <input type="text" id="page-name" class="form-control" name="page-name" placeholder=".i.e HenryPhotography" required>
+                    </div>
+        
+                    <div class="form-text">
+                        You can use letters, numbers &amp; periods, <strong>avoid spaces</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <label class="form-label" for="page-description">Page Description</label>
+
+                    <div class="input-group input-group-merge">
+
+                        <span class="input-group-text">
+                            <i class="fa fa-quote-left"></i>
+                        </span>
+
+                        <textarea type="text" id="page-description" name="page-description" class="form-control dt-post" placeholder="We provide photography services for your event at affordable prices" required></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-4">
+                    <label class="form-label" for="page-category">PAGE CATEGORY</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class="fa fa-tags"></i>
+                        </span>
+        
+                        <select class="form-select" id="page-category" name="page-category" required>
+                            {% for pageCategory in present_categories %}
+                                <option value="{{ pageCategory.name }}">{{ pageCategory.name }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+                            
+                    <div class="form-text">
+                        A category <strong>must</strong> be selected for each page, if there is none, <strong>First add one</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-4">
+                    <label for="page-image-holder" class="form-label">Page Image / Logo</label>
+                    
+                    <div class="input-group">
+                        <span class="input-group-text">Image Name</span>
+
+                        <input type="text" placeholder="Select an Image" name="page-image-url" id="page-image-holder" class="form-control" required>
+                        
+                        <button class="btn btn-outline-primary image-selectors" type="button" data-double-instance="true" data-output-receiver="page-image-holder">
+                            <i class='bx bxs-image-add' ></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-4">
+                    <label class="form-label" for="business-location">BUSINESS LOCATION</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class='bx bx-current-location bx-burst'></i>
+                        </span>
+        
+                        <select class="form-select" id="business-location" name="business-location" required>
+                            {% for eachDistrict in district_list %}
+                                <option value="{{ eachDistrict }}">{{ eachDistrict }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+                            
+                    <div class="form-text">
+                        A District <strong>must</strong> be selected for each page, to make easy search of the vendors
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <div class="form-check form-switch mb-md-0 mb-2">
+                        <label class="form-check-label" for="page-visibility">
+                            <div style="white-space: nowrap;">
+                                Page Visibility 
+                            </div>
+                            
+                        </label>
+        
+                        <input class="form-check-input" name="page-visibility" id="page-visibility" type="checkbox" disabled>
+        
+                    </div>
+
+                    <div class="form-text">
+                        By default a page is <strong>not visible</strong> until its other details are added
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">
+                    <i class="fa fa-check-circle me-2"></i> Submit
+                </button>
+
+                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+            </div>
+    
+        </form>
+
+    </div>
+</div>

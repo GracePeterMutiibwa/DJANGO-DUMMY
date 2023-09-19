@@ -1,31 +1,38 @@
 {% load static %}
 
 <section
-class="ftco-intro ftco-no-pt ftco-no-pb img mt-2"
-style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/bg_1.jpg' %})"
->
+  class="ftco-intro ftco-no-pt ftco-no-pb img mt-2"
+  {% if banner_image is None %}
+  style="background-image: url({% static 'mariasite/color/site-core/theme/unwind/images/bg_1.jpg' %})"
+  {% else %}
+  style="background-image: url({{ banner_image }})"
+
+  {% endif %}
+  >
 <div class="overlay"></div>
-<div class="container-xl py-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-10 col-xl-8">
-      <div class="row" data-aos="fade-up" data-aos-duration="1000">
-        <div class="col-md-8 d-flex align-items-center">
-          <div>
-            <span class="subheading">Find The Best Venue For Your Event</span>
-            <h1 class="mb-md-0 mb-4">
-              Discover the Ideal Setting for Your Special Day, We Have You Covered
-            </h1>
+
+  <div class="container-xl py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-xl-8">
+        <div class="row" data-aos="fade-up" data-aos-duration="1000">
+          <div class="col-md-8 d-flex align-items-center">
+            <div>
+              <span class="subheading">{{ ribbon.heading }}</span>
+              <h1 class="mb-md-0 mb-4">
+                {{ ribbon.message }}
+              </h1>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4 d-flex align-items-center">
-          <p class="mb-0">
-            <a href="#" class="btn btn-primary py-md-4 py-3 px-md-5 px-4"
-              >Book Now</a
-            >
-          </p>
+          <div class="col-md-4 d-flex align-items-center">
+            <p class="mb-0">
+              <a href="{{ ribbon.url }}" class="btn btn-primary py-md-4 py-3 px-md-5 px-4"
+                >{{ ribbon.text }}</a
+              >
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  
 </section>

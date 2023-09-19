@@ -1,0 +1,178 @@
+<div class="row w-100">
+    <section id="page-services">
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header">
+                <i class='bx bxs-user-detail bx-flashing-hover me-2'></i>
+                Page Services
+            </h5>
+            
+            <div class="card-body">
+                <form action="{% url 'messenger:save-page-services' %}" method="post" id="service-register-form" class="pt-0 row g-2">
+                    {% csrf_token %}
+        
+                    <input type="hidden" name="page-id" value="{{ page_id }}">
+
+                    <div id="assets-area">
+                        
+                    </div>
+                    
+                    <div class="col-sm-12">
+                        <div class="mb-2">
+                            <label class="form-label" for="service-name">Service Name</label>
+        
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text">
+                                    <i class='bx bxs-popsicle bx-burst-hover'></i>
+                                </span>
+                
+                                <input type="text" id="service-name" name="service-name" maxlength="50"  class="form-control" placeholder=".i.e Wedding Suits" required>
+                            </div>
+                
+                            <div class="form-text">
+                                Provide a simple name for the service, <strong>it cant be recorded more than once</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="mb-2">
+                            <label class="form-label" for="brief-description">Brief Description</label>
+        
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text">
+                                    <i class='bx bxs-quote-alt-left bx-burst-hover'></i>
+                                </span>
+                
+                                <textarea type="text" id="brief-description" name="brief-description" maxlength="180"  class="form-control" placeholder=".i.e We have Perfect Suits for your gentlemen and ladies, we dress you for your days" required></textarea>
+                            </div>
+                
+                            <div class="form-text">
+                                Provide a simple description of the service
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="mb-2">
+                            <label class="form-label" for="detailed-description">Detailed Description</label>
+        
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text">
+                                    <i class='bx bxs-quote-left bx-burst-hover'></i>
+                                </span>
+                
+                                <textarea type="text" id="detailed-description" name="detailed-description" class="form-control" placeholder=".i.e We have Perfect Suits for your gentlemen and ladies, we dress you for your days, the suits are affordable and come in all color flavours" required></textarea>
+                            </div>
+                
+                            <div class="form-text">
+                                Provide a detailed description of the service
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="mb-2">
+                            <label class="form-label" for="service-image">Service/Product Image</label>
+        
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text">
+                                    <i class='bx bx-image-alt bx-burst-hover'></i>
+                                </span>
+                
+                                <input type="text" id="service-image" name="service-image" class="form-control" placeholder=".i.e assets/images/Black-suit.jpeg" required>
+
+                                <button type="button" class="btn btn-primary image-selectors" data-output-receiver="service-image">
+                                    <i class="bx bxs-image-add bx-burst me-2"></i> Select Image
+                                </button>
+                            </div>
+                
+                            <div class="form-text">
+                                Select an image for the product or service
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-12" id="save-button-holder">
+                                    <button type="submit" class="btn btn-primary mb-2 w-100">
+                                        <i class="bx bxs-check-circle bx-burst-hover me-2"></i> Save Service
+        
+                                    </button>
+                                </div>
+
+                                <div class="col-6 d-none" id="cancel-button-holder">
+                                    <button type="button" class="btn btn-outline-secondary mb-2 w-100" id="cancel-edit-button">
+                                        <i class="bx bxs-x-circle bx-burst-hover me-2"></i> Cancel Edit
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <hr>
+
+                <div class="mt-5">
+                    <table class="table" id="services-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Service Name</th>
+                                <th>Controls</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="table-border-bottom-0">
+                            {% for eachService in present_services %}
+                            <tr>
+                                <td>
+                                    <strong>{{ forloop.counter  }}</strong>
+                                </td>
+    
+                                <td>{{ eachService.name }}</td>
+    
+                                <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                    
+                                    <div class="dropdown-menu">
+
+                                        <form action="#" id="fetch-{{ eachService.id }}">
+                                            {% csrf_token %}
+                                        </form>
+
+                                        <a class="dropdown-item service-viewer-trigger" href="#" data-service-id="{{ eachService.id }}"><i class="fa fa-eye bx-burst me-1"></i> Edit / View</a>
+                                    
+                                        <hr class="dropdown-divider">
+
+                                        <a class="dropdown-item" href="{% url 'messenger:wipe-page-service' eachService.id %}"><i class="bx bx-trash bx-burst me-1"></i> Delete Service</a>
+
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+    
+                            {% empty %}
+    
+                            <p class="lead">No Services recorded yet</p>
+    
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="form-text">
+                        The above services appear on the vendors page
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+</div>

@@ -1,0 +1,49 @@
+<div class="row w-100">
+    <div class="card mb-4 mx-2 w-100">
+        <h5 class="card-header"><i class="bx bx-paper-plane me-2"></i>Email Replies</h5>
+        <div class="card-body demo-vertical-spacing demo-only-element">
+            <div class="mb-0 mt-5">
+                <label for="defaultFormControlInput" class="form-label">SENT REPLIES</label>
+        
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th>DATE</th>
+                        <th>EMAIL</th>
+                        <th>MESSAGE</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        {% if present_replies %}
+                            {% for eachReply in present_replies %}
+                                <tr>
+                                    <td>{{ eachReply.when }}</td>
+                                    <td>{{ eachReply.to }}</td>
+                                    <td>{{ eachReply.message }}</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{% url 'messenger:wipe-reply' eachReply.id %}"><i class="bx bx-trash me-1"></i> Delete Reply Log</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+        
+                        {% else %}
+                            <div class="d-flex justify-content-center">
+                                <p class="lead">No Replies Made Yet</p>
+                            </div>
+                        {% endif %}
+        
+                    </tbody>
+                </table>
+                <div class="form-text">
+                    The above table contains replies sent to received emails
+                </div>
+            </div> 
+        </div>
+    </div>
+
+</div>

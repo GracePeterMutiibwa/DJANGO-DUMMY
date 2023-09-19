@@ -1,0 +1,224 @@
+{% extends "mariadmin/home-layout.html" %}
+
+{% load static %}
+
+{% block page_css %}
+
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/data-tables/css/jquery.dataTables.min.css' %}" />
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/swiper/swiper.css' %}"
+    />
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/pages/ui-carousel.css' %}"
+    />
+
+{% endblock %}
+
+
+{% block page_content %}
+
+    <div class="row w-100">
+        <section id="page-registry">
+            <div class="card mb-4 mx-2">
+                <h5 class="card-header">
+                    <i class='bx bxs-bookmark-plus bx-flashing-hover me-2'></i>
+                    Page Categories
+                </h5>
+                
+                <div class="card-body demo-vertical-spacing demo-only-element">
+                    <form action="{% url 'messenger:submit-page-category' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="page-category-name" placeholder="i.e. Photography or Ceremony Music" required>
+                            
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa-solid fa-floppy-disk me-2"></i> Save Category
+                            </button>
+                        </div>
+
+                        <div class="form-text">
+                            <strong>Note</strong>: Duplicates wont be registered
+                        </div>
+
+                    </form>
+                    
+                    <div class="mt-5">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Page Category</th>
+                                    <th>Controls</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="table-border-bottom-0">
+                                {% for eachPageCategory in present_categories %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ forloop.counter  }}</strong>
+                                    </td>
+        
+                                    <td>{{ eachPageCategory.name }}</td>
+        
+                                    <td>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                        <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{% url 'messenger:wipe-page-category' eachPageCategory.id %}"><i class="bx bx-trash me-1"></i> Delete Page Category</a>
+                                        </div>
+                                    </div>
+                                    </td>
+                                </tr>
+        
+                                {% empty %}
+        
+                                <p class="lead">No Page Categories yet</p>
+        
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <div class="form-text">
+                            Each Page Should have a given category
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>        
+    </div>
+
+    <div class="row w-100">
+        <section id="page-notebook">
+            <div class="card">
+                <h5 class="card-header">
+                    <i class='bx bx-window-alt bx-burst-hover me-1'></i> 
+                    Page Register
+                </h5>
+                <div class="card-body demo-vertical-spacing demo-only-element">
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary mb-2 w-100" data-bs-toggle="offcanvas" data-bs-target="#add-new-page-record">
+                            <i class="fa fa-plus-circle bx-burst-hover me-2"></i> Add Page
+
+                        </button>
+                    </div>
+
+                    <div class="mt-5">
+                        <table class="table mb-3" id="page-register">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Page Name</th>
+                                    <th>Category</th>
+                                    <th>Controls</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody class="table-border-bottom-0">
+                                {% for eachVendorPage in present_pages %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ forloop.counter  }}</strong>
+                                    </td>
+        
+                                    <td>{{ eachVendorPage.name }}</td>
+
+                                    <td>{{ eachVendorPage.category }}</td>
+        
+                                    <td>
+
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                            <i class="fa fa-wrench"></i>
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <form action="#" id="fetch-{{ eachVendorPage.id }}">
+                                                {% csrf_token %}
+                                            </form>
+
+                                            <a class="dropdown-item page-viewer-trigger" href="#" data-page-id="{{ eachVendorPage.id }}">
+                                                <i class="fa fa-eye me-1"></i>
+                                                View
+                                            </a>
+
+                                            <hr class="dropdown-divider">
+
+                                            <a class="dropdown-item" href="{% url 'messenger:manage-vendor-page' eachVendorPage.id %}">
+                                                <i class="fa fa-cog me-1"></i>
+                                                Manage
+                                            </a>
+
+                                            <hr class="dropdown-divider">
+
+                                            <a class="dropdown-item" href="{% url 'messenger:wipe-vendor-page' eachVendorPage.id %}">
+                                                <i class="fa fa-trash me-1"></i>
+                                                Delete Page
+                                            </a>
+                                        </div>
+                                    </div>
+                                    </td>
+                                </tr>
+        
+                                {% empty %}
+        
+                                <p class="lead">No Page Categories yet</p>
+        
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    
+                        <div class="form-text">
+                            Each Page Should have a given category
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </section>
+    </div>
+
+    <!-- page form -->
+    {% include "mariadmin/sections/page-new.html" %}
+
+    {% include "mariadmin/sections/page-view.html" %}
+
+    {% include "mariadmin/sections/image-section.html" %}
+
+{% endblock %}
+
+
+{% block vendor_js %}
+
+    <script src="{% static 'mariadmin/local-update/data-tables/js/jquery.dataTables.min.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/swiper/swiper.js' %}"></script>
+
+
+{% endblock %}
+
+
+{% block page_js %}
+
+    <script>
+        $(document).ready( function () {
+            $('#page-register').DataTable();
+        } );
+        
+    </script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/page-viewer.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/image-control.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/image-getter.js' %}"></script>
+
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/ui-carousel.js' %}"></script>
+
+{% endblock %}

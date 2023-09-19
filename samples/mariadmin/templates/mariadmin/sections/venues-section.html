@@ -1,0 +1,199 @@
+<div class="row w-100">
+    <section id="venues-section">
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header"> <i class="fa-solid fa-champagne-glasses me-2"></i>Venues Section</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd" aria-controls="offcanvasEnd">Toggle End</button> -->
+    
+                <div class="col-md">
+    
+                    <div class="card mb-3">
+    
+                        <div class="card-body">
+                            <form action="{% url 'messenger:edit-website' 9 %}" method="post">
+                                {% csrf_token %}
+                                <div class="mb-4">
+                                    <label for="venue-name" class="form-label">add new venue</label>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Name of Venue" name="venue-name" id="venue-name" class="form-control" required>
+                                        <textarea class="form-control" name="venue-description" placeholder="Detailed Venue description" required></textarea>
+                                    </div>
+                                    
+                                    <div class="form-text">
+                                        Note: A venue can not be added more than once
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <div class="input-group">
+                                        <label for="venue-category" class="input-group-text">Venue Category</label>
+                                        
+                                        <div class="row d-flex justify-content-between align-items-center">
+                                            {% for eachCategory in categories %}
+                                                <div class="col-md">
+                                                    <div class="form-check form-switch mb-md-0 mb-2">
+                                                        <input class="form-check-input" name="{{ eachCategory.category }}" type="checkbox">
+                                                        <label class="form-check-label" for="{{ eachCategory.category }}">
+                                                            <div style="white-space: nowrap;">
+                                                                {{ eachCategory.category }}
+                                                            </div>
+                                                            
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            {% endfor %}
+
+                                        </div>
+
+                                    </div>
+                                    <p class="card-text">
+                                    <small class="text-muted">
+                                        A category is a must for any venue for easy search, 
+                                        <a href="#categories-section">Add One</a> if None is available
+
+                                    </small>
+                                </p>
+                                
+
+                                </div>
+
+                                <div class="mb-4">
+                                    <div class="input-group">
+                                        <label for="venue-capacity" class="input-group-text">Venue Capacity</label>
+
+                                        <input type="number" min="1" value="1" placeholder="Hosting capacity say 20 people" name="venue-capacity" id="venue-capacity" class="form-control" required>
+
+                                    </div>
+                                    <p class="card-text"><small class="text-muted">Default capacity is 0, however above minimum has to be 1</small></p>
+                                
+
+                                </div>
+                                        
+                                <div class="mt-5">
+                                    <button class="btn btn-outline-primary w-100" type="submit">
+                                        <i class="fa-solid fa-circle-plus me-2"></i></i> Save Venue
+                                    </button>
+                                </div>
+    
+                            </form>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="mb-3">
+                    <label class="form-label">REGISTERED SERVICES</label>
+    
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Venue Name</th>
+                            <th>Venue Capacity</th>
+                            <th>Venue Details</th>
+                            <th>Featured</th>
+                            <th>Image</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            {% if venues %}
+                                {% for eachVenue in venues %}
+
+                                    <tr>
+                                        <td data-venue-form="{{ eachVenue.id }}">
+                                            {{ eachVenue.name }}
+                                        </td>
+
+                                        <td>{{ eachVenue.capacity }}</td>
+                                        
+                                        <td>{{ eachVenue.description }}</td>
+                                        <td>
+                                            <form action="#" data-venue-form="{{ eachVenue.id }}">
+                                                {% csrf_token %}
+                                                <div class="d-flex justify-content-center">
+                                                    <input
+                                                    data-venue-tag="{{ eachVenue.id }}"
+                                                    class="form-check-input mt-0 venue-featured"
+                                                    type="checkbox"
+                                                    {% if eachVenue.featured is True %}
+                                                        checked
+                                                    {% endif %}
+                                                    >
+                                                </div>
+                                            </form>
+                                        </td>
+                                        
+                                        <td>
+                                            <button class="btn bg-transparent text-dark text-center justify-content-center">
+                                                <i class="fa-solid fa-expand venue-display-trigger" data-venue-id="{{ eachVenue.id }}"></i>
+                                            </button>
+                                        </td>
+                
+                                        <td>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{% url 'messenger:wipe-venue' eachVenue.id %}"><i class="bx bx-trash me-1"></i> Delete Venue</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <p class="lead">No Venues Yet</p>
+
+                            {% endif %}
+                        </tbody>
+                    </table>
+                    <div class="form-text" id="feature-update-alert">
+                        Featured venues appear at the website home page
+                    </div>
+                </div>
+                
+                <div class="mb-2">
+                    <form action="{% url 'messenger:write-venue-image' %}" method="post">
+                        {% csrf_token %}
+
+                        <h5 class="card-title">Select Venue Images</h5>
+                        <p class="card-text">
+                            Click button below to select image!
+                        </p>
+    
+                        <button type="button" class="btn btn-label-secondary d-grid w-100 image-selectors" data-output-receiver="venue-sample-image">
+                            <i class="fa-regular fa-image"></i> Select Image
+                        </button>
+                        <p class="card-text"><small class="text-muted">Name of selected image appears below</small></p>
+                        
+                        <div class="input-group">
+                            <span class="input-group-text">Selected Image Name</span>
+                            <input type="text" class="form-control" name="venue-image" id="venue-sample-image" placeholder="i.e. Venue.jpg" required>
+                        
+                        
+                            <span class="input-group-text">Venue</span>
+                            <select class="form-select" name="selected-venue-id" required>
+                                {% for eachVenueItem in venues %}
+                                    <option value="{{ eachVenueItem.id }}">{{ eachVenueItem.name }}</option>
+    
+                                {% endfor %}
+                            </select>
+                        </div>
+    
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary mb-2 w-100">
+                                <i class='bx bxs-image-add me-2' ></i>
+                                Add Image
+                            </button>
+                        </div>
+    
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</div>

@@ -1,0 +1,56 @@
+{% load static %}
+
+<section class="ftco-section bg-light">
+    <div class="container-xl">
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 heading-section text-center mb-5" data-aos="fade-up" data-aos-duration="1000">
+                <span class="subheading">Other Venues</span>
+                <h2 class="mb-4">Venues From Our Partners</h2>
+            </div>
+        </div>
+
+        {% if featured_list %}
+
+            <div class="row justify-content-center">
+                {% for eachVenue in featured_list %}
+                    {% if forloop.counter|divisibleby:2 %}
+                        <div class="col-md-6 col-12 col-lg-4 d-flex align-items-stretch justify-content-center" data-aos="flip-left" data-aos-delay="100" data-aos-duration="1000">
+                            <div class="room-wrap d-md-flex flex-md-column-reverse">
+                                <a href="{{ eachVenue.url }}" class="img img-room" style="background-image: url({{ eachVenue.image }});">
+                                </a>
+                                <div class="text p-5 text-center">
+                                    <h3><a href="{% url 'messenger:venue-details' eachVenue.name %}">{{ eachVenue.name.title }}</a></h3>
+                                    <p>{{ eachVenue.description }}</p>
+                                    <p class="mb-0 mt-2"><span class="me-3 price">{{ eachVenue.capacity }}</span><a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">Book Now</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+                        <div class="col-md-6 col-12 col-lg-4 d-flex align-items-stretch justify-content-center" data-aos="flip-left" data-aos-delay="200" data-aos-duration="1000">
+                            <div class="room-wrap">
+                                <a href="{% url 'messenger:venue-details' eachVenue.name %}" class="img img-room" style="background-image: url({{ eachVenue.image }});">
+                                </a>
+                                <div class="text p-5 text-center">
+                                    <h3><a href="{% url 'messenger:venue-details' eachVenue.name %}">{{ eachVenue.name.title }}</a></h3>
+                                    <p>{{ eachVenue.description }}</p>
+                                    <p class="mb-0 mt-2"><span class="me-3 price">{{ eachVenue.capacity }}</span><a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">Book Now</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+                {% endfor %}
+                
+            </div>
+
+        {% else %}
+            <div class="col-12 d-flex w-100 justify-content-center">
+                <p> No Featured Venues Yet</p>
+            </div>
+        
+
+        {% endif %}
+    </div>
+</section>

@@ -1,10 +1,7 @@
-{% extends "mariasite/core/base.html" %}
+{% extends "mariasite/pages/blog-base.html" %}
 
-{% load static %}
-
-{%  block page_main %}
-    {% include 'mariasite/headers/secondary-header.html' %}
-
-    {% include 'mariasite/sections/posts-section.html' %}
-
+{% block site_content %}
+  {% include "mariasite/sections/blog-main.html" %}
 {% endblock %}
+
+

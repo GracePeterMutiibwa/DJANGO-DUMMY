@@ -2,115 +2,116 @@
 
 <footer class="ftco-footer">
     <div class="container-xl">
-      <div class="row mb-5 pb-5 justify-content-between">
-        <div class="col-md-6 col-lg">
+      <div class="row mb-5 pb-5 gx-5">
+        <div class="col-md-4">
           <div class="ftco-footer-widget mb-4">
             <h2 class="ftco-heading-2 logo d-flex">
               <a class="navbar-brand align-items-center" href="#">
-                <span class>Maria <small>Hill Gardens</small></span>
+                <span class>Mariahill <small> Gardens, Entebbe</small></span>
               </a>
             </h2>
             <p>
-              Creating memorable moments in a serene setting, also a Haven for extraordinary occasions
+              Discover the Ideal Setting for Your Special Day & Let you Celebrate in Style at Our Enchanting Gardens
             </p>
             <ul class="ftco-footer-social list-unstyled mt-2">
-              <li>
-                <a href="#"><span class="fa fa-twitter"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="fa fa-facebook"></span></a>
-              </li>
-              <li>
-                <a href="#"><span class="fa fa-instagram"></span></a>
-              </li>
+              {% if contacts.twitter %}
+                <li>
+                  <a href="{{ contacts.twitter }}"><span class="fa fa-twitter"></span></a>
+                </li>
+              {% endif %}
+
+              {% if contacts.facebook %}
+                <li>
+                  <a href="{{ contacts.facebook }}"><span class="fa fa-facebook"></span></a>
+                </li>
+              {% endif %}
+
+              {% if contacts.instagram %}
+                <li>
+                  <a href="{{ contacts.instagram }}"><span class="fa fa-instagram"></span></a>
+                </li>
+              {% endif %}
+
+              {% if contacts.whatsapp %}
+                <li>
+                  <a href="{{ contacts.whatsapp }}"><span class="fa fa-whatsapp"></span></a>
+                </li>
+              {% endif %}
             </ul>
           </div>
         </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="ftco-footer-widget mb-4 d-lg-flex justify-content-center">
-            <h2 class="ftco-heading-2">Services</h2>
-          </div>
-          <div class="row">
-            <div class="col-lg d-lg-flex justify-content-center">
-              <div class="ftco-footer-widget mb-4">
-                <ul class="list-unstyled">
-                  <li>
-                    <span class="fa fa-chevron-right me-2"></span>
-                    Free Wifi
-                  </li>
-                  <li>
-                    <span class="fa fa-chevron-right me-2"></span>
-                    Easy Booking
-                  </li>
-                  <li>
-                    <span class="fa fa-chevron-right me-2"></span>
-                    Restaurant
-                  </li>
-                  <li>
-                    <span class="fa fa-chevron-right me-2"></span>
-                    Swimming Pool
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-2">
+        <div class="col-md-4">
           <div class="ftco-footer-widget mb-4">
             <h2 class="ftco-heading-2">Quick Links</h2>
             <ul class="list-unstyled">
               <li>
-                <a href="#"
+                <a href="{% url 'messenger:welcome' %}"
                   ><span class="fa fa-chevron-right me-2"></span>Home</a
                 >
               </li>
               <li>
-                <a href="#"
+                <a href="{% url 'messenger:about' %}"
                   ><span class="fa fa-chevron-right me-2"></span>About</a
                 >
               </li>
               <li>
-                <a href="#"
+                <a href="{% url 'messenger:venue' %}"
                   ><span class="fa fa-chevron-right me-2"></span>Bookings</a
                 >
               </li>
               <li>
-                <a href="#"
-                  ><span class="fa fa-chevron-right me-2"></span>Blog &amp;
-                  Gallery</a
-                >
+                <a href="{% url 'messenger:gallery' %}">
+                  <span class="fa fa-chevron-right me-2"></span>
+                  Gallery
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'messenger:blog' %}">
+                  <span class="fa fa-chevron-right me-2"></span>
+                  Blog
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div class="col-md-6 col-lg">
+        <div class="col-md-4">
           <div class="ftco-footer-widget mb-4">
             <h2 class="ftco-heading-2">Have a Questions?</h2>
             <div class="block-23 mb-3">
               <ul>
-                <li>
-                  <span class="icon fa fa-map marker"></span
-                  ><span class="text"
-                    >203 Fake Location, Entebbe, Uganda,
-                    Africa
-                    </span>
-                </li>
-                <li>
-                  <a href="#"
-                    ><span class="icon fa fa-phone"></span
-                    ><span class="text">+256 761 66 444 8</span></a
-                  >
-                </li>
-                <li>
-                  <a href="#"
-                    ><span class="icon fa fa-paper-plane pr-4"></span
-                    ><span class="text"
-                      ><span>contact@mariahillgardens.com</span></span
-                    ></a
-                  >
-                </li>
+                {% if contacts.location %}
+                  <li>
+                    <div>
+                      <span class="icon fa fa-map marker"></span>
+                      <span class="text">
+                        <span>{{ contacts.location }}</span>
+                      </span>
+                    </div>
+                  </li>
+                {% endif %}
+
+                {% if contacts.telephone %}
+                  <li>
+                    <div>
+                      <span class="icon fa fa-phone"></span>
+                      <span class="text">
+                        <span>{{ contacts.telephone }}</span>
+                      </span>
+                    </div>
+                  </li>
+                {% endif %}
+                
+                {% if contacts.email %}
+                  <li>
+                    <div>
+                      <span class="icon fa fa-paper-plane pr-4"></span>
+                      <span class="text">
+                        <span>{{ contacts.email }}</span>
+                      </span>
+                    </div>
+                  </li>
+                {% endif %}
               </ul>
             </div>
           </div>

@@ -1,0 +1,289 @@
+{% load static  %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maria Hill Gardens | Admin Dashboard</title>
+
+
+    <meta name="description" content="Create unforgettable memories with us" />
+    <meta
+        name="keywords"
+        content="unforgettable, memories, maria hill, maria hill gardens, maria hill events, maria hill entebbe"
+    />
+
+    <!-- Favicon -->
+    <link
+        rel="icon"
+        type="image/x-icon"
+        href="{% static 'mariadmin/local-update/frest/admin/assets/img/favicon/mariahill.png' %}"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Playfair:wght@300&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/fonts/boxicons.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'mariasite/color/bloggy/fonts/icomoon/style.css' %}">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'mariasite/color/bloggy/fonts/flaticon/font/flaticon.css' %}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' %}">
+
+    <link rel="stylesheet" href="{% static 'mariasite/color/bloggy/css/tiny-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'mariasite/color/bloggy/css/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'mariasite/color/bloggy/css/glightbox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'mariasite/color/bloggy/css/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'mariasite/color/bloggy/css/flatpickr.min.css' %}">
+
+
+    <title>Blogy &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
+
+    <style>
+        .maria-header {
+            font-family: 'Imperial Script', cursive;
+            font-weight: normal;
+            font-size: 4em;
+            line-height: 1.2em;
+            display: block;
+            color: white;
+        }
+
+        .book-now-btn {
+            position: fixed;
+            top: 280px;
+            left: -30px;
+            z-index: 999999999999;
+            display: block;
+    
+            text-align: center;
+            font-size: 27px !important;
+            line-height: 42px;
+            opacity: 1;
+        }
+
+        @media (max-width: 991.98px) {    
+            .book-now-btn{
+                top: 150px;
+    
+            }
+    
+    
+        }
+
+        .template-customizer-open-btn {
+            position: fixed;
+            top: 400px;
+            right: 0;
+            z-index: 99999999;
+            display: block;
+            width: 47px;
+            height: 42px;
+            border-top-left-radius: 45%;
+            border-bottom-left-radius: 45%;
+            background: #333;
+            color: #fff !important;
+            text-align: center;
+            font-size: 27px !important;
+            line-height: 42px;
+            opacity: 1;
+        }
+    
+        @media (max-width: 991.98px) {
+        .template-customizer-open-btn {
+            top: 300px;
+        }
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+        <span class="icofont-close js-menu-toggle"></span>
+        </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <nav class="site-nav">
+    <div class="container">
+        <div class="menu-bg-wrap">
+        <div class="site-navigation">
+            <div class="row g-0 align-items-center">
+                <div class="col-2">
+                    <a href="{% url 'messenger:welcome' %}" class="logo m-0 float-start d-inline-block" style="white-space: nowrap;">Mariahill Gardens<span class="text-primary">.</span></a>
+                </div>
+                <div class="col-8 text-center">
+                    <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
+                    <li><a href="{% url 'messenger:welcome' %}">Home</a></li>
+                    <li><a href="{% url 'messenger:about' %}">About</a></li>
+                    <li><a href="{% url 'messenger:venue' %}">Venues</a></li>
+                    <li><a href="{% url 'messenger:restaurant' %}">Services</a></li>
+                    <li class="active"><a href="{% url 'messenger:blog' %}">Blog</a></li>
+                    <li><a href="{% url 'messenger:contact' %}">Contact</a></li>
+
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'messenger:home' %}">Account</a></li>
+                    {% endif %}
+                    </ul>
+                </div>
+                <div class="col-2 text-end">
+                    <a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
+                    <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </nav>
+
+
+    {% if blog_details %}
+
+    {% else %}
+        <!-- default site cover -->
+        <div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url({% static 'mariasite/color/bloggy/images/bg_3.jpg' %});">
+        <div class="container">
+            <div class="row same-height justify-content-center">
+            <div class="col-md-6">
+                <div class="post-entry text-center">
+                <h2 class="mb-4 maria-header">Welcome to our Blog</h2>
+                <div class="post-meta align-items-center text-center">
+                    <span class="d-inline-block mt-1">Mariahill Gardens</span>
+                    <span>&nbsp;-&nbsp; Our memories lane</span>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+    {% endif %}
+
+
+    {% block site_content %}
+
+    {% endblock %}
+
+    {% include 'mariasite/core/side-button.html' %}
+
+
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="widget">
+                    <h3 class="mb-4">Mariahill Gardens</h3>
+                    <p>
+                        Discover the Ideal Setting for Your Special Day & Let you Celebrate in Style at Our Enchanting Gardens
+                    </p>
+                </div>
+                
+                <div class="widget">
+                    <h3>Social Media Handles</h3>
+                    <ul class="list-unstyled social">
+                        {% if contacts.twitter %}
+                            <li><a href="{{ contacts.twitter }}"><span class="icon-twitter"></span></a></li>
+                        {% endif %}
+
+
+                        {% if contacts.facebook %}
+                            <li><a href="{{ contacts.facebook }}"><span class="icon-facebook"></span></a></li>
+                        {% endif %}
+
+                        {% if contacts.instagram %}
+                            <li><a href="{{ contacts.instagram }}"><span class="icon-instagram"></span></a></li>
+                        {% endif %}
+
+                        {% if contacts.whatsapp %}
+                            <li><a href="{{ contacts.whatsapp }}"><span class="icon-whatsapp"></span></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 ps-lg-5">
+                <div class="widget">
+                    <h3 class="mb-4">Quick Links</h3>
+                    <ul class="list-unstyled float-start links">
+                        <li><a href="{% url 'messenger:welcome' %}">Home</a></li>
+                        <li><a href="{% url 'messenger:about' %}">About</a></li>
+                        <li><a href="{% url 'messenger:venue' %}">Bookings</a></li>
+                        <li><a href="{% url 'messenger:gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'messenger:blog' %}">Blog</a></li>
+                    </ul>
+                </div> <!-- /.widget -->
+            </div>
+
+            <div class="col-lg-4">
+                <div class="widget">
+                <h3 class="mb-4">Have a Questions?</h3>
+
+                <ul class="list-unstyled float-start links">
+                    {% if contacts.location %}
+                        <li><span  style="white-space: nowrap;"><i class="fa fa-map"></i> {{ contacts.location }} </span></li>
+                    {% endif %}
+
+                    {% if contacts.telephone %}
+                        <li><span  style="white-space: nowrap;"><i class="fa fa-phone"></i> {{ contacts.telephone }} </span></li>
+                    {% endif %}
+
+                    {% if contacts.email %}
+                        <li><span  style="white-space: nowrap;"><i class="fa fa-paper-plane"></i> {{ contacts.email }} </span></li>
+                    {% endif %}
+                </ul>
+
+                </div>
+            </div> 
+        </div>
+
+        <div class="row mt-5">
+        <div class="col-12 text-center">
+
+            <p>
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Maria Hill Gardens
+            </p>
+            </div>
+        </div>
+        </div> 
+    </footer>
+
+    <!-- Preloader -->
+    <div id="overlayer"></div>
+    <div class="loader">
+        <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+
+    <script src="{% static 'mariasite/color/bloggy/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/bloggy/js/tiny-slider.js' %}"></script>
+
+    <script src="{% static 'mariasite/color/bloggy/js/flatpickr.min.js' %}"></script>
+
+
+    <script src="{% static 'mariasite/color/bloggy/js/aos.js' %}"></script>
+    <script src="{% static 'mariasite/color/bloggy/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/bloggy/js/navbar.js' %}"></script>
+    <script src="{% static 'mariasite/color/bloggy/js/counter.js' %}"></script>
+    <script src="{% static 'mariasite/color/bloggy/js/custom.js' %}"></script>
+
+    
+</body>
+</html>

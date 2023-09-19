@@ -14,16 +14,34 @@
               <div class="f-services d-md-flex flex-md-column-reverse">
                 <div
                   class="img w-100"
-                  style="background-image: url({% static 'mariasite/color/site-core/theme/unwind/images/f-services.jpg' %});"
+                  {% if right_card_data and right_card_data.image %}
+                    style="background-image: url({{ right_card_data.image }});"
+                  {% else %}
+                    style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/f-services.jpg' %})"
+                  {% endif %}
                 ></div>
-                <div class="text w-100 p-4 text-center mb-md-4">
+                <div class="text w-100 p-4 text-center mb-md-4 mb-4">
                   <div class="icon">
-                    <span class="flaticon-pillow"></span>
+                    <!-- <span class="flaticon-pillow"></span> -->
+                    <!-- <span class="">
+                      <img src="{% static 'mariasite/color/site-core/theme/unwind/images/white-maria.png' %}" style="width: 150px; height:auto;" alt="Logo">
+                    </span> -->
                   </div>
-                  <h3>Cozy Room</h3>
+                  <h3>
+                    {% if left_card_data %}
+                      {{ left_card_data.heading }}
+                    {% else %}
+                        Cozy Room
+                    {% endif %}
+
+                  </h3>
                   <p>
-                    Far far away, behind the word mountains, far from the
-                    countries Vokalia.
+                    {% if left_card_data %}
+                      {{ left_card_data.text }}
+                    {% else %}
+                      Far far away, behind the word mountains, far from the
+                      countries Vokalia.
+                    {% endif %}
                   </p>
                 </div>
               </div>
@@ -32,16 +50,27 @@
               <div class="f-services">
                 <div
                   class="img w-100 mb-md-4"
-                  style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/f-services-2.jpg' %})"
+                  {% if left_card_data and left_card_data.image %}
+                    style="background-image: url({{ left_card_data.image }});"
+                  {% else %}
+                    style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/f-services-2.jpg' %})"
+                  {% endif %}
                 ></div>
                 <div class="text w-100 p-4 text-center">
-                  <div class="icon">
-                    <span class="flaticon-special"></span>
-                  </div>
-                  <h3>Special Offers</h3>
+                  <h3>
+                    {% if right_card_data %}
+                      {{ right_card_data.heading }}
+                    {% else %}
+                        Special Offers
+                    {% endif %}                    
+                  </h3>
                   <p>
-                    Far far away, behind the word mountains, far from the
-                    countries Vokalia.
+                    {% if right_card_data %}
+                      {{ right_card_data.text }}
+                    {% else %}
+                      Far far away, behind the word mountains, far from the
+                      countries Vokalia.
+                    {% endif %}
                   </p>
                 </div>
               </div>
@@ -56,15 +85,26 @@
         >
           <div class="mt-5 mt-md-0">
             <span class="subheading">About Us</span>
-            <h2 class="mb-4">We are Maria Hill Gardens</h2>
+            
+              <h2 class="mb-4">
+                {% if heading %}
+                  {{ heading }}
+                {% else %}
+                Missing Heading
+                {% endif %}
+
+              </h2>
+            
             <p class="mb-5">
-              Far far away, behind the word mountains, far from the countries
-              Vokalia and Consonantia, there live the blind texts. Separated
-              they live in Bookmarksgrove right at the coast of the Semantics,
-              a large language ocean.
+              {% if about_detail %}
+                {{ about_detail }}
+              {% else %}
+              Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.
+              {% endif %}
+
             </p>
             <p>
-              <a href="#" class="btn btn-primary py-3 px-4"
+              <a href="{% url 'userenv:useraccount' %}" class="btn btn-primary py-3 px-4"
                 >Make Your Booking Now</a
               >
             </p>

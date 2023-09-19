@@ -1,30 +1,58 @@
 <div class="row w-100">
-    <div class="card mb-4 mx-2">
-        <h5 class="card-header">About Information</h5>
-        <div class="card-body demo-vertical-spacing demo-only-element">
-            <div class="input-group">
-                <span class="input-group-text">New About</span>
-                <textarea class="form-control" aria-label="About Maria Hill" placeholder="Information about Maria Hill Gardens"></textarea>
-                <button class="btn btn-outline-primary" type="button">
-                    <i class="fa-solid fa-circle-plus me-2"></i></i> Save
-                </button>
-            </div>
+    <section id="about-meta">
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header"><i class="fa-regular fa-address-card me-2"></i>About Information</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <div class="mb-4">
+                    <form action="{% url 'messenger:edit-website' 1 %}" method="post">
+                        {% csrf_token %}
+                        <label for="about-heading" class="form-label">Heading at about section</label>
+                        <div class="input-group">
+                            <input type="text" name="about-heading" class="form-control" id="about-heading" placeholder="We are Maria Hill Gardens" required>
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa-solid fa-circle-plus me-2"></i>Save
+                            </button>
+        
+                        </div>
+                    </form>
 
-            <div class="form-group">
-                <label class="form-label lead">Current Information</label>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <p class="card-text">
-                        This is some text within a card body.
-                        Jelly lemon drops tiramisu chocolate cake cotton candy soufflé oat cake sweet roll. Sugar plum marzipan dragée
-                        topping cheesecake chocolate bar. Danish muffin icing donut.
-                        </p>
+                    <div class="form-text">
+                        {{ heading }}
                     </div>
                 </div>
+    
+                <form action="{% url 'messenger:edit-website' 2 %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <span class="input-group-text">New About</span>
+                        <textarea class="form-control" name="about-details" placeholder="Detailed information about Mariahill Gardens"></textarea>
+                        <button class="btn btn-outline-primary" type="submit">
+                            <i class="fa-solid fa-circle-plus me-2"></i></i> Save
+                        </button>
+                    </div>
+                </form>
 
+    
+                <div class="form-group">
+                    <label class="form-label lead">Current about Information</label>
+                    <div class="card mt-2">
+                        <div class="card-body">
+                            <p class="card-text">
+                                {% if not about_detail is None  %}
+                                {{ about_detail }}
+                                {% else %}
+                                There is no about information yet!
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+    
+                </div>
+    
+                
             </div>
-
-            
         </div>
-    </div>
+
+    </section>
+
 </div>

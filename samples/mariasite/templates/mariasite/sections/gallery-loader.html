@@ -1,0 +1,31 @@
+{% load static %}
+
+<section class="pt-3">
+    <div class="ftco-gallery bg-light">
+        <div class="container-fluid">    
+            <div class="row justify-content-center">
+                {% for value in range %}
+                    <div
+                        class="col-md-6 mt-2"
+                        data-aos="fade-up"
+                        data-aos-delay="100"
+                        data-aos-duration="1000"
+                    >
+                        <a
+                        href="{% static 'mariasite/color/site-core/theme/unwind/images/gallery-1.jpg' %}"
+                        class="gallery-wrap img d-flex align-items-center justify-content-center glightbox"
+                        style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/gallery-1.jpg' %})"
+                        >
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-expand"></span>
+                        </div>
+                        </a>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</section>
+

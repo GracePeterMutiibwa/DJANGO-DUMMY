@@ -1,0 +1,298 @@
+{% load static %}
+
+<div class="offcanvas offcanvas-end" id="profile-image-manager" role="dialog" data-bs-backdrop="false">
+    <div class="offcanvas-header border-bottom">
+
+        <h5 class="offcanvas-title">
+            <i class='bx bxs-info-circle bx-burst me-2' style="font-size: 19px;"></i>Profile Image Setting
+        </h5>
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+
+        <div class="card-body">
+            <div class="d-flex align-items-start align-items-sm-center gap-4">
+            
+                {% if avatar %}
+                <img src="{{ avatar }}" alt="user-avatar" class="d-block rounded-circle" height="100" width="100" id="uploadedAvatar" >
+            {% else %}
+                <img src="{% static 'mariadmin/local-update/frest/admin/assets/img/avatars/general.png' %}" alt="user-avatar" class="d-block rounded-circle" height="100" width="100" id="uploadedNewAvatar" >
+            {% endif %}
+
+            <div class="button-wrapper">
+                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                    <span class="d-none d-sm-block">Upload new photo</span>
+                    <i class="bx bx-upload d-block d-sm-none"></i>
+                    <input type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" />
+                </label>
+
+                <form action="{% url 'messenger:update-avatar' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="selected-image-avatar" value="" id="avatar-form-element">
+
+                    <input type="hidden" name="user-id-tag" value="{{ request.user.pk }}">
+
+                    <button type="submit" class="btn btn-label-secondary account-image-reset mb-4 d-none" id="profile-image-saver">
+                        <i class="fa fa-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Save As Profile Image</span>
+                    </button>
+                </form>
+    
+                <p class="mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+            </div>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="card-body">
+            <div class="col-sm-12 mb-4 d-none" id="preview-image-holder">
+                <button type="submit" class="btn btn-info w-100" id="preview-image-button">
+                    <i class="fa fa-eye me-2"></i> Preview Selected Image
+                </button>
+            </div>
+
+            <div id="cropper-result-holder">
+
+            </div>
+        </div>
+        
+
+
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" id="profile-security-manager" role="dialog" data-bs-backdrop="false">
+    <div class="offcanvas-header border-bottom">
+
+        <h5 class="offcanvas-title">
+            <i class='bx bxs-info-circle bx-burst me-2' style="font-size: 19px;"></i>Vendor Page Details
+        </h5>
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+        
+        <div class="card-body">
+            <form id="formAccountSettingsChange" method="POST" onsubmit="return false">
+            <div class="row">
+                
+                <div class="mb-3 col-md-12 form-password-toggle">
+                <label class="form-label" for="currentPassword">Current Password</label>
+                <div class="input-group input-group-merge">
+                    <input class="form-control" type="password" name="currentPassword" id="currentPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-md-12 form-password-toggle">
+                <label class="form-label" for="newPassword">New Password</label>
+                <div class="input-group input-group-merge">
+                    <input class="form-control" type="password" id="newPassword" name="newPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+                </div>
+    
+                <div class="mb-3 col-md-12 form-password-toggle">
+                <label class="form-label" for="confirmPassword">Confirm New Password</label>
+                <div class="input-group input-group-merge">
+                    <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                <p class="fw-semibold mt-2">Password Requirements:</p>
+                <ul class="ps-3 mb-0">
+                    <li class="mb-1">
+                    Minimum 8 characters long - the more, the better
+                    </li>
+                    <li class="mb-1">At least one lowercase character</li>
+                    <li>At least one number, symbol, or whitespace character</li>
+                </ul>
+                </div>
+
+                <div class="col-12 mt-1">
+                <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                <button type="reset" class="btn btn-label-secondary">Cancel</button>
+                </div>
+
+            </div>
+            </form>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="card-body">
+            <div class="col-12 mb-0">
+              <div class="alert alert-warning">
+                <h6 class="alert-heading mb-1">Are you sure you want to delete your account?</h6>
+                <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
+              </div>
+            </div>
+            <form id="formAccountDeactivation" onsubmit="return false">
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation" />
+                <label class="form-check-label" for="accountActivation">I confirm my account deactivation</label>
+              </div>
+              <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
+            </form>
+        </div>
+        
+
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" id="profile-bookings-manager" role="dialog" data-bs-backdrop="false">
+    <div class="offcanvas-header border-bottom">
+
+        <h5 class="offcanvas-title">
+            <i class='bx bxs-info-circle bx-burst me-2' style="font-size: 19px;"></i>Vendor Page Details
+        </h5>
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+        <form action="{% url 'messenger:save-page' %}" method="post" class="pt-0 row g-2" id="view-page-form">
+            {% csrf_token %}
+
+            <input type="hidden" name="page-id" value="" id="page-id-holder">
+        
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <label class="form-label" for="page-name-input">Page Name</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class="fa fa-window-maximize"></i>
+                        </span>
+        
+                        <input type="text" id="page-name-input" class="form-control" name="page-name" placeholder=".i.e HenryPhotography" required>
+                    </div>
+        
+                    <div class="form-text">
+                        You can use letters, numbers &amp; periods, <strong>avoid spaces</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <label class="form-label" for="page-description-input">Page Description</label>
+
+                    <div class="input-group input-group-merge">
+
+                        <span class="input-group-text">
+                            <i class="fa fa-quote-left"></i>
+                        </span>
+
+                        <textarea type="text" id="page-description-input" name="page-description" class="form-control" placeholder="We provide photography services for your event at affordable prices" required></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-4">
+                    <label class="form-label" for="page-category-input">PAGE CATEGORY</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class="fa fa-tags"></i>
+                        </span>
+        
+                        <select class="form-select" id="page-category-input" name="page-category" required>
+                            {% for pageCategory in present_categories %}
+                                <option value="{{ pageCategory.name }}">{{ pageCategory.name }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+                            
+                    <div class="form-text">
+                        A category <strong>must</strong> be selected for each page, if there is none, <strong>First add one</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-4">
+                    <label for="page-image-holder-input" class="form-label">Page Image / Logo</label>
+                    
+                    <div class="input-group">
+                        <span class="input-group-text">Image Name</span>
+
+                        <input type="text" placeholder="Select an Image" name="page-image-url" id="page-image-holder-input" class="form-control" required>
+                        
+                        <button class="btn btn-outline-primary image-selectors" type="button" data-double-instance="true" data-output-receiver="page-image-holder-input">
+                            <i class='bx bxs-image-add' ></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-4">
+                    <label class="form-label" for="business-location-input">BUSINESS LOCATION</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class='bx bx-current-location bx-burst'></i>
+                        </span>
+        
+                        <select class="form-select" id="business-location-input" name="business-location" required>
+                            {% for eachDistrict in district_list %}
+                                <option value="{{ eachDistrict }}">{{ eachDistrict }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+                            
+                    <div class="form-text">
+                        A District <strong>must</strong> be selected for each page, to make easy search of the vendors
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <div class="form-check form-switch mb-md-0 mb-2">
+                        <label class="form-check-label" for="page-visibility-input">
+                            <div style="white-space: nowrap;">
+                                Page Visibility 
+                            </div>
+                            
+                        </label>
+        
+                        <input class="form-check-input" name="page-visibility" id="page-visibility-input" type="checkbox">
+        
+                    </div>
+
+                    <div class="form-text">
+                        The switch above <strong>is on</strong> if the page is visible and vice versa
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-info me-sm-3 me-1">
+                    <i class="fa fa-pencil me-2"></i> Save Changes
+                </button>
+
+                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+            </div>
+    
+        </form>
+
+    </div>
+</div>

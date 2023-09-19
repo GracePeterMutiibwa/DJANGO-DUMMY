@@ -1,0 +1,119 @@
+{% extends "mariadmin/home-layout.html" %}
+
+{% load static %}
+
+{% block page_content %}
+    <div class="row w-100">
+        <section id="next-of-kins-section">
+            <div class="card mb-4 mx-2">
+
+                <h5 class="card-header">
+                    <i class="bx bx-user-plus me-2"></i>
+                    Register Website Admins
+                </h5>
+
+                <div class="card-body demo-vertical-spacing demo-only-element">
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary mb-2 w-100" data-bs-toggle="offcanvas" data-bs-target="#site-admin-register">
+                            <i class="bx bx-support bx-burst-hover me-2"></i> Add Admin
+
+                        </button>
+                    </div>
+
+                    <div class="mb-1">
+                        <table class="table mb-3" id="page-register">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>DATE ADDED</th>
+                                    <th>ADMIN NAME</th>
+                                    <th>EMAIL</th>
+                                    <th>Controls</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody class="table-border-bottom-0">
+                                {% for eachAdminInstance in admins_present %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ forloop.counter  }}</strong>
+                                    </td>
+
+                                    <td>{{ eachAdminInstance.name }}</td>
+        
+                                    <td>{{ eachAdminInstance.date }}</td>
+
+                                    <td>{{ eachAdminInstance.email }}</td>
+        
+                                    <td>
+
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                            <i class="fa fa-wrench"></i>
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <form action="#" id="fetch-{{ eachAdminInstance.id }}">
+                                                {% csrf_token %}
+                                            </form>
+
+                                            {% if eachAdminInstance.password_issuance is True %}
+                                                <a class="dropdown-item" href="{% url 'messenger:grant-admin-access' eachAdminInstance.id %}">
+                                                    <i class="bx bx-mail-send me-1"></i>
+                                                    Issue Temporary Password
+                                                </a>
+
+                                                <hr class="dropdown-divider">
+                                            {% endif %}
+
+                                            
+
+                                            <a class="dropdown-item manage-admin-toggler" href="#" data-admin-id="{{ eachAdminInstance.id }}">
+                                                <i class="fa fa-cog me-1"></i>
+                                                Manage
+                                            </a>
+
+                                            <hr class="dropdown-divider">
+
+                                            <a class="dropdown-item" href="{% url 'messenger:wipe-administrator' eachAdminInstance.id %}">
+                                                <i class="fa fa-trash me-1"></i>
+                                                Delete User Profile
+                                            </a>
+                                        </div>
+                                    </div>
+                                    </td>
+                                </tr>
+        
+                                {% empty %}
+        
+                                <p class="lead">No Site Admins Yet yet</p>
+        
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    
+                        <div class="form-text">
+                            <strong>Note:</strong>
+                            <span id="error-alert-label">
+                                Admins without permissions can be issued passwords via their emails
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {% include "mariadmin/sections/admin-access.html" %}
+
+    {% include "mariadmin/sections/admin-permissions.html" %}
+
+{% endblock %}
+
+
+{% block page_js %}
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/admin-permissions.js' %}"></script>
+
+{% endblock %}

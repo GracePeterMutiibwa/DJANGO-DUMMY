@@ -1,0 +1,478 @@
+{% load static %}
+<div class="row w-100">
+  <div class="content-wrapper">
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="app-email card">
+        <div class="border-0">
+          <div class="row g-0">
+            <!-- Email Sidebar -->
+            <div
+              class="col app-email-sidebar border-end flex-grow-0"
+              id="app-email-sidebar"
+            >
+              <div class="d-flex justify-content-center mt-3">
+                <span
+                >
+                <i class="bx bx-paper-plane"></i>
+                  Mariahill Messenger
+              </span>
+              </div>
+              <!-- Email Filters -->
+              <div class="email-filters py-2">
+                <!-- Email Filters: Folder -->
+                <ul class="email-filter-folders list-unstyled mb-4">
+                  <li
+                    class="active d-flex justify-content-between"
+                    data-target="inbox"
+                  >
+                    <a
+                      href="javascript:void(0);"
+                      class="d-flex flex-wrap align-items-center"
+                    >
+                      <i class="bx bx-envelope"></i>
+                      <span class="align-middle ms-2">Inbox</span>
+                    </a>
+                    <div class="badge bg-label-primary rounded-pill">
+                      <span id="inbox-count-show">{{ count }}</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!--/ Email Sidebar -->
+
+
+
+
+
+
+
+            <!-- Emails List -->
+            <div class="col app-emails-list">
+              <div class="card shadow-none border-0">
+                <div
+                  class="card-body emails-list-header p-3 py-lg-3 py-2"
+                >
+                  <!-- Email List: Search -->
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="d-flex align-items-center w-100">
+                      <i
+                        class="bx bx-menu bx-sm cursor-pointer d-block d-lg-none me-3"
+                        data-bs-toggle="sidebar"
+                        data-target="#app-email-sidebar"
+                        data-overlay
+                      ></i>
+                      <div class="mb-0 mb-lg-2 w-100">
+                        <div
+                          class="input-group input-group-merge shadow-none"
+                        >
+                          <span
+                            class="input-group-text border-0 ps-0"
+                            id="email-search"
+                          >
+                            <i class="bx bx-search fs-4"></i>
+                          </span>
+                          <input
+                            type="text"
+                            class="form-control email-search-input border-0"
+                            placeholder="Search mail"
+                            aria-label="Search mail"
+                            aria-describedby="email-search"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="mx-n3 emails-list-header-hr" />
+                  <!-- Email List: Actions -->
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="form-check me-2 mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="email-select-all"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="email-select-all"
+                        ></label>
+                      </div>
+                      <i
+                        class="bx bx-trash-alt email-list-delete cursor-pointer me-2"
+                      ></i>
+                    </div>
+                    <div
+                      class="email-pagination d-sm-flex d-none align-items-center flex-wrap justify-content-between justify-sm-content-end"
+                    >
+                      <span class="d-sm-block d-none mx-3 text-muted">
+                        <span id="user-count-show">{{ users }}</span> Users
+                      </span>
+
+                    </div>
+                  </div>
+                </div>
+                <hr class="container-m-nx m-0" />
+                <!-- Email List: Items -->
+                <div class="email-list pt-0">
+                  <ul class="list-unstyled m-0">
+                    {% for eachUserEntry in preview_inbox %}
+                      <li
+                        class="email-list-item"
+                        data-starred="true"
+                        data-bs-toggle="sidebar"
+                        data-target="#app-email-view"
+                        data-attached-user="{{ eachUserEntry.name }}"
+                        data-attached-email="{{ eachUserEntry.email }}"
+                      >
+                        <form action="#" id="{{ eachUserEntry.name }}">
+                          {% csrf_token %}
+                        </form>
+                        <div class="d-flex align-items-center">
+                          <div class="form-check mb-0">
+                            <input
+                              class="email-list-item-input form-check-input"
+                              type="checkbox"
+                              id="{{ eachUserEntry.name }}"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="{{ eachUserEntry.name }}"
+                            ></label>
+                          </div>
+
+                          <div class="avatar avatar-sm d-block flex-shrink-0 me-sm-3 me-0">
+                            <span class="avatar-initial rounded-circle bg-label-success">{{ eachUserEntry.initials }}</span>
+                          </div>
+
+                          <div class="email-list-item-content ms-2 ms-sm-0 me-2">
+                            <span class="email-list-item-username me-2">
+                              {{ eachUserEntry.name }}
+                            </span>
+
+                            <span class="email-list-item-subject d-xl-inline-block d-block">
+                              {{ eachUserEntry.message }}
+                              
+                              </span>
+                          </div>
+
+                          <div class="email-list-item-meta ms-auto d-flex align-items-center">
+
+                            <small class="email-list-item-time text-muted">
+                              {{ eachUserEntry.date }}
+                            </small>
+                          </div>
+                        </div>
+                      </li>
+
+                    {% empty %}
+
+                      <div class="d-flex justify-content-center align-items-center">
+                        <p class="lead mt-5">No Emails Yet</p>
+                      </div>
+                      
+                    {% endfor %}
+
+                  </ul>
+                </div>
+              </div>
+              <div class="app-overlay"></div>
+            </div>
+            <!-- /Emails List -->
+
+            <!-- Email View -->
+            <div
+              class="col app-email-view flex-grow-0 bg-body border-left"
+              id="app-email-view"
+            >
+              <div
+                class="card shadow-none border-0 rounded-0 app-email-view-header px-3 py-md-3 py-2"
+              >
+                <!-- Email View : Title  bar-->
+                <div
+                  class="d-flex justify-content-between align-items-center py-2"
+                >
+                  <div
+                    class="d-flex align-items-center overflow-hidden"
+                  >
+                    <i
+                      class="bx bx-chevron-left bx-sm cursor-pointer me-2"
+                      data-bs-toggle="sidebar"
+                      data-target="#app-email-view"
+                    ></i>
+                    <h6 class="text-truncate mb-0 me-2" id="user-email-display">
+                      Focused impactful open issues
+                    </h6>
+                    <span class="badge bg-label-success">Via Contact Form</span>
+                  </div>
+                </div>
+                <hr class="app-email-view-hr mx-n3 mb-2" />
+                <div
+                  class="d-flex justify-content-between align-items-center"
+                >
+                  <div class="d-flex align-items-center">
+                    <i class="bx bx-paper-plane me-2"></i>
+                      Received Via Mariahill Messenger
+                  </div>
+                </div>
+              </div>
+              <hr class="m-0" />
+              <!-- Email View : Content-->
+              <div class="app-email-view-content py-4">
+                <p class="email-earlier-msgs text-center text-muted cursor-pointer mb-5" id="earlier-toggle">
+                  1 Earlier Message
+                </p>
+
+                <div id="email-messages-display">
+                    <!-- Email View : Previous mails-->
+                  <div class="card email-card-prev mx-sm-4 mx-3 border shadow-none">
+                    <div
+                      class="card-header d-flex justify-content-between align-items-center flex-wrap"
+                    >
+                      <div class="d-flex align-items-center mb-sm-0 mb-3">
+                        <img
+                          src="{% static 'mariadmin/local-update/frest/admin/assets/img/avatars/2.png' %}"
+                          alt="user-avatar"
+                          class="flex-shrink-0 rounded-circle me-3"
+                          height="40"
+                          width="40"
+                        />
+                        <div class="flex-grow-1 ms-1">
+                          <h6 class="m-0">Ross Geller</h6>
+                          <small class="text-muted"
+                            >rossGeller@email.com</small
+                          >
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <p class="mb-0 me-3 text-muted">
+                          June 20th 2020, 08:30 AM
+                        </p>
+                        <i
+                          class="bx bx-paperclip cursor-pointer me-2 fs-4"
+                        ></i>
+                        <i
+                          class="email-list-item-bookmark bx bx-star cursor-pointer me-2 fs-4"
+                        ></i>
+                        <div class="dropdown me-3">
+                          <i
+                            class="bx bx-dots-vertical-rounded cursor-pointer fs-4"
+                            id="dropdownEmail"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                          </i>
+                          <div
+                            class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownEmail"
+                          >
+                            <a
+                              class="dropdown-item scroll-to-reply"
+                              href="javascript:void(0)"
+                            >
+                              <i class="bx bx-share me-1"></i>
+                              <span class="align-middle">Reply</span>
+                            </a>
+                            <a
+                              class="dropdown-item"
+                              href="javascript:void(0)"
+                            >
+                              <i
+                                class="bx bx-share me-1 scaleX-n1 scaleX-n1-rtl"
+                              ></i>
+                              <span class="align-middle">Forward</span>
+                            </a>
+                            <a
+                              class="dropdown-item"
+                              href="javascript:void(0)"
+                            >
+                              <i class="bx bx-info-circle me-1"></i>
+                              <span class="align-middle">Report</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <p class="fw-bold">Greetings!</p>
+                      <p>
+                        It is a long established fact that a reader will
+                        be distracted by the readable content of a page
+                        when looking at its layout.The point of using
+                        Lorem Ipsum is that it has a more-or-less normal
+                        distribution of letters, as opposed to using
+                        'Content here, content here',making it look like
+                        readable English.
+                      </p>
+                      <p>
+                        There are many variations of passages of Lorem
+                        Ipsum available, but the majority have suffered
+                        alteration in some form, by injected humour, or
+                        randomised words which don't look even slightly
+                        believable.
+                      </p>
+                      <p class="mb-0">Sincerely yours,</p>
+                      <p class="fw-bold mb-0">Envato Design Team</p>
+                      <hr />
+                      <p class="email-attachment-title mb-2">
+                        Attachments
+                      </p>
+                      <div class="cursor-pointer">
+                        <i class="bx bx-file"></i>
+                        <span class="align-middle ms-1">report.xlsx</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Email View : Last mail-->
+
+
+                  <div class="card email-card-last mx-sm-4 mx-3 mt-4 border shadow-none">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                      <div class="d-flex align-items-center mb-sm-0 mb-3">
+                        <img
+                          src="{% static 'mariadmin/local-update/frest/admin/assets/img/avatars/1.png' %}"
+                          alt="user-avatar"
+                          class="flex-shrink-0 rounded-circle me-3"
+                          height="40"
+                          width="40"
+                        />
+                        <div class="flex-grow-1 ms-1">
+                          <h6 class="m-0">Chandler Bing</h6>
+                          <small class="text-muted"
+                            >iAmAhoot@email.com</small
+                          >
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <p class="mb-0 me-3 text-muted">
+                          June 20th 2020, 08:10 AM
+                        </p>
+                        <i
+                          class="bx bx-paperclip cursor-pointer me-2 fs-4"
+                        ></i>
+                        <i
+                          class="email-list-item-bookmark bx bx-star cursor-pointer me-2 fs-4"
+                        ></i>
+                        <div class="dropdown me-3">
+                          <i
+                            class="bx bx-dots-vertical-rounded cursor-pointer fs-4"
+                            id="dropdownEmail"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          ></i>
+                          <div
+                            class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownEmail"
+                          >
+                            <a
+                              class="dropdown-item scroll-to-reply"
+                              href="javascript:void(0)"
+                            >
+                              <i class="bx bx-share me-1"></i>
+                              <span class="align-middle">Reply</span>
+                            </a>
+                            <a
+                              class="dropdown-item"
+                              href="javascript:void(0)"
+                            >
+                              <i
+                                class="bx bx-share me-1 scaleX-n1 scaleX-n1-rtl"
+                              ></i>
+                              <span class="align-middle">Forward</span>
+                            </a>
+                            <a
+                              class="dropdown-item"
+                              href="javascript:void(0)"
+                            >
+                              <i class="bx bx-info-circle me-1"></i>
+                              <span class="align-middle">Report</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                    <div class="card-body">
+                    <p class="fw-bold">Greetings!</p>
+                    <p>
+                      It is a long established fact that a reader will
+                      be distracted by the readable content of a page
+                      when looking at its layout.The point of using
+                      Lorem Ipsum is that it has a more-or-less normal
+                      distribution of letters, as opposed to using
+                      'Content here, content here',making it look like
+                      readable English.
+                    </p>
+                    <p>
+                      There are many variations of passages of Lorem
+                      Ipsum available, but the majority have suffered
+                      alteration in some form, by injected humour, or
+                      randomised words which don't look even slightly
+                      believable.
+                    </p>
+                    <p class="mb-0">Sincerely yours,</p>
+                    <p class="fw-bold mb-0">Envato Design Team</p>
+                    <hr />
+                    <p class="email-attachment-title mb-2">
+                      Attachments
+                    </p>
+                    <div class="cursor-pointer">
+                      <i class="bx bx-file"></i>
+                      <span class="align-middle ms-1">report.xlsx</span>
+                    </div>
+                  </div>
+                  </div>
+
+                </div>
+
+                <!-- Email View : Reply mail-->
+                <div class="email-reply card mt-4 mx-sm-4 mx-3 border shadow-none">
+                  <h6 class="card-header border-0">
+                    Reply to <span id="reply-name-display">Ross Geller</span>
+                  </h6>
+
+                  <form action="{% url 'messenger:send-reply' %}" method="post">
+                    {% csrf_token %}
+                    <div id="email-address-meta">
+
+                    </div>
+                    <div class="card-body pt-0 px-3">
+                      <div class="email-reply-editor">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" id="floatingInput" name="reply-message" placeholder="i.e. Well received, thank you" required>
+                          <label for="floatingInput">Email Reply</label>
+                          <div id="floatingInputHelp" class="form-text">Ensure there is internet connection before hitting send.</div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex justify-content-end align-items-center"
+                      >
+                        <button class="btn btn-primary" type="submit">
+                          <i class="bx bx-paper-plane me-1"></i>
+                          <span class="align-middle">Send</span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+
+              </div>
+            </div>
+            <!-- Email View -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+

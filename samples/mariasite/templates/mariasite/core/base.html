@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -19,127 +19,331 @@
     />
 
     <!-- online -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'mariadmin/local-update/frest/admin/assets/img/favicon/mariahill.png' %}"
+    />
 
     <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Playfair:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Playfair:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
 
-    <!-- <link rel="preconnect" href="{% static 'mariasite/color/fonts.gstatic.com/index.html' %}" />
     <link
-      href="{% static 'mariasite/color/fonts.googleapis.com/css25fcd.css?family=Nunito:wght@300;400;600;700&amp;family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&amp;display=swap' %}"
       rel="stylesheet"
+      href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/fonts/boxicons.css' %}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css"
+    />
+
+    {% block own_css %} {% endblock %}
+
+    <link
+      rel="stylesheet"
+      href="{% static 'mariasite/color/site-core/theme/unwind/css/animate.css' %}"
     />
     <link
       rel="stylesheet"
-      href="{% static 'mariasite/color/stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' %}"
+      href="{% static 'mariasite/color/site-core/theme/unwind/css/flaticon.css' %}"
     />
-
-    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/fonts/fontawesome.css' %}" />
-    
     <link
       rel="stylesheet"
-      href="{% static 'mariasite/color/cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css' %}"
-    /> -->
+      href="{% static 'mariasite/color/site-core/theme/unwind/css/tiny-slider.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'mariasite/color/site-core/theme/unwind/css/glightbox.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'mariasite/color/site-core/theme/unwind/css/aos.css' %}"
+    />
 
-    <link rel="stylesheet" href="{% static 'mariasite/color/site-core/theme/unwind/css/animate.css' %}" />
-    <link rel="stylesheet" href="{% static 'mariasite/color/site-core/theme/unwind/css/flaticon.css' %}" />
-    <link rel="stylesheet" href="{% static 'mariasite/color/site-core/theme/unwind/css/tiny-slider.css' %}" />
-    <link rel="stylesheet" href="{% static 'mariasite/color/site-core/theme/unwind/css/glightbox.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'mariasite/color/site-core/theme/unwind/css/aos.css' %}" />
-    <!-- <link rel="stylesheet" href="css/datepicker.min.css" /> -->
-    <link rel="stylesheet" href="{% static 'mariasite/color/site-core/theme/unwind/css/style.css' %}" />
-  
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariasite/color/site-core/theme/unwind/css/ancient/ny-fonts.css' %}"
+    />
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariasite/color/site-core/theme/unwind/css/tangerine/tangerine.css' %}"
+    />
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariasite/color/site-core/theme/unwind/css/lovers-quarrel/lovers-quarrel.css' %}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'mariasite/color/site-core/theme/unwind/css/style.css' %}"
+    />
+
+
     <style>
-      .maria-header{
-        font-family: 'Imperial Script', cursive;
-        font-weight: normal;
-        font-size: 6em;
+      .maria-header {
+        font-family: 'IM Fell French Canon', serif;
+        font-size: 1em;
+        font-weight: 10 !important;
         line-height: 1.2em;
         display: block;
         color: white;
+        margin-bottom: 0 !important;
+      }
+
+      .d-none{
+        display: none;
+      }
+
+      .navbar-logo {
+        display: none;
       }
 
       @media (max-width: 767px) {
         .maria-header {
-          font-size: 4em;
+          font-size: 3em;
+          white-space: wrap !important;
         }
       }
 
       @media (min-width: 768px) {
         .maria-header {
-          font-size: 6em;
+          font-size: 4em;
+          white-space: wrap;
         }
       }
-    </style>
 
+      @media screen and (min-width: 768px) and (max-width: 792px) {
+        .maria-header {
+          font-size: 4em;
+          white-space: wrap;
+        }
+      }
+
+
+      @media (min-width: 1001px) {
+        .navbar-logo {
+          display: block;
+        }
+      }
+
+      .template-customizer-open-btn-services {
+        position: fixed;
+        top: 250px;
+        left: 0;
+        z-index: 99999999px;
+        display: block;
+        width: 47px;
+        height: 42px;
+        border: none;
+        border-top-right-radius: 45%;
+        border-bottom-right-radius: 45%;
+        background: #c5a880;
+        color: #fff !important;
+        text-align: center;
+        font-size: 27px !important;
+        line-height: 42px;
+        opacity: 1;
+      }
+
+      @media (max-width: 991.98px) {
+        .template-customizer-open-btn-services {
+          top: 120px;
+        }
+      }
+
+      @media (min-width: 991.98px) {
+        .maria-header {
+          font-size: 4em;
+          white-space: nowrap;
+        }
+      }
+
+      .template-customizer-open-btn {
+        position: fixed;
+        top: 180px;
+        right: 0;
+        z-index: 99999999px;
+        display: block;
+        width: 47px;
+        height: 42px;
+        border-top-left-radius: 45%;
+        border-bottom-left-radius: 45%;
+        background: #333;
+        color: #fff !important;
+        text-align: center;
+        font-size: 27px !important;
+        line-height: 42px;
+        opacity: 1;
+      }
+
+      .book-now-btn {
+        position: fixed;
+        top: 280px;
+        left: -30px;
+        z-index: 99999999px;
+        display: block;
+
+        text-align: center;
+        font-size: 27px !important;
+        line-height: 42px;
+        opacity: 1;
+      }
+
+      @media (max-width: 991.98px) {
+        .template-customizer-open-btn {
+          top: 145px;
+        }
+
+        .book-now-btn{
+          top: 150px;
+
+        }
+
+
+      }
+    </style>
   </head>
   <body>
-        <nav class="navbar navbar-expand-lg ftco-navbar-light">
-          <div class="container-xl">
-              <a class="navbar-brand align-items-center" href="{% url 'messenger:welcome' %}">
-              <!-- <span class>MariaHill<small>Gardens</small></span> -->
-              <!-- <img src="{% static 'mariasite/color/site-core/theme/unwind/images/maria-hill.jpeg' %}" style="width: 150px; height:auto;" alt="Logo"> -->
-              </a>
-              <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+    <nav class="navbar navbar-expand-lg ftco-navbar-light">
+      <div class="container-xl">
+        <!--  -->
+        <a
+          class="navbar-brand navbar-logo"
+          href="{% url 'messenger:welcome' %}"
+        >
+          <!-- <span class>MariaHill<small>Gardens</small></span> -->
+          <img
+            src="{% static 'mariasite/color/site-core/theme/unwind/images/white-maria.png' %}"
+            style="width: 150px; height: auto"
+            alt="Logo"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="fa fa-bars"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                data-id="1"
+                href="{% url 'messenger:welcome' %}"
+                >Home</a
               >
-              <span class="fa fa-bars"></span> Menu
-              </button>
-             
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                  <a class="nav-link active" data-id="1" href="{% url 'messenger:welcome' %}">Home</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" data-id="2" href="{% url 'messenger:about' %}">About</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" data-id="3" href="{% url 'messenger:venue' %}">Venues</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" data-id="4" href="{% url 'messenger:restaurant' %}">Resto &amp; Bar</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" data-id="5" href="{% url 'messenger:blog' %}">Blog</a>
-                  </li>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-id="2" href="{% url 'messenger:about' %}"
+                >About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-id="3" href="{% url 'messenger:venue' %}"
+                >Venues</a
+              >
+            </li>
 
-                  {% if request.user.is_authenticated %}
-                    <li class="nav-item bg-sm-transparent bg-secondary">
-                      <a class="nav-link" data-id="6" href="{% url 'messenger:home' %}">Account</a>
-                    </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-id="4"
+                href="{% url 'messenger:restaurant' %}"
+                >Services</a
+              >
+            </li>
 
-                  {% endif %}
-              </ul>
-              </div>
-          </div>
-        </nav>
+            <li class="nav-item">
+              <a class="nav-link" data-id="5" href="{% url 'messenger:blog' %}"
+                >Blog</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-id="5"
+                href="{% url 'messenger:contact' %}"
+                >Contact</a
+              >
+            </li>
 
-        {%  block page_main %}
+            {% if request.user.is_authenticated %}
+            <li class="nav-item bg-sm-transparent bg-secondary">
+              <a class="nav-link" data-id="6" href="{% url 'messenger:home' %}"
+                >Account</a
+              >
+            </li>
 
-        {% endblock %}
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-        {% include 'mariasite/sections/footer-section.html' %}
+    {% block page_main %}
+    {% endblock %} 
 
-        <script src="{% static 'mariasite/color/site-core/theme/unwind/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'mariasite/color/site-core/theme/unwind/js/tiny-slider.js' %}"></script>
-        <script src="{% static 'mariasite/color/site-core/theme/unwind/js/glightbox.min.js' %}"></script>
-        <script src="{% static 'mariasite/color/site-core/theme/unwind/js/aos.js' %}"></script>
-        <script src="{% static 'mariasite/color/site-core/theme/unwind/js/main.js' %}"></script>
-        <script src="{% static 'mariasite/color/site-core/theme/unwind/js/custom-script.js' %}"></script>
-    </body>
+    {% include 'mariasite/sections/footer-section.html' %} 
+
+    {% if hide_gallery %} 
+
+    {% else %}
+
+    {% include 'mariasite/core/side-button.html' %} 
+    
+    {% endif %}
+
+    {% include 'mariasite/core/services-side-button.html' %} 
+
+    <script src="{% static 'mariasite/color/site-core/theme/unwind/js/new/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'mariasite/color/site-core/theme/unwind/js/tiny-slider.js' %}"></script>
+    <script src="{% static 'mariasite/color/site-core/theme/unwind/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/site-core/theme/unwind/js/aos.js' %}"></script>
+    <script src="{% static 'mariasite/color/site-core/theme/unwind/js/main.js' %}"></script>
+    <script src="{% static 'mariasite/color/site-core/theme/unwind/js/custom-script.js' %}"></script>
+    <script src="{% static 'mariasite/color/site-core/theme/unwind/js/service-home.js' %}"></script>
+    <script src="{% static 'mariasite/color/site-core/theme/unwind/js/search-manager.js' %}"></script>
+
+
+    {% block own_js %}
+    {% endblock %}
+  </body>
 </html>

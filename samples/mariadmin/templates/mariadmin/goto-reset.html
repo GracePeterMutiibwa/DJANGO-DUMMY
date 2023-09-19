@@ -1,0 +1,60 @@
+{% extends "mariadmin/reglog-layout.html" %}
+
+{% block content %}
+
+    <div class="authentication-wrapper authentication-basic px-4">
+        {% include "mariadmin/alert-toast.html" %}
+
+        <div class="authentication-inner py-4">
+            <!-- Get reset via Email -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="app-brand justify-content-center">
+                        <a href="#" class="app-brand-link gap-2">
+                          <span class="app-brand-logo demo">
+                          </span>
+                          <span class="app-brand-text demo h3 mb-0 fw-bold">Maria Hill Gardens <i class='bx bxs-check-shield ms-1'></i> </span>
+                        </a>
+                    </div>
+
+                    <!-- /Logo -->
+                    <h4 class="mb-2">Wish to reset your password? 🤔</h4>
+
+                    <p class="text-start">
+                        Provide a valid email address that is attached to your account via which you will request a reset code
+                    </p>
+
+                    <form action="{% url 'messenger:start-reset' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3 fv-plugins-icon-container">
+                            <label for="reset-email" class="form-label">Enter Account Email</label>
+                            
+                            <input type="email" class="form-control" id="reset-email" name="reset-email" placeholder="Enter your account email address" autofocus="" required
+                            {% if reset_email %}
+                                value="{{ reset_email }}"
+                            {% endif %}
+                            >
+                            
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                        </div>
+    
+                        <button class="btn btn-primary w-100 my-3" type="submit">
+                            <i class='bx bx-refresh bx-burst-hover me-1'></i> Get Reset Code
+                        </button>
+                    </form>
+
+                    <p class="text-center">Remembered you password?
+                        <a href="{% url 'messenger:home' %}">
+                        Login
+                        </a>
+                    </p>
+                    
+                </div>
+            </div>
+            <!-- Get reset via Email -->
+        </div>
+        
+    </div>
+
+{% endblock %}

@@ -1,3 +1,172 @@
+function getAssociatedEmailData(userName, userEmail, validationToken){
+  // create a form
+  var newForm = new FormData();
+
+  // add the email to the form
+  newForm.append('user-email', userEmail);
+
+  // prepare to send
+  var xmlHttpRequest = new XMLHttpRequest();
+
+  // bridge to the server
+  xmlHttpRequest.open("POST", "/get-thread/");
+
+  // add the validation headers
+  xmlHttpRequest.setRequestHeader("X-CSRFToken", validationToken);
+
+  xmlHttpRequest.setRequestHeader("Accept", "application/json");
+
+  // track changes
+  xmlHttpRequest.onload = ()=>{
+      if (xmlHttpRequest.status == 200){
+        // get json
+        var jsonResponse = JSON.parse(xmlHttpRequest.responseText);
+
+        // fill the template
+        fillEmailTemplate(jsonResponse.info, userEmail, userName);
+
+      } else {
+          // console.log('Connection failed');
+      }
+  };
+
+  // send
+  xmlHttpRequest.send(newForm);
+
+
+
+}
+
+function emailNodesMint(emailInfo){
+  // extract the email data
+  var userName = emailInfo.name;
+
+  var userEmail = emailInfo.email;
+
+  var sentDate = emailInfo.date;
+
+  var emailSubject = emailInfo.subject;
+
+  var emailMessage = emailInfo.message;
+
+  var emailInitials = emailInfo.initials;
+
+  var emailId = emailInfo.id;
+
+  // create parent
+  var nodeParent = document.createElement("div");
+
+  // load styling classes
+  nodeParent.classList.add("card");
+  nodeParent.classList.add("email-card-last");
+  nodeParent.classList.add("mx-sm-4");
+  nodeParent.classList.add("mx-3");
+  nodeParent.classList.add("mt-4");
+  nodeParent.classList.add("border");
+  nodeParent.classList.add("shadow-none");
+
+
+  var emailNode = `
+  <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+    <div class="d-flex align-items-center mb-sm-0 mb-3">
+
+      <div class="avatar avatar-sm d-block flex-shrink-0 me-sm-3 me-0">
+        <span class="avatar-initial rounded-circle bg-label-success">${emailInitials}</span>
+      </div>
+
+      <div class="flex-grow-1 ms-1">
+        <h6 class="m-0">${userName}</h6>
+        <small class="text-muted">${userEmail}</small>
+      </div>
+    </div>
+    
+    <div class="d-flex align-items-center">
+      <p class="mb-0 me-3 text-muted">
+        ${sentDate}
+      </p>
+      
+    </div>
+
+  </div>
+  <div class="card-body">
+    <p class="fw-bold">${emailSubject}</p>
+    <p>
+      ${emailMessage}
+    </p>
+
+    <hr />
+    <p class="email-attachment-title mb-2">
+      By <i class="bx bx-paper-plane me-1"></i>  Maria Messenger
+    </p>
+    <div class="d-flex">
+      <span class="align-middle ms-1">All rights reserved Mariahill Messenger</span>
+    </div>
+  </div>`;
+
+  // load the html
+  nodeParent.innerHTML = emailNode;
+
+  return nodeParent;
+
+}
+
+
+function fillEmailTemplate(fillDataObject, emailAddress, nameOfUser){
+  if (fillDataObject.length > 0){
+    // load the data
+    var headerPhrase = `From ${emailAddress}`;
+
+    document.getElementById("user-email-display").innerHTML = headerPhrase;
+
+    // get the toggle button
+    var earlierToggleElement = document.getElementById("earlier-toggle");
+
+    earlierToggleElement.classList.add("d-none");
+
+    // update the reply area header
+    document.getElementById("reply-name-display").innerHTML = nameOfUser;
+
+
+    // get the email messages container
+    var messagesContainer = document.getElementById("email-messages-display");
+
+    // wipe also
+    messagesContainer.innerHTML = "";
+
+
+    // load earlier messages
+    fillDataObject.forEach(emailObject =>{
+
+      
+      // get the nodes
+      var earlierNode = emailNodesMint(emailObject);
+
+      // add the node
+      messagesContainer.appendChild(earlierNode);
+
+    });
+
+    // after add the email address area
+    var userEmailInput = document.createElement("input");
+
+    userEmailInput.setAttribute("name", "user-email");
+
+    userEmailInput.value = `${emailAddress}`;
+
+    userEmailInput.setAttribute("type", "hidden");
+
+    // add the element to the form
+    document.getElementById("email-address-meta").innerHTML = userEmailInput.outerHTML;
+
+
+  }else {
+
+  }
+
+
+}
+
+
 !(function (t, e) {
   if ("object" == typeof exports && "object" == typeof module)
     module.exports = e();
@@ -920,6 +1089,22 @@
           .querySelectorAll('[data-bs-toggle="sidebar"]')
           .forEach(function (t) {
             t.addEventListener("click", function () {
+              if (t.classList.contains("email-list-item")){
+                // get the email
+                var emailAddress = t.getAttribute("data-attached-email");
+
+                var userName = t.getAttribute("data-attached-user");
+
+                var validationToken = document.getElementById(userName).querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+                // load the data
+                getAssociatedEmailData(userName, emailAddress, validationToken);
+
+              } else {
+
+              }
+
+              // get the data-target andromeda
               var e = t.getAttribute("data-target"),
                 n = t.getAttribute("data-overlay"),
                 i = document.querySelectorAll(".app-overlay");

@@ -3,62 +3,89 @@
 {% load static %}
 
 {% block page_css %}
-    <link
-    rel="stylesheet"
-    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/dropzone/dropzone.css' %}"
-    />
+    <style>
+        .simple-drop-zone{
+            padding: 1.5rem;
+            border-radius: 0.3125rem;
+        }
 
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+        @media(min-width:768px){
+            .simple-drop-zone{
+                border-right: 2px dashed gray;
+            }
+        }
+
+        .ds-message {
+            color: #516377;
+        }
+
+        #image-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 5px;
+            max-width: 400px;
+            max-height: auto;
+        }
+
+        #modal-image-preview{
+            overflow: hidden;
+            
+
+        }
+    </style>
+
 
 {% endblock %}
 
 
 {% block page_content %}
 
-    <div class="row w-100">
+    <div class="row w-100 px-2">
         <div class="col-12">
-            <div class="row w-100">
-                <div class="d-none">
-                    <div class="card mb-4">
-                        <h5 class="card-header">Basic</h5>
-                        <div class="card-body">
-                        <form action="https://demos.pixinvent.com/upload" class="dropzone needsclick" id="dropzone-basic">
-                            <div class="dz-message needsclick">
-                            Drop files here or click to upload
-                            <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
-                            </div>
-                            <div class="fallback">
-                            <input name="file" type="file" />
-                            </div>
-                        </form>
-                        </div>
-                    </div>
-                </div>
+            <div class="row">
                     <!-- Multi  -->
-                <div class="">
                 <div class="card">
                     <h5 class="card-header">Upload One or Multiple Files</h5>
                     <div class="card-body">
-                    <form action="https://demos.pixinvent.com/upload" class="dropzone needsclick" id="dropzone-multi">
-                        <div class="dz-message needsclick">
-                            Drop files here or click to upload
-                            <span class="note needsclick">Select or Drag and Drop<strong>Any</strong> Number of Files</span>
+                    <form action="{% url 'messenger:file-manager' %}" enctype="multipart/form-data" method="post" id="files-form">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-md col-md-7 mb-4 simple-drop-zone">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="file-field">Upload</label>
+                                    <input type="file" class="form-control" name="file-to-upload" id="file-field" accept=".jpg, .jpeg, .png" required>
+                                    <button class="btn btn-info" type="button" id="reset-button" disabled>
+                                        <i class="fa-solid fa-trash-arrow-up me-1"></i></i> Reset
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-md col-md-5 ps-3 d-flex justify-content-center align-items-center">
+                                <div id="image-container">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <p class="fs-4">Preview Of Selected Image File</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
                         </div>
-                        <div class="fallback">
-                            <input name="file" type="image" accept="image/*" />
+
+                        <div class="row w-100 justify-content-center mt-5 border-top border-dashed border-secondary pt-3">
+                            <button class="btn btn-success w-100" type="submit" id="upload-button" disabled>
+                                <i class="fa-solid fa-floppy-disk me-2"></i> Save
+                            </button>
                         </div>
                     </form>
                     </div>
                 </div>
-                </div>
+
                 <!-- Multi  -->
             </div>
 
-            <div class="row w-100 justify-content-center mt-3">
-                <button class="btn btn-success w-75" type="button">
-                    <i class="fa-solid fa-floppy-disk me-2"></i> Save
-                </button>
-            </div>
         
         </div>
 
@@ -81,44 +108,47 @@
                           </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                          <tr>
-                            <td>
-                                <strong>1</strong>
-                            </td>
-                            <td>Social Event</td>
+                            {% for eachImageInfo in uploads %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ forloop.counter }}</strong>
+                                    </td>
+                                    <td>{{ eachImageInfo.name }}</td>
 
-                            <td>
-                                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Simple File" data-bs-original-title="Simple Image">
-                                      <img src="https://picsum.photos/200" alt="Avatar" class="rounded-circle">
-                                    </li>
-                                </ul>
-                            </td>
-                            
-                            <!-- <td>
-                                <button class="btn bg-transparent text-dark text-center justify-content-center">
-                                    <i class="fa-solid fa-expand"></i>
-                                </button>
-                                
-                            </td> -->
+                                    <td>
+                                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Simple File"
+                                            {% if eachImageInfo.date %}
+                                                data-bs-original-title="{{ eachImageInfo.name }} Created on {{ eachImageInfo.date }}"
+                                            {% else %}    
+                                                data-bs-original-title="{{ eachImageInfo.name }}"
+                                            {% endif %}
+                                            >
 
-                            <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" id="my-button">
-                                    Launch demo modal
-                                </button>
-                            </td>
+                                            <img src="{{ eachImageInfo.data }}" id="{{ eachImageInfo.name }}-{{ eachImageInfo.id }}" alt="Avatar" class="rounded-circle">
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    
+                                    <td>
+                                        <button class="btn bg-transparent text-dark text-center justify-content-center">
+                                            <i class="fa-solid fa-expand view-button" data-meta-id="{{ eachImageInfo.name }}-{{ eachImageInfo.id }}"></i>
+                                        </button>
+                                        
+                                    </td>
         
-                            <td>
-                              <div class="dropdown">
-                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                                <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit Label</a>
-                                  <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                            <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{% url 'messenger:wipe-upload' eachImageInfo.id %}"><i class="bx bx-trash me-1"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <p>No Uploads Yet</p>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -133,82 +163,38 @@
         <!-- modal-add-new-cc -->
         <div class="modal-dialog modal-dialog-centered1 modal-simple">
             <div class="modal-content p-3 p-md-5">
-            <div class="modal-body">
-                <button type="button" class="btn-close" id="closeButton" aria-label="Close"></button>
-                <div class="text-center mb-4">
-                    <h3>Add New Card</h3>
-                    <p>Add new card to complete payment</p>
-                </div>
-                <form id="simple-form" class="row g-3" onsubmit="return false">
-                    <div class="col-12">
-                        <label class="form-label w-100" for="modalAddCard">Card Number</label>
-                        <div class="input-group input-group-merge">
-                        <input id="modalAddCard" name="modalAddCard" class="form-control credit-card-mask" type="text" placeholder="1356 3215 6548 7898" aria-describedby="modalAddCard2" />
-                        <span class="input-group-text cursor-pointer p-1" id="simplemodal-card"><span class="card-type"></span></span>
-                        </div>
+                <div class="modal-body">
+                    <button type="button" class="btn-close" id="closeButton"></button>
+                    <div id="modal-image-preview">
+                        <img src="" alt="" id="modal-image-show" class="img-fluid">
                     </div>
-                <div class="col-12 col-md-6">
-                    <label class="form-label" for="modalAddCardName">Name</label>
-                    <input type="text" id="modalAddCardName" class="form-control" placeholder="John Doe" />
+                    
                 </div>
-                <div class="col-6 col-md-3">
-                    <label class="form-label" for="modalAddCardExpiryDate">Exp. Date</label>
-                    <input type="text" id="modalAddCardExpiryDate" class="form-control expiry-date-mask" placeholder="MM/YY" />
-                </div>
-                <div class="col-6 col-md-3">
-                    <label class="form-label" for="modalAddCardCvv">CVV Code</label>
-                    <div class="input-group input-group-merge">
-                    <input type="text" id="modalAddCardCvv" class="form-control cvv-code-mask" maxlength="3" placeholder="654" />
-                    <span class="input-group-text cursor-pointer" id="modalAddCardCvv2"><i class="bx bx-help-circle text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Card Verification Value"></i></span>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <label class="switch">
-                        <input type="checkbox" class="switch-input" checked>
-                        <span class="switch-toggle-slider">
-                            <span class="switch-on">
-                                <i class="bx bx-check"></i>
-                            </span>
-                            <span class="switch-off">
-                                <i class="bx bx-x"></i>
-                            </span>
-                        </span>
-                        <span class="switch-label">Save card for future billing?</span>
-                    </label>
-                </div>
-                <div class="col-12 text-center mt-4">
-                    <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                    <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                </div>
-                </form>
-            </div>
             </div>
         </div>
     </div>
-
 
 {% endblock %}
 
 
 
 {% block vendor_js %}
-    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/dropzone/dropzone.js' %}"></script>
 
 {% endblock %}
 
 
 {% block page_js %}
-    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/forms-file-upload.js' %}"></script>
-
     <script type="text/javascript">
-        $('#my-button').on('click', function(){
-            // display the modal
-            $('#displayImage').modal('show');       
+        $(document).ready(function() {
+            $('#closeButton').on('click', function() {
+                $('#displayImage').modal('hide');
         });
-
-        $('#closeButton').on('click', function() {
-            $('#displayImage').modal('hide');
-        });
-
+    });
     </script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/own-script.js' %}"></script>
+
+
+
+
 {% endblock %}

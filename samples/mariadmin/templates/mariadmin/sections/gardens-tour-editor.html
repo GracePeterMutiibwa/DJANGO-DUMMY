@@ -1,0 +1,45 @@
+{% load static %}
+
+<div class="row w-100">
+    <section id="gardens-tour-section">
+
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header">
+                <i class="bx bxs-movie-play me-2"></i>
+                Gardens Tour Video Link
+            </h5>
+
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <form action="{% url 'messenger:edit-website' 16 %}" method="post">
+                    {% csrf_token %}
+
+                    <label for="banner-image-holder" class="form-label">Video  Link</label>
+                    
+                    <div class="input-group">
+                        <span class="input-group-text">Video Url</span>
+
+                        <input type="text" placeholder="Please Provide a Video Link i.e. from Youtube" name="video-link-url" class="form-control" required>
+                    </div>
+
+                    <div class="form-text">
+                        {% if tour_video_link is not None %}
+                            <strong>Current Link:</strong> {{ tour_video_link }}
+                        {% else %}
+                            Provide a valid location to a tour video of the gardens
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-5">
+                        <button class="btn btn-outline-primary w-100" type="submit">
+                            <i class="bx bxs-video-plus me-2"></i> 
+                            Save Video Link
+                        </button>
+                    </div>
+
+                </form>
+                
+            </div>
+        </div>
+
+    </section>
+</div>

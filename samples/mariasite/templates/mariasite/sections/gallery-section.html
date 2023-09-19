@@ -1,98 +1,58 @@
 {% load static %}
 
 <section class="ftco-gallery">
+  
     <div class="container-fluid">
-      <div class="row g-3">
-        <div
-          class="col-md"
-          data-aos="fade-up"
-          data-aos-delay="100"
-          data-aos-duration="1000"
-        >
-          <a
-            href="{% static 'mariasite/color/site-core/theme/unwind/images/gallery-1.jpg' %}"
-            class="gallery-wrap img d-flex align-items-center justify-content-center glightbox"
-            style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/gallery-1.jpg' %})"
-          >
-            <div
-              class="icon d-flex align-items-center justify-content-center"
-            >
-              <span class="fa fa-search"></span>
-            </div>
-          </a>
-        </div>
-        <div
-          class="col-md"
-          data-aos="fade-up"
-          data-aos-delay="200"
-          data-aos-duration="1000"
-        >
-          <a
-            href="{% static 'mariasite/color/site-core/theme/unwind/images/gallery-1.jpg' %}"
-            class="gallery-wrap img d-flex align-items-center justify-content-center glightbox"
-            style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/gallery-2.jpg' %} )"
-          >
-            <div
-              class="icon d-flex align-items-center justify-content-center"
-            >
-              <span class="fa fa-search"></span>
-            </div>
-          </a>
-        </div>
-        <div
-          class="col-md"
-          data-aos="fade-up"
-          data-aos-delay="300"
-          data-aos-duration="1000"
-        >
-          <a
-            href="{% static 'mariasite/color/site-core/theme/unwind/images/gallery-3.jpg' %}"
-            class="gallery-wrap img d-flex align-items-center justify-content-center glightbox"
-            style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/gallery-3.jpg' %} )"
-          >
-            <div
-              class="icon d-flex align-items-center justify-content-center"
-            >
-              <span class="fa fa-search"></span>
-            </div>
-          </a>
-        </div>
-        <div
-          class="col-md"
-          data-aos="fade-up"
-          data-aos-delay="400"
-          data-aos-duration="1000"
-        >
-          <a
-            href="{% static 'mariasite/color/site-core/theme/unwind/images/gallery-4.jpg' %}"
-            class="gallery-wrap img d-flex align-items-center justify-content-center glightbox"
-            style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/gallery-4.jpg' %} )"
-          >
-            <div
-              class="icon d-flex align-items-center justify-content-center"
-            >
-              <span class="fa fa-search"></span>
-            </div>
-          </a>
-        </div>
-        <div
-          class="col-md"
-          data-aos="fade-up"
-          data-aos-delay="500"
-          data-aos-duration="1000"
-        >
-          <a
-            href="{% static 'mariasite/color/site-core/theme/unwind/images/gallery-5.jpg' %}"
-            class="gallery-wrap img d-flex align-items-center justify-content-center glightbox"
-            style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/gallery-5.jpg' %} )"
-          >
-            <div
-              class="icon d-flex align-items-center justify-content-center"
-            >
-              <span class="fa fa-search"></span>
-            </div>
-          </a>
+      <div class="site-section first-section">
+        <div class="container">
+          <div class="mb-5"></div>
+
+          <div class="row">
+
+            {% for eachImageGroup in gallery_images %}
+
+              {% for eachImageObject in eachImageGroup %}
+                <div class="col-md-6 col-lg-3 mb-4"data-aos="fade-up"
+
+                  {% if forloop.counter == 1 %}
+
+                    data-aos-delay
+
+                  {% elif forloop.counter == 2 %}
+
+                    data-aos-delay="100"
+
+                  {% elif forloop.counter == 3 %}
+                    data-aos-delay="200"
+
+
+                  {% else %}
+
+                    data-aos-delay="300"
+
+                  {% endif %} >
+
+                  <a href="{{ eachImageObject.data }}" data-fancybox="gallery">
+
+                    <img src="{{ eachImageObject.data }}" alt="{{ eachImageObject.name }}" class="img-fluid"/>
+                  
+                  </a>
+                </div>
+
+              {% endfor %}
+
+            {% empty %}
+              <div class="d-flex justify-content-center align-items-center p-5 m-5">
+                <p class="lead m-5 p-5" style="">No Images Yet</p>
+              </div>
+
+            {% endfor %}
+
+
+          </div>
+
         </div>
       </div>
     </div>
+
 </section>

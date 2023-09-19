@@ -1,0 +1,345 @@
+{% extends "mariadmin/home-layout.html" %}
+
+{% load static %}
+
+{% block page_css %}
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/swiper/swiper.css' %}"
+    />
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/pages/ui-carousel.css' %}"
+    />
+
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/data-tables/css/jquery.dataTables.min.css' %}" />
+
+{% endblock %}
+
+
+{% block page_content %}
+
+    <div class="row w-100">
+        <section id="page-detail">
+            <div class="card mb-4 mx-2">
+                <h5 class="card-header">
+                    <i class='bx bxs-calendar-edit bx-flashing-hover me-2'></i>
+                    Page Details
+                </h5>
+                
+                <div class="card-body">
+                    <form action="{% url 'messenger:save-page-details' %}" method="post" class="pt-0 row g-2">
+                        {% csrf_token %}
+            
+                        <input type="hidden" name="page-id" value="{{ page_id }}">
+                    
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="page-heading">Page Heading</label>
+            
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        <i class='bx bx-heading bx-burst-hover'></i>
+                                    </span>
+                    
+                                    <input type="text" 
+
+                                    {% if details.heading %}
+                                        value="{{ details.heading }}"
+                                    {% endif %}
+
+                                    id="page-name-input" class="form-control" name="page-heading" maxlength="34" placeholder=".i.e Welcome To Grace Bridals" required>
+
+                                </div>
+                    
+                                <div class="form-text">
+                                    A bigHeading for the page
+                                </div>
+                            </div>
+                        </div>
+
+                                            
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="vendor-slogan">Vendor Slogan</label>
+            
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        <i class='fa fa-quote-left bx-burst-hover'></i>
+                                    </span>
+                    
+                                    <input type="text"
+
+                                    {% if details.slogan %}
+                                        value="{{ details.slogan }}"
+                                    {% endif %}
+
+                                    id="vendor-slogan" class="form-control" name="vendor-slogan" maxlength="43" placeholder=".i.e We inspire and reach millions of couples across the globe" required>
+                                </div>
+                    
+                                <div class="form-text">
+                                    A simple slogan for the page
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="phone-contact">Phone Contact</label>
+            
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        <i class='bx bxs-phone-call bx-burst-hover me-1'></i>
+                                        +256
+                                    </span>
+                    
+                                    <input type="text" 
+
+                                    {% if details.phone %}
+                                        value="{{ details.phone }}"
+                                    {% endif %}
+
+                                    id="phone-contact" class="form-control" maxlength="11" name="phone-contact" placeholder="705 783 839" required>
+                                </div>
+                    
+                                <div class="form-text">
+                                    Telephone contact of the vendor | if its 0705 783 839 <strong>only write 705 783 839</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="business-email">Business Email</label>
+            
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        <i class='bx bxs-envelope bx-burst-hover'></i>
+                                    </span>
+                    
+                                    <input type="email" 
+
+                                    {% if details.email %}
+                                        value="{{ details.email }}"
+                                    {% endif %}
+
+                                    id="business-email" class="form-control" name="business-email" placeholder=".i.e gracebridals@gmail.com" required>
+                                </div>
+                    
+                                <div class="form-text">
+                                    An email via which the vendor can be reached
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="main-location">Main Location</label>
+            
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        <i class='bx bxs-map bx-burst-hover'></i>
+                                    </span>
+                    
+                                    <input type="text" 
+
+                                    {% if details.location %}
+                                        value="{{ details.location }}"
+                                    {% endif %}
+
+                                    id="main-location" class="form-control" name="main-location" placeholder=".i.e Mbarara, Opposite Umeme Offices" required>
+                                </div>
+                    
+                                <div class="form-text">
+                                    Directions for a physical point of operation
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">
+                                <i class="fa fa-check bx-burst-hover me-2"></i> Save Details
+                            </button>
+            
+                            <button type="reset" class="btn btn-outline-secondary">
+                                <i class='bx bxs-eraser bx-burst-hover me-2'></i>
+                                Clear All
+                            </button>
+                        </div>
+                
+                    </form>
+                </div>
+
+            </div>
+
+        </section>
+        
+    </div>
+
+    <div class="row w-100">
+        <section id="page-socials">
+            <div class="card mb-4 mx-2">
+                <h5 class="card-header">
+                    <i class='bx bx-globe bx-flashing-hover me-2'></i>
+                    Social Media Handles
+                </h5>
+                
+                <div class="card-body">
+                    <form action="{% url 'messenger:save-page-handles' %}" method="post" class="pt-0 row g-2">
+                        {% csrf_token %}
+            
+                        <input type="hidden" name="page-id" value="{{ page_id }}">
+
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="facebook-handle">Facebook Page Link</label>
+            
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        <i class='bx bxl-meta bx-burst-hover'></i>
+                                    </span>
+                    
+                                    <input type="text"
+
+                                    {% if handles.facebook %}
+                                        value="{{ handles.facebook }}"
+                                    {% endif %}
+
+                                    id="facebook-handle" class="form-control" name="facebook-handle" placeholder=".i.e https://www.facebook.com/MariahillGardens">
+                                </div>
+                    
+                                <div class="form-text">
+                                    Visit the vendors facebook page and copy the page link
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="twitter-handle">Twitter Page Link</label>
+            
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        <i class='bx bxl-twitter bx-burst-hover'></i>
+                                    </span>
+                    
+                                    <input type="text"
+
+                                    {% if handles.twitter %}
+                                        value="{{ handles.twitter }}"
+                                    {% endif %}
+
+                                    id="twitter-handle" class="form-control" name="twitter-handle" placeholder=".i.e https://x.com/MariahillGardens">
+                                </div>
+                    
+                                <div class="form-text">
+                                    Visit the vendors twitter page and copy the page link
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="instagram-handle">Instagram Page Link</label>
+            
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        <i class='bx bxl-instagram bx-burst-hover'></i>
+                                    </span>
+                    
+                                    <input type="text"
+
+                                    {% if handles.instagram %}
+                                        value="{{ handles.instagram }}"
+                                    {% endif %}
+
+                                    id="instagram-handle" class="form-control" name="instagram-handle" placeholder=".i.e https://www.instagram.com/MariahillGardens">
+                                </div>
+                    
+                                <div class="form-text">
+                                    Visit the vendors instagram page and copy the page link
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="whatsapp-handle">Whatsapp Page Link</label>
+            
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        <i class='bx bxl-whatsapp bx-burst-hover'></i>
+                                    </span>
+                    
+                                    <input type="text"
+
+                                    {% if handles.whatsapp %}
+                                        value="{{ handles.whatsapp }}"
+                                    {% endif %}
+
+                                    id="whatsapp-handle" class="form-control" name="whatsapp-handle" placeholder=".i.e https://web.whatsapp.com/+25675167356">
+                                </div>
+                    
+                                <div class="form-text">
+                                    Visit the vendors whatsappage and copy the page link
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary mb-2 w-100">
+                                <i class="bx bxl-telegram bx-burst-hover me-2"></i> Save Social Media Handles
+    
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    {% include 'mariadmin/sections/page-service.html' %}
+
+    {% include "mariadmin/sections/image-section.html" %}
+
+    {% include "mariadmin/sections/page-service-view.html" %}
+
+
+{% endblock %}
+
+
+{% block vendor_js %}
+
+    <script src="{% static 'mariadmin/local-update/data-tables/js/jquery.dataTables.min.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/swiper/swiper.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/ui-carousel.js' %}"></script>
+
+
+{% endblock %}
+
+
+{% block page_js %}
+
+    <script>
+        $(document).ready( function () {
+            $('#services-table').DataTable();
+        } );
+        
+    </script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/page-viewer.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/image-control.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/page-service-viewer.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/service-edit.js' %}"></script>
+
+
+{% endblock %}

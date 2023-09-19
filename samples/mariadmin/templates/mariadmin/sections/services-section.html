@@ -1,0 +1,70 @@
+<div class="row w-100">
+    <section id="services-section">
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header"><i class="fa-brands fa-servicestack me-2"></i> Available Services</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <div class="mb-4">
+                    <form action="{% url 'messenger:edit-website' 7 %}" method="post">
+                        {% csrf_token %}
+                        <label for="service-name" class="form-label">add new service</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Service Name & Details</span>
+                            <input type="text" id="service-name" name="service-name" placeholder="i.e. Restaurant" class="form-control" required>
+                            <textarea class="form-control" name="service-details" placeholder="i.e. We have a perfect spot for your dinners" required></textarea>
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa-solid fa-circle-plus me-2"></i></i> Save
+                            </button>
+                        </div>
+                        
+                        <div class="form-text">
+                            Note: A service can not be added more than once
+                        </div>
+                    </form>
+                </div>
+    
+                <div class="mb-4">
+                    <label for="defaultFormControlInput" class="form-label">REGISTERED SERVICES</label>
+    
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Service Name</th>
+                            <th>Service Details</th>
+                            <th>Preview</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            {% if services %}
+                                {% for eachService in services %}
+                                    <tr>
+                                        <td>{{ eachService.name }}</td>
+                                        <td>{{ eachService.details }}</td>
+                                        <td>
+                                            <button class="btn bg-transparent text-dark">
+                                                <i class="fa-solid fa-expand service-view-button" data-service-name="{{ eachService.name }}" data-service-details="{{ eachService.details }}"></i>
+                                            </button>
+                                        </td>
+                
+                                        <td>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{% url 'messenger:wipe-service' eachService.id %}"><i class="bx bx-trash me-1"></i> Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+                            {% else %}
+                                <p class="lead">No Services Yet</p>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+    
+                
+            </div>
+        </div>
+    </section>
+</div>

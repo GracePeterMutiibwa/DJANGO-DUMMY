@@ -1,8 +1,13 @@
 {% load static %}
 
 <section
-class="img vid-section"
-style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/bg_2.jpg' %})"
+  class="img vid-section"
+  {% if banner_image is None %}
+  style="background-image: url({% static 'mariasite/color/site-core/theme/unwind/images/bg_2.jpg' %})"
+  {% else %}
+  style="background-image: url({{ banner_image }})"
+
+  {% endif %}
 >
 <div class="overlay"></div>
 <div class="container-xl">
@@ -14,7 +19,13 @@ style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/
         <span class="subheading">Watch our beautiful gardens</span>
         <h3>Take A Tour</h3>
         <a
+          target="_blank"
+        {% if tour_video_link is not None %}
+          href="{{ tour_video_link }}"
+        {% else %}
           href="https://vimeo.com/115041822"
+        {% endif %}
+          
           class="video-icon glightbox d-flex align-items-center justify-content-center"
         >
           <span class="ion-ios-play"></span>

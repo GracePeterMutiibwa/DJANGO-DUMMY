@@ -1,0 +1,58 @@
+<div class="row w-100">
+    <section id="ribbon-section">
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header"><i class="fa-solid fa-ribbon me-2"></i>Ribbon Section</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <form action="{% url 'messenger:edit-website' 8 %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="ribbon-heading" class="form-label">RIBBON HEADING</label>
+                        
+                        <input type="text" class="form-control" name="ribbon-heading" id="ribbon-heading" placeholder="i.e. Find the best venue for your event" required>
+                        
+                        <div class="form-text">
+                            {{ ribbon.heading }}
+                        </div>
+                    </div>
+        
+                    <div class="">
+                        <label for="ribbon-message" class="form-label">RIBBON DETAILS</label>
+                        <textarea class="form-control" id="ribbon-message" name="ribbon-message" placeholder="Detailed information about the above heading" required></textarea>
+        
+                    </div>
+
+                    <div class="form-text mb-4">
+                        {{ ribbon.message }}
+                    </div>
+        
+                    <div class="input-group">
+                        <label class="input-group-text" for="button-text">Button Text</label>
+                        <input type="text" class="form-control" name="ribbon-button" id="button-text" placeholder="i.e. Book Now" required>
+                        <label class="input-group-text" for="redirection-url">Redirection Page</label>
+                        <select class="form-select" name="ribbon-url" id="redirection-url">
+                            <option value="{% url 'messenger:gallery' %}">Gallery</option>
+                            <option value="{% url 'messenger:venue' %}">Venues</option>
+                            <option value="{% url 'messenger:blog' %}">Blog</option>
+                            <option value="{% url 'messenger:contact' %}">Contact Page</option>
+                        </select>
+                    </div>
+        
+                    <div class="form-text mb-4">
+                        {{ ribbon.text }} : {{ ribbon.url }}
+                    </div>
+        
+        
+                    <div class="">
+                            <button class="btn btn-outline-primary w-100" type="submit">
+                                <i class="fa-solid fa-circle-plus me-2"></i></i> Save Changes
+                            </button>
+                    </div>
+                
+                </form>
+    
+                
+            </div>
+        </div>
+    </section>
+
+</div>

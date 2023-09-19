@@ -5,12 +5,23 @@
 {% block page_css %}
     <link
     rel="stylesheet"
-    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/dropzone/dropzone.css' %}"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/swiper/swiper.css' %}"
+    />
+
+    <link
+    rel="stylesheet"
+    href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/pages/ui-carousel.css' %}"
     />
 
 {% endblock %}
 
+
+
 {% block page_content %}
+
+    {% include "mariadmin/sections/banner-image-editor.html" %}
+
+    {% include "mariadmin/sections/gardens-tour-editor.html" %}
 
     {% include "mariadmin/sections/event-categories.html" %}
 
@@ -18,12 +29,47 @@
 
     {% include "mariadmin/sections/about-left-meta.html" %}
 
+    <!-- {% include "mariadmin/sections/services-section.html" %} -->
+
+    {% include "mariadmin/sections/ribbon-section.html" %}
+
+    {% include "mariadmin/sections/venues-section.html" %}
+
+    {% include "mariadmin/sections/testimonial-section.html" %}
+
+    {% include "mariadmin/sections/stat-section.html" %}
+
+    {% include "mariadmin/sections/contact-section.html" %}
+
+    {% include "mariadmin/sections/image-section.html" %}
+
+    {% include "mariadmin/sections/service-viewer.html" %}
+
+    {% include "mariadmin/sections/image-display.html" %}
+
+    {% include "mariadmin/sections/venue-viewer.html" %}
+
+
 {% endblock %}
 
-{% block vendor_js %}
+{% block vendor_js %} 
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/swiper/swiper.js' %}"></script>
 
 {% endblock %}
 
 
 {% block page_js %}
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/image-control.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/ui-carousel.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/service-viewer.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/image-display.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/featured-control.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/venue-viewer.js' %}"></script>
+
+
 {% endblock %}

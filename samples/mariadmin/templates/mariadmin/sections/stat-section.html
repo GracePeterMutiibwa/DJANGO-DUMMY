@@ -1,0 +1,92 @@
+<div class="row w-100">
+    <section id="stat-section">
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header"><i class="fa-solid fa-award me-2"></i>Achievements</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+
+                <form action="{% url 'messenger:edit-website' 11 %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text">Happy Guests</span>
+                            <input type="number" class="form-control" min="1" name="happy-guests" placeholder="i.e. 1200" value="{{ statistics.guests }}" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text">Events Hosted</span>
+                            <input type="number" class="form-control" min="1" name="events-hosted" placeholder="i.e. 3400" value="{{ statistics.events }}" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text">Available Staff</span>
+                            <input type="number" class="form-control" min="1" name="staff-count" placeholder="i.e. 2700" value="{{ statistics.staff }}" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text">Our Venues</span>
+                            <input type="number" class="form-control" min="1" name="venues-count" placeholder="i.e. 156" value="{{ statistics.venues }}" required>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary mb-2 w-100">Add Achievement</button>
+                    </div>
+                </form>
+
+                <div class="mb-2">
+                    <label class="form-label">AVAILABLE ACHIEVEMENTS</label>
+    
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>No.</th>
+                            <th>ACHIEVEMENT</th>
+                            <th>NUMBERS</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            <tr>
+                                <td>1</td>
+                                <td>Happy Guests</td>
+                                <td>{{ statistics.guests }}</td>  
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>Events Hosted</td>
+                                <td>{{ statistics.events }}</td>  
+                            </tr>
+
+                            <tr>
+                                <td>3</td>
+                                <td>Available Staff</td>
+                                <td>{{ statistics.staff }}</td>  
+                            </tr>
+
+                            <tr>
+                                <td>4</td>
+                                <td>Our Venues</td>
+                                <td>{{ statistics.venues }}</td>  
+                            </tr>
+  
+                        </tbody>
+                    </table>
+
+                    <div class="form-text">
+                        Only Four statistics measures are considered
+                    </div>
+                </div>      
+            </div>
+        </div>
+    </section>
+
+
+</div>

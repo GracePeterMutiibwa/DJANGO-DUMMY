@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Cropper</title>
+    <!-- css -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/cropper.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">My Cropper</h1>
+
+        <!-- form -->
+        <div class="form-group container mb-3 w-50">
+            <label for="my-uploader" class="form-label">Select an image file</label>
+            <input type="file" name="file-upload" class="form-control" id="my-uploader" accept="image/*" required>
+        </div>
+
+        <!-- contains uploaded -->
+        <div class="box-2">
+            <div class="result container">
+
+            </div>
+
+        </div>
+
+        <!-- image result -->
+        <div class="box-2 img-result my-2">
+            <img src="" alt="" class="cropped">
+
+        </div>
+
+        <!-- options -->
+        <div class="box">
+            <div class="options d-none">
+                <div class="input-group w-50" id="width-selector">
+                    <label for="width" class="input-group-text">Width</label>
+                    <input type="number" class="form-control" name="width" id="width" value="150" min="100" max="1200">
+                </div>
+
+                <div class="my-3" id="save">
+                    <button type="button" id="my-save-button" class="btn btn-secondary">Save</button>
+                </div>
+
+                <div class="my-3" id="download">
+                    <a href="" role="button" id="my-downloader" class="btn btn-primary">Download</a>
+
+                </div>
+                
+
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- js -->
+    <script src="./js/main.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/cropper.min.js"></script>
+</body>
+</html>

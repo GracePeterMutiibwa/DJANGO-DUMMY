@@ -1,0 +1,149 @@
+{% load static %}
+
+<div class="modal-onboarding modal fade animate__animated" id="postDataModal" tabindex="-1" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-center">
+
+      <div class="modal-header">
+        <a class="text-muted close-label" href="javascript:void(0);" data-bs-dismiss="modal">Close Viewer</a>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+
+      <div id="modalCarouselControls" class="carousel slide pb-4 mb-2" data-bs-interval="false">
+        <ol class="carousel-indicators" id="indicators-holder">
+          <li data-bs-target="#modalCarouselControls" data-bs-slide-to="0" class="active" aria-current="true"></li>
+          <li data-bs-target="#modalCarouselControls" data-bs-slide-to="1" class=""></li>
+          <li data-bs-target="#modalCarouselControls" data-bs-slide-to="2" class=""></li>
+          <li data-bs-target="#modalCarouselControls" data-bs-slide-to="3" class=""></li>
+          <li data-bs-target="#modalCarouselControls" data-bs-slide-to="4" class=""></li>
+        </ol>
+        
+        <div class="carousel-inner" style="height: 582.683px;" id="sliders-container">
+          <div class="carousel-item active" style="">
+            <div class="onboarding-media">
+              <h4 class="onboarding-title text-body">
+                POST HEADING BACKGROUND
+              </h4>
+              <div class="mx-2">
+                <img src="/assets/About-Rotator-10.jpg" width="355" class="img-fluid" id="post-heading-image">
+              </div>
+            </div>
+
+            <hr class="mt-3 mb-3">
+            <div class="onboarding-contents">
+              <h4 class="onboarding-title text-body mt-4">POST HEADING</h4>
+              <div class="onboarding-info" id="post-title-heading">
+
+                In this example you can see a form where you can request some
+              additional information from the customer when they land on the app page.
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item" style="">
+            <div class="onboarding-media">
+              <div class="mx-2">
+                <h4 class="onboarding-title text-body">TOP POST BODY</h4>
+              </div>
+            </div>
+
+            <div class="onboarding-content">
+              <div class="onboarding-info" id="top-body-text">
+                In this example you can see a form where you can request some
+                additional information from the customer when they land on the app page.
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item" style="">
+            <div class="onboarding-media">
+              <div class="mx-2">
+                <img src="" width="300" class="img-fluid" id="post-body-main-image">
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="onboarding-content">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-3" id="left-image-holder">
+                      <p class="lead">
+                        Missing Left Image
+                      </p>
+                    
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="mb-3" id="right-image-holder">
+                      <p class="lead">
+                        Missing Right Image
+                      </p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+          <div class="carousel-item" style="">
+            <div class="onboarding-media">
+              <div class="mx-2">
+                <h4 class="onboarding-title text-body">LOWER POST BODY</h4>
+              </div>
+            </div>
+
+            <div class="onboarding-contents">
+              <div class="onboarding-info" id="lower-body-text">
+
+                In this example you can see a form where you can request some
+              additional information from the customer when they land on the app page.
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item" style="">
+            <div class="onboarding-media">
+              <div class="mx-2">
+                <h4 class="onboarding-title text-body">POST META DATA</h4>              </div>
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-center">
+              <p class="lead">
+                <strong>Date:</strong>
+                <span id="post-date-show">12-09-2023</span>
+              </p>
+            </div>
+            
+            <hr>
+
+
+            <div class="row d-flex p-1" id="post-category-show">
+
+            </div>
+
+            <hr>
+
+            <div class="onboarding-content">
+              <div class="onboarding-info">
+                The above is extra information about the post
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <a class="carousel-control-prev" href="#modalCarouselControls" role="button" data-bs-slide="prev">
+          <i class="bx bx-chevrons-left lh-1"></i><span>Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#modalCarouselControls" role="button" data-bs-slide="next">
+          <span>Next</span><i class="bx bx-chevrons-right lh-1"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

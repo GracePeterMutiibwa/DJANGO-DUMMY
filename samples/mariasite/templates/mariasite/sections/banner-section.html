@@ -1,26 +1,21 @@
 {% load static %}
 
-<section class="hero-wrap" style="background-image: url({% static 'mariasite/color/site-core/theme/unwind/images/bg_1.jpg' %})">
+<section class="hero-wrap" 
+  {% if banner_image is None %}
+    style="background-image: url({% static 'mariasite/color/site-core/theme/unwind/images/bg_1.jpg' %})"
+  {% else %}
+    style="background-image: url({{ banner_image }})"
+
+  {% endif %}
+    >
     <div class="overlay"></div>
     <div class="container">
-      <div
-        class="row no-gutters slider-text align-items-center justify-content-center"
-      >
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
         <div class="col-lg-10 text-center">
-          <h2 class="mb-5 maria-header">MariaHill Gardens</h2>
-          <span class="subheading"
-            >Enjoy Your Wonderful Events With A Great Memorable
-            Experience!</span
-          >
-          <!-- <h1 class="mb-4">Most Relaxing Place</h1> -->
-          <p class="mt-4">
-            <a href="#" class="btn btn-primary p-4 py-3"
-              >Take A Tour <span class="ion-ios-arrow-round-forward"></span
-            ></a>
-            <a href="#" class="btn btn-white btn-outline-white p-4 py-3"
-              >Learn More <span class="ion-ios-arrow-round-forward"></span
-            ></a>
-          </p>
+
+          <h2 class="maria-header" style="margin-bottom:3rem !important;">Mariahill Gardens And Events Services</h2>
+          
+
         </div>
       </div>
     </div>

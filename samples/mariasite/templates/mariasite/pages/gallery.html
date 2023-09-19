@@ -1,0 +1,45 @@
+{% extends "mariasite/core/base.html" %}
+
+{% load static %}
+
+{% block own_css %}
+    <!-- <link href="../../../fonts.googleapis.com/cssae5c.css?family=Oswald:400,700|Work+Sans:300,400,700" rel="stylesheet"> -->
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/fonts/icomoon/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/magnific-popup.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/jquery-ui.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/owl.carousel.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/owl.theme.default.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/bootstrap-datepicker.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/fonts/flaticon/font/flaticon.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/aos.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/jquery.fancybox.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'mariasite/color/galla/css/style.css' %}" />
+
+{% endblock %}
+
+
+{%  block page_main %}
+    {% include 'mariasite/headers/secondary-header.html' %}
+
+    {% include 'mariasite/sections/gallery-section.html' %}
+
+{% endblock %}
+
+
+{% block own_js %}
+    <script src="{% static 'mariasite/color/galla/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/jquery-ui.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/popper.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/aos.js' %}"></script>
+    <script src="{% static 'mariasite/color/galla/js/main.js' %}"></script>
+
+{% endblock %}

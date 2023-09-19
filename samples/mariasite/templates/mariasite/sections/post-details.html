@@ -1,0 +1,204 @@
+{% load static %}
+
+<div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url({{ post_details.heading_image }});">
+  <div class="container">
+    <div class="row same-height justify-content-center">
+      <div class="col-md-6">
+        <div class="post-entry text-center">
+          <h1 class="mb-4">
+            {{ post_details.heading }}
+          </h1>
+          <div class="post-meta align-items-center text-center">
+            <figure class="author-figure mb-0 me-3 d-inline-block">
+              <img src="{% static 'mariadmin/local-update/frest/admin/assets/img/avatars/general.png' %}" alt="Image" class="img-fluid">
+            </figure>
+            <span class="d-inline-block mt-1">
+              Admin
+            </span>
+            <span>&nbsp;-&nbsp; {{ post_details.date }} </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <div class="row blog-entries element-animate">
+
+      <div class="col-md-12 col-lg-8 main-content">
+
+        <div class="post-content-body">
+          <p>
+            {{ post_details.top_body }}
+          </p>
+          <div class="row my-4">
+            <div class="col-md-12 mb-4">
+              <img src="{{ post_details.main_image }}" alt="Image placeholder" class="img-fluid rounded">
+            </div>
+
+            {% if post_details.left_image %}
+              <div class="col-md-6 mb-4">
+                <img src="{{ post_details.left_image }}" alt="Image placeholder" class="img-fluid rounded">
+              </div>
+            {% endif %}
+
+            {% if post_details.right_image %}
+              <div class="col-md-6 mb-4">
+                <img src="{{ post_details.right_image }}" alt="Image placeholder" class="img-fluid rounded">
+              </div>
+            {% endif %}
+
+          </div>
+
+          <p>
+            {{ post_details.lower_body }}
+          </p>
+        </div>
+
+
+        <div class="pt-5">
+          <p>
+            Categories:  
+            {% if post_details.is_list is True %}
+
+              {% for eachCategory in post_details.categories %}
+
+                <a href="#">{{ eachCategory }}</a>,
+
+              {% endfor %}
+
+            {% else %}
+
+              <a href="#">{{ post_details.categories }}</a>,
+
+            {% endif %}
+          </p>
+        </div>
+
+
+        <div class="pt-5 comment-wrap">
+          <h3 class="mb-5 heading">
+            {{ comments_count }} Comment (s)
+
+          </h3>
+          <ul class="comment-list">
+            {% for eachComment in comments %}
+              <li class="comment">
+                <div class="comment-body">
+
+                  <h3>{{ eachComment.name }}</h3>
+
+                  <div class="meta">
+                    {{ eachComment.date }}
+                  </div>
+
+                  <p>
+                    {{ eachComment.comment }}
+                  </p>
+
+                </div>
+              </li>
+
+            {% empty %}
+              <p class="lead">
+                No Comments Yet!
+              </p>
+
+            {% endfor %}
+
+          </ul>
+          <!-- END comment-list -->
+
+          <div class="comment-form-wrap pt-5">
+            <h3 class="mb-5">Leave a comment</h3>
+            <form action="{% url 'messenger:submit-comment' %}" method="post" class="p-5 bg-light">
+
+              {% csrf_token %}
+
+              <div class="form-group">
+                <label for="poster-name">Name *</label>
+                <input type="text" name="poster-name" class="form-control" id="poster-name" required>
+              </div>
+
+              <div class="form-group">
+                <input type="hidden" name="post-id" value="{{ post_id }}">
+              </div>
+
+
+              <div class="form-group">
+                <label for="poster-comment">Message</label>
+                <textarea name="poster-comment" id="poster-comment" cols="30" rows="10" class="form-control" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <input type="submit" value="Post Comment" class="btn btn-primary">
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- END main-content -->
+
+      <div class="col-md-12 col-lg-4 sidebar">
+        {% include 'mariasite/sections/post-side-box.html' %}
+
+      </div>
+      <!-- END sidebar -->
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Start posts-entry -->
+<section class="section posts-entry posts-entry-sm bg-light">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-12 text-uppercase text-black">More Blog Posts</div>
+    </div>
+    <div class="row">
+      {% for eachOtherPost in footer_posts %}
+
+        <div class="col-md-6 col-lg-3">
+          <div class="blog-entry">
+            <a href="{% url 'messenger:blog-post' eachOtherPost.id %}" class="img-link">
+
+              <img src="{{ eachOtherPost.heading_image }}" alt="Image" class="img-fluid">
+
+            </a>
+            <span class="date">{{ eachOtherPost.date }}</span>
+
+            <h2>
+              <a href="{% url 'messenger:blog-post' eachOtherPost.id %}">
+                {{ eachOtherPost.heading }}
+              </a>
+            </h2>
+
+            <p>
+              {{ eachOtherPost.body_preview }}
+            </p>
+
+            <p>
+              <a href="{% url 'messenger:blog-post' eachOtherPost.id %}" class="read-more">Continue Reading</a>
+            </p>
+          </div>
+        </div>
+
+      {% empty %}
+
+        <div class="d-flex justify-content-center p-5">
+          <p class="lead">There are no other posts!</p>
+        </div>
+
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- End posts-entry -->
+

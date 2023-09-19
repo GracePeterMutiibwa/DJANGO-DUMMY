@@ -1,0 +1,83 @@
+<div class="offcanvas offcanvas-end" id="site-admin-register" aria-modal="true" role="dialog">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="exampleModalLabel">
+            <i class="fa fa-cogs me-2"></i> Admin Control
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+        <form action="{% url 'messenger:register-admin' %}" method="post" class="add-new-record pt-0 row g-2" id="form-add-new-record">
+            {% csrf_token %}
+        
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <label class="form-label" for="admin-user-name">USERNAME</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class="bx bx-user"></i>
+                        </span>
+        
+                        <input type="text" id="admin-user-name" class="form-control" name="admin-user-name" placeholder=".i.e John Doe" required>
+                    </div>
+        
+                    <div class="form-text">
+                        You can use letters, numbers &amp; periods, <strong>avoid symbols</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="mb-4">
+                    <label class="form-label" for="admin-user-email">USER EMAIL</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class='bx bxs-envelope' ></i>
+                        </span>
+    
+                        <input type="email" id="admin-user-email" class="form-control" name="admin-user-email" placeholder=".i.e JohnDoe@mail.com" required>
+
+                    </div>
+                            
+                    <div class="form-text">
+                        A valid email <strong>must</strong> be provided to ease password reset, Also an
+                        <strong>Email cant be added twice</strong>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <div class="form-check form-switch mb-md-0 mb-2">
+                        <label class="form-check-label" for="page-visibility">
+                            <div style="white-space: nowrap;">
+                                Access Activation
+                            </div>
+                            
+                        </label>
+        
+                        <input class="form-check-input" name="page-visibility" id="page-visibility" type="checkbox" disabled>
+        
+                    </div>
+
+                    <div class="form-text">
+                        By default a newly registered admin cant use the created credentials till they have been given permissions
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">
+                    <i class="fa fa-check-circle me-2"></i> Add to Team
+                </button>
+
+                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+            </div>
+    
+        </form>
+
+    </div>
+</div>

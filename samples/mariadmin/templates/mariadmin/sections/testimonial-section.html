@@ -1,0 +1,107 @@
+<div class="row w-100">
+    <section id="testimonial-section">
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header"><i class="fa-solid fa-comments me-2"></i>Testimonials</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <form action="{% url 'messenger:edit-website' 10 %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label for="guest-name" class="form-label">add new testimonial</label>
+                        <div class="input-group">
+                            <input type="text" id="guest-name" name="guest-name" placeholder="Name of Guest" class="form-control" required>
+                            
+                            <textarea class="form-control" name="guest-comment" placeholder="Person's say about Marihill Gardens" required></textarea>
+                        </div>
+                        
+                        <div class="form-text">
+                            Note: A testimonial can not be added more than once
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text">Guest Position</span>
+                            <input type="text" class="form-control" name="guest-position" placeholder="i.e. CEO Total Energies" required>
+                        </div>
+                    </div>
+    
+                    <div class="mb-4">
+                        <h5 class="card-title">Select Guest Profile Image</h5>
+                        <p class="card-text">
+                            Click button below to select image!
+                        </p>
+        
+                        <button type="button" class="btn btn-label-secondary d-grid w-100 image-selectors" data-output-receiver="testimonial-giver-avatar">
+                            <i class="fa-regular fa-image"></i> Select Image
+                        </button>
+                        <p class="card-text">
+                            <small class="text-muted">Name of selected image appears below</small>
+                        </p>
+                        
+                        <div class="input-group">
+                            <span class="input-group-text">Selected Image Name</span>
+                            <input type="text" class="form-control" id="testimonial-giver-avatar" name="guest-avatar" placeholder="i.e. Andromeda.jpg" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary mb-2 w-100">Save Testimonial</button>
+                    </div>
+                </form>
+                
+                        
+                <div class="mb-2">
+                    <label for="defaultFormControlInput" class="form-label">AVAILABLE TESTIMONIALS</label>
+    
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>PERSON'S NAME</th>
+                            <th>POSITION/TITLE</th>
+                            <th>COMMENT</th>
+                            <th>AVATAR</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            {% if testimonials %}
+                                {% for eachTestimonial in testimonials %}
+                                    <tr>
+                                        <td>{{ eachTestimonial.name }}</td>
+                                        <td>{{ eachTestimonial.position }}</td>
+                                        <td>{{ eachTestimonial.comment }}</td>
+                                        <td>
+                                            <button
+                                            class="btn bg-transparent text-dark text-center justify-content-center">
+                                                <i class="fa-solid fa-expand image-display-trigger" data-image-url="{{ eachTestimonial.image }}"></i>
+                                            </button>
+                                        </td>
+                
+                                        <td>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{% url 'messenger:wipe-testimonial' eachTestimonial.id %}"><i class="bx bx-trash me-1"></i> Delete Testimonial</a>
+                                                </div>
+                                            </div>
+                                        </td>
+            
+                                    </tr>
+                                {% endfor %}
+
+                            {% else %}
+                                <p class="lead">No testimonials Yet!</p>
+
+                            {% endif %}
+    
+                        </tbody>
+                    </table>
+                    <div class="form-text">
+                        Testimonials cant be edited but rather deleted and then replaced
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

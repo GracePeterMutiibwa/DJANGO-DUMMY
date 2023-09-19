@@ -5629,8 +5629,8 @@
                       paramName: "file",
                       createImageThumbnails: !0,
                       maxThumbnailFilesize: 10,
-                      thumbnailWidth: 120,
-                      thumbnailHeight: 120,
+                      thumbnailWidth: null,
+                      thumbnailHeight: null,
                       thumbnailMethod: "crop",
                       resizeWidth: null,
                       resizeHeight: null,
@@ -8097,6 +8097,8 @@
                         var e;
                         if (document.querySelectorAll)
                           e = document.querySelectorAll(".dropzone");
+                         // this is the major section
+                         // this the final 
                         else {
                           e = [];
                           var t = function (t) {

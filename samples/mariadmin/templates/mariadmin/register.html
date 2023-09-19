@@ -15,16 +15,18 @@
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="#" class="app-brand-link">
+                <a href="{% url 'messenger:welcome' %}" class="app-brand-link">
                   <span class="app-brand-text demo h3 mb-0 fw-bold"
                     >Maria Hill Gardens</span
                   >
                 </a>
               </div>
+
               <!-- /Logo -->
-              <!-- <h4 class="mb-2">Adventure starts here 🚀</h4> -->
               <p class="mb-4 text-center">
-                Make your events become 🚀 memories!
+                First 👋 Create an account?
+                <i class='bx bxs-hand-down bx-fade-down'></i>
+                then make your bookings
               </p>
 
               <form
@@ -86,7 +88,10 @@
                     </label>
                   </div>
                 </div>
-                <button class="btn btn-primary d-grid w-100">Sign up</button>
+                <button class="btn btn-primary w-100">
+                  <i class='bx bxs-user-plus bx-burst-hover me-2'></i>
+                  Sign up
+                </button>
               </form>
 
               <p class="text-center">

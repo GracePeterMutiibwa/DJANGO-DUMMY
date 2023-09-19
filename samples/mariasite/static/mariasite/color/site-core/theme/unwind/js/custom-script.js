@@ -11,7 +11,7 @@ navLinks.forEach(link => {
 });
 
 // Apply the "active" class to the corresponding element when new context is loaded
-window.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const activeLinkId = localStorage.getItem('activeLinkId');
   
     // If there is an active link ID stored
@@ -26,5 +26,14 @@ window.addEventListener('DOMContentLoaded', function() {
       if (elementToActivate) {
         elementToActivate.classList.add('active');
       }
+    } else {
+
     }
+
+
   });
+
+
+
+
+

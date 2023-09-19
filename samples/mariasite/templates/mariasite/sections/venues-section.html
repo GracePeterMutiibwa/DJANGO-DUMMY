@@ -3,19 +3,17 @@
 <section class="ftco-section bg-light">
     <div class="container-xl">
         {% if venue_list %}
-
             <div class="row justify-content-center">
                 {% for eachVenue in venue_list %}
                     {% if forloop.counter|divisibleby:2 %}
                         <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="flip-left" data-aos-delay="100" data-aos-duration="1000">
                             <div class="room-wrap d-md-flex flex-md-column-reverse">
-                                <!-- https://picsum.photos/200 -->
-                                <a href="{{ eachVenue.url }}" class="img img-room" style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/room-1.jpg' %});">
+                                <a href="{% url 'messenger:venue-details' eachVenue.name %}" class="img img-room" style="background-image: url({{ eachVenue.image }});">
                                 </a>
                                 <div class="text p-5 text-center">
-                                    <h3><a href="room-single.html">{{ eachVenue.name.title }}</a></h3>
+                                    <h3><a href="{% url 'messenger:venue-details' eachVenue.name %}">{{ eachVenue.name.title }}</a></h3>
                                     <p>{{ eachVenue.description }}</p>
-                                    <p class="mb-0 mt-2"><span class="me-3 price">{{ eachVenue.capacity }}</span><a href="#" class="btn-custom">Book Now</a></p>
+                                    <p class="mb-0 mt-2"><span class="me-3 price">{{ eachVenue.capacity }}</span><a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">Book Now</a></p>
                                 </div>
                             </div>
                         </div>
@@ -23,42 +21,34 @@
                     {% else %}
                         <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="flip-left" data-aos-delay="200" data-aos-duration="1000">
                             <div class="room-wrap">
-                                <a href="{{ eachVenue.url }}" class="img img-room" style="background-image: url( {% static 'mariasite/color/site-core/theme/unwind/images/room-1.jpg' %});">
+                                <a href="{% url 'messenger:venue-details' eachVenue.name %}" class="img img-room" style="background-image: url({{ eachVenue.image }});">
                                 </a>
                                 <div class="text p-5 text-center">
-                                    <h3><a href="room-single.html">{{ eachVenue.name.title }}</a></h3>
+                                    <h3><a href="{% url 'messenger:venue-details' eachVenue.name %}">{{ eachVenue.name.title }}</a></h3>
                                     <p>{{ eachVenue.description }}</p>
-                                    <p class="mb-0 mt-2"><span class="me-3 price">{{ eachVenue.capacity }}</span><a href="#" class="btn-custom">Book Now</a></p>
+                                    <p class="mb-0 mt-2">
+                                        <span class="me-3 price">
+                                        {{ eachVenue.capacity }}
+                                        </span>
+                                        <a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">
+                                            Book Now
+
+                                        </a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
 
                     {% endif %}
                 {% endfor %}
-                
-            </div>
 
+            </div>
+            
         {% else %}
             <p> No Venues Yet</p>
 
         {% endif %}
-
-        <div class="row mt-5">
-        <div class="col text-center">
-        <div class="block-27">
-        <ul>
-        <li><a href="#">&lt;</a></li>
-        <li class="active"><span>1</span></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&gt;</a></li>
-        </ul>
-        </div>
-        </div>
-        </div>
+        
     </div>
 </section>
     
-<hr>

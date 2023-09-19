@@ -1,0 +1,104 @@
+<div class="offcanvas offcanvas-end" id="admin-manage-credentials" aria-modal="true" role="dialog">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="exampleModalLabel">
+            <i class="fa fa-cogs me-2"></i> Your Account
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+
+    <div class="offcanvas-body flex-grow-1">
+        <div class="col-sm-12">
+            <div class="mb-3">
+                <label class="form-label" for="admin-user-name-input">USERNAME</label>
+    
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text">
+                        <i class="bx bx-user"></i>
+                    </span>
+    
+                    <input type="text" id="admin-user-name-input" class="form-control" readonly>
+                </div>
+    
+                <div class="form-text">
+                    Your current user name
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-sm-12">
+            <div class="mb-4">
+                <label class="form-label" for="admin-user-email-input">USER EMAIL</label>
+    
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text">
+                        <i class='bx bxs-envelope' ></i>
+                    </span>
+    
+                    <input type="email" id="admin-user-email-input" class="form-control" readonly>
+    
+                </div>
+                        
+                <div class="form-text">
+                    Your current email address
+                </div>
+            </div>
+        </div>
+
+        
+
+        <form action="{% url 'messenger:primary-credentials' %}" method="post" class="add-new-record pt-0 row g-2" id="form-add-new-record">
+            {% csrf_token %}
+
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <label class="form-label" for="admin-current-key">CURRENT PASSWORD</label>
+        
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class="bx bx-dialpad"></i>
+                        </span>
+        
+                        <input type="password" id="admin-current-key" class="form-control" minlength="6" name="admin-current-password" placeholder="**********" required>
+                    </div>
+        
+                    <div class="form-text">
+                        Provide Current Password
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" name="admin-id-tag" value="" id="admin-tag-key">
+        
+            <div class="col-sm-12">
+                <div class="mb-4">
+                    <label class="form-label" for="admin-new-key">NEW PASSWORD</label>
+        
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class='bx bxs-key'></i>
+                        </span>
+        
+                        <input type="text" id="admin-new-key" minlength="6" class="form-control" name="admin-new-key" placeholder="#########" required>
+        
+                    </div>
+                            
+                    <div class="form-text">
+                        Ensure that you create a <strong>strong</strong> password
+                    </div>
+                </div>
+            </div>
+    
+
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">
+                    <i class="bx bxs-edit-alt bx-burst-hover me-2"></i> Save Changes
+                </button>
+
+                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+            </div>
+    
+        </form>
+
+    </div>
+</div>
