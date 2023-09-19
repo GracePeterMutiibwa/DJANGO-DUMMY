@@ -2049,6 +2049,15 @@ def managePrimaryCredentials(request):
 
 @login_required(login_url='messenger:home')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def updateUserCredentials(request):
+    # alter the passwords
+    AdminUtilities(request=request).alterUserPassword()
+    
+    return redirect("userenv:useraccount")
+
+
+@login_required(login_url='messenger:home')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def updateUserAvatar(request):
     # get teh submitted data
     avatarRequest = request.POST.dict()

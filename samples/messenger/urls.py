@@ -85,6 +85,8 @@ urlpatterns = [
     
     path('alter-admin-profile/', views.changeAdminPermissions, name='alter-admin-profile'),
     
+    path('alter-local-user-credentials/', views.updateUserCredentials, name='update-local-user-credentials'),
+    
     path('grant-admin-access/<int:idOfAdmin>/', views.giveSecondaryAdminAccess, name='grant-admin-access'),
     
     path('delete-upload/<int:imageId>/', views.deleteSpecificUpload, name='wipe-upload'),

@@ -172,6 +172,51 @@ class AdminUtilities:
         
         self.submittedRequestData = request.POST.dict()
         
+
+    def alterUserPassword(self):
+        # validate match
+        doPasswordsMatch = self.submittedRequestData['confirm-new-key'] == self.submittedRequestData['user-new-key']
+        
+        if doPasswordsMatch is True:
+            pass
+        
+        else:
+            # alert 
+            messages.error(self.requestObject, f"New password and its confirmation password dont match ! 😫")
+
+            return
+        
+        # get the admin id
+        userId = self.submittedRequestData['user-id-tag']
+        
+        # get the user instance object
+        userObject = get_object_or_404(User, pk=int(userId))
+        
+        # get current key
+        currentKey = self.submittedRequestData['user-current-password']
+        
+        
+        if userObject.check_password(raw_password=currentKey):
+            # get new key
+            newPassword = self.submittedRequestData['user-new-key']
+            
+            # change the password then
+            userObject.set_password(raw_password=newPassword)
+            
+            userObject.save()
+            
+            
+            # alert okay
+            messages.success(self.requestObject, f"Your password was changed successfully! 🥳")
+        
+        else:
+            # alert wrong credentials
+            messages.error(self.requestObject, f"Invalid credentials please try again ! 😫")
+            
+            
+        
+        return
+        
         
     
     def alterAdminPassword(self):
