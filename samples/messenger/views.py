@@ -360,7 +360,14 @@ class ControlUtils:
         return venueData
             
             
-    def getUploadsData(self):
+    def getUploadsData(self, forGallery=False):
+        # get all images
+        if forGallery is False:
+            attachedImages = ImageAsset.objects.all()
+            
+        else:
+            attachedImages = ImageAsset.objects.filter(isGalleryItem=True)
+        
         # get present images data
         uploadsMetaData = [
             {
@@ -371,7 +378,7 @@ class ControlUtils:
                 'for_gallery': eachImageMeta.isGalleryItem
             }
             
-            for eachImageMeta in ImageAsset.objects.all()
+            for eachImageMeta in attachedImages
         ]
         
         return uploadsMetaData
@@ -596,7 +603,7 @@ def imagePreProcessingEngine(imageListObject):
 
 def galleryPage(request):
     # get uploads
-    presentUploads = ControlUtils().getUploadsData()
+    presentUploads = ControlUtils().getUploadsData(forGallery=True)
     
     # process the images
     processedGalleryImages = imagePreProcessingEngine(imageListObject=presentUploads)
@@ -1276,6 +1283,29 @@ def galleryControlPanel(request):
     }
     
     return render(request, "mariadmin/sections/gallery-control.html", context=pageContext)
+
+@login_required(login_url='messenger:home')
+@user_passes_test(isAdmin)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def updateGalleryImageState(request):
+    # get the id
+    imageObjectId = request.POST['gallery-image-id']
+    
+    imageState = True if request.POST['featured-state'] == 'true' else False
+    
+    # get the selected object
+    selectedImageItem = get_object_or_404(ImageAsset, pk=int(imageObjectId))
+    
+    # update its state
+    selectedImageItem.isGalleryItem = imageState
+    
+    # save the changes
+    selectedImageItem.save()
+        
+    
+    return JsonResponse(dict(
+        info = 'updated'
+    ))
 
 @login_required(login_url='messenger:home')
 @user_passes_test(isAdmin)

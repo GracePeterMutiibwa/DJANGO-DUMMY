@@ -48,7 +48,7 @@
                                                 {% csrf_token %}
 
                                                 <div class="form-check form-switch mb-md-0 mb-2">                                    
-                                                    <input class="form-check-input image-preview" data-image-tag="{{ eachImageObject.id }}" type="checkbox"
+                                                    <input class="form-check-input gallery-image-toggle" data-image-tag="{{ eachImageObject.id }}" type="checkbox"
                                                     {% if eachImageObject.for_gallery is True %}
                                                         checked
                                                     {% endif %}
@@ -76,7 +76,7 @@
                             </tbody>
                         </table>
     
-                        <div class="form-text">
+                        <div class="form-text" id="feature-gallery-update-alert">
                             <strong>Only Images that are checked</strong> appear at the website gallery 
                         </div>
                     </div>
@@ -91,4 +91,11 @@
 
     {% include "mariadmin/sections/gallery-control-view.html" %}
 
+{% endblock %}
+
+{% block page_js %}
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/gallery-trigger.js' %}"></script>
+
+    
 {% endblock %}

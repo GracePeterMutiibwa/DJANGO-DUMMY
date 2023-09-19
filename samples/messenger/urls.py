@@ -53,6 +53,8 @@ urlpatterns = [
     
     path('gallery-manager/', views.galleryControlPanel, name='gallery-control'),
     
+    path('update-image-state/', views.updateGalleryImageState, name='gallery-image-control'),
+    
     path('page-registry/', views.viewPageRegistry, name='page-registry'),
     
     path('services/', views.servicesPageView, name='restaurant'),
