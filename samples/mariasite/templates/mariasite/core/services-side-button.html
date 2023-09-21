@@ -1,5 +1,5 @@
 <button class="template-customizer-open-btn-services text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop" tabindex="-1">
-    <i class="fa fa-bars bx-burst-hover" style="font-size: 20px;"></i>
+    <i class="bx bxs-paper-plane bx-burst-hover" style="font-size: 20px;"></i>
 </button>
 
 
@@ -10,42 +10,11 @@
     </div>
 
     <div class="offcanvas-body my-auto mx-0 flex-grow-0">
-        <div class="mb-4">
-            <div class="d-flex justify-content-center">
-                <div class="form-check form-switch">
-                    <label class="form-check-label" for="search-enabler">Search By District</label>
-                    <input class="form-check-input" type="checkbox" id="search-enabler">
-                </div>
-            </div>
-
-            <form action="{% url 'messenger:search-by-district' %}" method="post">
-                {% csrf_token %}
-            
-                <div class="input-group">
-                    <span class="input-group-text">
-                        District
-                    </span>
+        <a role="button" href="{% url 'messenger:restaurant' %}" class="btn btn-primary mt-5 mb-2 d-grid w-100">
+            <i class="fa fa-paper-plane"></i>
+            View All
+        </a>
         
-                    <select class="form-select" name="selected-district" id="service-search-area" disabled required>
-                        <option disabled="disabled" type="hidden">Search by district</option>
-    
-                        {% for eachDistrict in district_list %}
-    
-                            <option value="{{ eachDistrict }}">{{ eachDistrict }}</option>
-    
-                        {% endfor %}
-    
-                    </select>
-    
-                    <button class="btn btn-primary" id="services-search-trigger" type="submit" disabled>
-                        <i class="fa fa-search"></i>
-                    </button>
-        
-                </div>
-            </form>
-
-        </div>
-
         <div class="mb-3">
             <ol class="list-group list-group-numbered">
                 {% for eachCategoryObject in page_category_meta %}
@@ -70,19 +39,12 @@
             </ol>
         </div>
 
-
-
-
         <!-- create  -->
-        <p class="text-center">
+        <!-- <p class="text-center">
             Services displayed above can be handy on your event, 
-        </p>
-        
-        <a role="button" href="{% url 'messenger:restaurant' %}" class="btn btn-primary mt-5 mb-2 d-grid w-100">
-            <i class="fa fa-paper-plane"></i>
-            View All
-        </a>
+        </p> -->
+    
 
-        <button type="button" class="btn btn-label-secondary d-grid w-100" data-bs-dismiss="offcanvas">CLOSE</button>
+        <!-- <button type="button" class="btn btn-label-secondary d-grid w-100" data-bs-dismiss="offcanvas">CLOSE</button> -->
     </div>
 </div>

@@ -4,88 +4,51 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <form action="#" class="booking-form">
-            <div class="row g-0">
-              {% if request.user.is_authenticated %}
+          <div class="booking-form py-3">
+              <div class="d-md-flex g-0 flex-wrap">
+                <div class="col-md-7 d-flex py-3 justify-content-center align-items-center">
+                    <a href="{% url 'messenger:venue' %}" class="btn btn-white btn-outline-white p-4 py-3 w-50">
+                      OTHER VENUES
+                      
+                    </a>
 
-              {% else %}
-                <div
-                  class="col-md-12 col-lg col-sm flex-md-column form-wrap d-flex py-3 py-lg-5 px-4 justify-content-center"
-                >
-                  <p class="w-50">
-                    <a
-                      href="{% url 'messenger:register' %}"
-                      class="btn btn-white btn-outline-white p-4 py-3"
-                    >
-                      REGISTER
-                      <i class="fa fa-user-plus" aria-hidden="true"></i>
-                    </a>
-                  </p>
-                  <p class="w-50">
-                    <a
-                      href="{% url 'messenger:home' %}"
-                      class="btn btn-white btn-outline-white p-4 py-3"
-                    >
-                      LOGIN
-                      <i class="fa fa-user"></i>
-                    </a>
-                  </p>
+
+                      <a href="{% url 'messenger:restaurant' %}" class="btn btn-white btn-outline-white p-4 py-3 w-50">
+                        SERVICE PROVIDERS
+                        
+                      </a>
                 </div>
-              {% endif %}
 
-              <div class="col-md-6 col-lg form-wrap d-flex py-3 py-lg-5 px-4">
-                <div class="form-group ps-4">
-                  <label for="#">Event Category</label>
-                  <div class="form-field">
-                    <div class="select-wrap">
-                      <div class="icon">
-                        <span class="fa fa-chevron-down"></span>
-                      </div>
-                      <select name id class="form-control">
-                        {% for eachCategory in categories %}
-                            <option value="{{ eachCategory.tag }}">{{ eachCategory.category }}</option>
+                <div class="col-md-5 justify-content-center d-flex py-3 align-items-center">
+                  <form action="/search-by-district/" method="post">
 
-                        {% endfor %}
-                      </select>
+                    {% csrf_token %}
+                    
+                    <div class="input-group w-100">
+                        <span class="input-group-text">
+                            Search By District
+                        </span>
+            
+                        <select class="form-select" name="selected-district" required="">
+                          <option disabled="disabled" type="hidden">Search by district</option>
+    
+                          {% for eachDistrict in district_list %}
+      
+                              <option value="{{ eachDistrict }}">{{ eachDistrict }}</option>
+      
+                          {% endfor %}
+                        </select>
+        
+                        <button class="btn btn-primary me-2" type="submit">
+                          <i class="fa fa-search"></i>
+                        </button>
+            
                     </div>
-                  </div>
+                  </form>
                 </div>
+
               </div>
-              <div class="col-md-6 col-lg form-wrap d-flex py-3 py-lg-5 px-4">
-                <div class="form-group ps-4">
-                  <label for="#">Number Of Guests</label>
-                  <div class="form-field">
-                    <div class="select-wrap">
-                      <div class="icon">
-                        <span class="fa fa-chevron-down"></span>
-                      </div>
-                      <select name id class="form-control">
-                        <option value>1 Person</option>
-                        <option value>up to 10 People</option>
-                        <option value>up to 20 People</option>
-                        <option value>up to 30 People</option>
-                        <option value>up to 40 People</option>
-                        <option value>up to 50 People</option>
-                        <option value>50+ People</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 col-lg d-flex">
-                <div class="form-group d-flex border-0">
-                  <div class="form-field w-100 align-items-center d-flex">
-                    <a href="{% url 'userenv:useraccount' %}" type="submit" class="d-flex justify-content-center align-items-center align-self-stretch form-control btn btn-primary py-lg-4 py-xl-0">
-                      <span>
-                        <i class='bx bxs-check-circle bx-burst me-1'></i>
-                        Book Now
-                      </span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

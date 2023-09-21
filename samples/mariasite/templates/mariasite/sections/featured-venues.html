@@ -2,7 +2,6 @@
 
 <section class="ftco-section bg-light">
     <div class="container-xl">
-
         <div class="row justify-content-center">
             <div class="col-md-8 heading-section text-center mb-5" data-aos="fade-up" data-aos-duration="1000">
                 <span class="subheading">Other Venues</span>
@@ -11,38 +10,57 @@
         </div>
 
         {% if featured_list %}
-
             <div class="row justify-content-center">
-                {% for eachVenue in featured_list %}
-                    {% if forloop.counter|divisibleby:2 %}
-                        <div class="col-md-6 col-12 col-lg-4 d-flex align-items-stretch justify-content-center" data-aos="flip-left" data-aos-delay="100" data-aos-duration="1000">
-                            <div class="room-wrap d-md-flex flex-md-column-reverse">
-                                <a href="{{ eachVenue.url }}" class="img img-room" style="background-image: url({{ eachVenue.image }});">
-                                </a>
-                                <div class="text p-5 text-center">
-                                    <h3><a href="{% url 'messenger:venue-details' eachVenue.name %}">{{ eachVenue.name.title }}</a></h3>
-                                    <p>{{ eachVenue.description }}</p>
-                                    <p class="mb-0 mt-2"><span class="me-3 price">{{ eachVenue.capacity }}</span><a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">Book Now</a></p>
-                                </div>
-                            </div>
-                        </div>
+              <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  {% for eachVenue in featured_list %}
+                    {% if forloop.counter == 1 %}
+                      <div class="carousel-item active" style="display: flex !important; align-items:center !important;">
+                        <a href="" class="d-block w-100">
+                          <img src="{{ eachVenue.image }}" class="d-block w-100" alt="...">
+                          <div class="d-block" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            <span style="color: white;" class="venue-name-featured">{{ eachVenue.name }}</span>
+                            <p style="color: white;" class="venue-description">
+                              <q>
+                                {{ eachVenue.description.capitalize }}
+                              </q>
+                            </p>
+                          </div>
+                        </a>
+                      </div>
 
                     {% else %}
-                        <div class="col-md-6 col-12 col-lg-4 d-flex align-items-stretch justify-content-center" data-aos="flip-left" data-aos-delay="200" data-aos-duration="1000">
-                            <div class="room-wrap">
-                                <a href="{% url 'messenger:venue-details' eachVenue.name %}" class="img img-room" style="background-image: url({{ eachVenue.image }});">
-                                </a>
-                                <div class="text p-5 text-center">
-                                    <h3><a href="{% url 'messenger:venue-details' eachVenue.name %}">{{ eachVenue.name.title }}</a></h3>
-                                    <p>{{ eachVenue.description }}</p>
-                                    <p class="mb-0 mt-2"><span class="me-3 price">{{ eachVenue.capacity }}</span><a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">Book Now</a></p>
-                                </div>
-                            </div>
+
+                      <div class="carousel-item">
+                        <a href="" class="d-block w-100">
+                        <img src="{{ eachVenue.image }}" class="d-block w-100" alt="...">
+                        <div class="d-block" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                          <span style="color: white;" class="venue-name-featured">{{ eachVenue.name }}</span>
+                          <p style="color: white;" class="venue-description"><q>{{ eachVenue.description.capitalize }}</q></p>
+                                                    
                         </div>
+                        </a>
+                      </div>
 
                     {% endif %}
-                {% endfor %}
+
+                  {% endfor %}
+                </div>
                 
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
             </div>
 
         {% else %}

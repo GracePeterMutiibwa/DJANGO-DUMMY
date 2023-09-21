@@ -23,14 +23,21 @@
         
                             <input type="text" name="contact-value" class="form-control" placeholder="i.e. mariahill@gmail.com" required>
                             
+                            <span class="input-group-text">Value</span>
+
+                            <select class="form-select" name="whose-contacts">
+                                <option value="1">Gardens</option>
+                                <option value="2">Events Services</option>
+                            </select>
+
                             <button type="submit" class="btn btn-primary">Save Contact</button>
                         </div>
 
                     </form>
                 </div>
                 
-                <div class="mb-0">
-                    <label for="defaultFormControlInput" class="form-label">AVAILABLE ACHIEVEMENTS</label>
+                <div class="mb-4">
+                    <label for="defaultFormControlInput" class="form-label">MARIA HILL GARDENS CONTACTS</label>
     
                     <table class="table">
                         <thead>
@@ -51,7 +58,7 @@
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{% url 'messenger:wipe-contact' eachContact.id %}"><i class="bx bx-trash me-1"></i> Delete Contact</a>
+                                                    <a class="dropdown-item" href="{% url 'messenger:wipe-contact' contactId=eachContact.id whoseContact=eachContact.kind %}"><i class="bx bx-trash me-1"></i> Delete Contact</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -68,7 +75,48 @@
                     <div class="form-text">
                         For Facebook, Twitter, Instagram & Whatsapp, use links as values
                     </div>
-                </div>      
+                </div>
+                
+                <div class="mb-0">
+                    <label for="defaultFormControlInput" class="form-label">EVENTS SERVICES CONTACTS</label>
+    
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>No.</th>
+                            <th>CONTACT TYPE</th>
+                            <th>VALUE</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            {% if events_contacts %}
+                                {% for eachContact in events_contacts %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ eachContact.type }}</td>
+                                        <td>{{ eachContact.value }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{% url 'messenger:wipe-contact' contactId=eachContact.id whoseContact=eachContact.kind %}"><i class="bx bx-trash me-1"></i> Delete Contact</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                            {% else %}
+                                <p class="lead">No Contacts Yet</p>
+                            
+                            {% endif %}
+
+                        </tbody>
+                    </table>
+                    <div class="form-text">
+                        For Facebook, Twitter, Instagram & Whatsapp, use links as values
+                    </div>
+                </div> 
             </div>
         </div>
 

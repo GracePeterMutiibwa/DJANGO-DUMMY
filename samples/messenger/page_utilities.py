@@ -99,6 +99,7 @@ class PageTools:
         # is data present
         if textualDetailsPresent is True:
             pageData = {
+                'media_handles': PageTools().getSocialHandles(pageId=vendorPage.pk),
                 'details': self.extractPageDataToRender(pageDetailObject=textualDetails),
                 'present_services': self.extractVendorServices(vendorPage=vendorPage)
             }

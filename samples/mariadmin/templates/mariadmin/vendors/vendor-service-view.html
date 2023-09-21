@@ -4,7 +4,7 @@
         <h5 class="offcanvas-title" id="offcanvasRightLabel">
 
             <div class="logo">
-                <h2 class="vendor-header text-white" style="white-space: nowrap;">{{ details.name }}</h2>
+                <h2 class="aside-header text-white" style="white-space: nowrap;">{{ details.name }}</h2>
             </div>
             
         </h5>
@@ -58,10 +58,10 @@
                         </p>
                         
                         <div class="mt-4">
-                            <a class="btn btn-primary w-100" href="{% url 'userenv:useraccount' %}">
+                            <a class="btn btn-primary w-100" target="_blank" href="https://wa.me/+256{{ details.phone }}">
                                 <i class='bx bxs-cart-add bx-burst me-2'></i>
 
-                                Get It
+                                Contact Provider
                             </a>
                         </div>
                     </div>

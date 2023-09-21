@@ -10,21 +10,21 @@
                                 <p class="mb-4">We're open for any suggestion or just to have a chat</p>
                             
                                 <div class="row mb-4">
-                                    {% if contacts.location %}
+                                    {% if events_contacts.location %}
                                         <div class="col-md-6">
                                             <div class="dbox w-100 d-flex align-items-start">
                                                 <div class="text">
-                                                    <p><span>Address:</span> {{ contacts.location }}</p>
+                                                    <p><span>Address:</span> {{ events_contacts.location }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     {% endif %}
 
-                                    {% if contacts.telephone %}
+                                    {% if events_contacts.telephone %}
                                         <div class="col-md-6">
                                             <div class="dbox w-100 d-flex align-items-start">
                                                 <div class="text">
-                                                    <p><span>Phone:</span> {{ contacts.telephone }}</p>
+                                                    <p><span>Phone:</span> {{ events_contacts.telephone }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -79,19 +79,19 @@
                                 <div class="w-100 social-media mt-5">
                                 <h3>Follow us here</h3>
                                     <p>
-                                        {% if contacts.twitter %}
+                                        {% if events_contacts.twitter %}
                                             <a href="{{ contacts.twitter }}"><span class="fa fa-twitter" style="font-size: 12px;"></span></a>
                                         {% endif %}
 
-                                        {% if contacts.facebook %}
+                                        {% if events_contacts.facebook %}
                                             <a href="{{ contacts.facebook }}"><span class="fa fa-facebook" style="font-size: 12px;"></span></a>
                                         {% endif %}
 
-                                        {% if contacts.instagram %}
+                                        {% if events_contacts.instagram %}
                                             <a href="{{ contacts.instagram }}"><span class="fa fa-instagram" style="font-size: 12px;"></span></a>
                                         {% endif %}
 
-                                        {% if contacts.whatsapp %}
+                                        {% if events_contacts.whatsapp %}
                                             <a href="{{ contacts.whatsapp }}"><span class="fa fa-whatsapp" style="font-size: 12px;"></span></a>
                                         {% endif %}
                                     </p>

@@ -99,7 +99,7 @@ urlpatterns = [
     
     path('delete-venue/<int:venueId>/', views.deleteSpecificVenue, name='wipe-venue'),
     
-    path('delete-contact/<int:contactId>/', views.deleteSpecificContact, name='wipe-contact'),
+    path('delete-contact/<int:contactId>/<int:whoseContact>/', views.deleteSpecificContact, name='wipe-contact'),
     
     path('delete-comments/<int:postId>/', views.deletePostComments, name='delete-comments'),
     

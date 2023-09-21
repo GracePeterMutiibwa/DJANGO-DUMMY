@@ -40,14 +40,19 @@
       rel="stylesheet"
     />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&display=swap" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
 
     <link
       rel="stylesheet"
@@ -87,20 +92,24 @@
       href="{% static 'mariasite/color/site-core/theme/unwind/css/aos.css' %}"
     />
 
-
     <link
-    rel="stylesheet"
-    href="{% static 'mariasite/color/site-core/theme/unwind/css/ancient/ny-fonts.css' %}"
+      rel="stylesheet"
+      href="{% static 'mariasite/color/site-core/theme/unwind/css/ancient/ny-fonts.css' %}"
     />
 
     <link
-    rel="stylesheet"
-    href="{% static 'mariasite/color/site-core/theme/unwind/css/tangerine/tangerine.css' %}"
+      rel="stylesheet"
+      href="{% static 'mariasite/color/banner/fonts/benedict.css' %}"
     />
 
     <link
-    rel="stylesheet"
-    href="{% static 'mariasite/color/site-core/theme/unwind/css/lovers-quarrel/lovers-quarrel.css' %}"
+      rel="stylesheet"
+      href="{% static 'mariasite/color/site-core/theme/unwind/css/tangerine/tangerine.css' %}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'mariasite/color/site-core/theme/unwind/css/lovers-quarrel/lovers-quarrel.css' %}"
     />
 
     <link
@@ -108,10 +117,44 @@
       href="{% static 'mariasite/color/site-core/theme/unwind/css/style.css' %}"
     />
 
-
     <style>
+      @import url(http://fonts.googleapis.com/css?family=Gentium+Book+Basic:400,700,700italic,400italic);
+      
+      q,
+      blockquote {
+        quotes: "“" "”" "‘" "’";
+        font-style: italic;
+      }
+
+      .french {
+        quotes: "«" "»" "‹" "›";
+      }
+
+      q:before,
+      blockquote:before {
+        content: open-quote;
+      }
+
+      q:after,
+      blockquote:after {
+        content: close-quote;
+      }
+
+      q:before,
+      q:after,
+      blockquote:before,
+      blockquote:after {
+        color: #CAA87B;
+        font-size: 1.2em;
+      }
+
+      blockquote {
+        margin-left: 0;
+        padding-left: 1em;
+        border-left: 5px solid deepPink;
+      }
       .maria-header {
-        font-family: 'IM Fell French Canon', serif;
+        font-family: "IM Fell French Canon", serif;
         font-size: 1em;
         font-weight: 10 !important;
         line-height: 1.2em;
@@ -120,7 +163,7 @@
         margin-bottom: 0 !important;
       }
 
-      .d-none{
+      .d-none {
         display: none;
       }
 
@@ -132,6 +175,10 @@
         .maria-header {
           font-size: 3em;
           white-space: wrap !important;
+        }
+
+        .book-mariahill{
+          width: 140px !important;
         }
       }
 
@@ -148,7 +195,6 @@
           white-space: wrap;
         }
       }
-
 
       @media (min-width: 1001px) {
         .navbar-logo {
@@ -224,15 +270,41 @@
           top: 145px;
         }
 
-        .book-now-btn{
+        .book-now-btn {
           top: 150px;
-
         }
+
+      }
+
+      .banner-sub-title {
+        font-family: "Benedict";
+        font-size: 30px;
+      }
+
+      .venue-description{
+        margin-top: 1rem !important;
+        font-family: "Benedict";
+        font-size: 20px;
+        background: rgba(34, 34, 34, 0.5);
+        border-radius: 7px;
+        padding-left: 1rem;
+        padding-right: 1rem;
 
 
       }
+
+      .venue-name-featured{
+        margin-bottom: 1.2rem !important;
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-radius: 50px;
+        background: rgba(34, 34, 34, 0.5);
+      }
     </style>
   </head>
+
   <body>
     <nav class="navbar navbar-expand-lg ftco-navbar-light">
       <div class="container-xl">
@@ -241,7 +313,6 @@
           class="navbar-brand navbar-logo"
           href="{% url 'messenger:welcome' %}"
         >
-          <!-- <span class>MariaHill<small>Gardens</small></span> -->
           <img
             src="{% static 'mariasite/color/site-core/theme/unwind/images/white-maria.png' %}"
             style="width: 150px; height: auto"
@@ -305,10 +376,18 @@
             </li>
 
             {% if request.user.is_authenticated %}
+
             <li class="nav-item bg-sm-transparent bg-secondary">
-              <a class="nav-link" data-id="6" href="{% url 'messenger:home' %}"
-                >Account</a
-              >
+              <a class="nav-link" data-id="6" href="{% url 'messenger:home' %}">
+                Account
+              </a>
+            </li>
+            {% else %}
+
+            <li class="nav-item bg-sm-transparent bg-secondary">
+              <a class="nav-link" data-id="6" href="{% url 'messenger:home' %}">
+                Login
+              </a>
             </li>
 
             {% endif %}
@@ -317,20 +396,12 @@
       </div>
     </nav>
 
-    {% block page_main %}
-    {% endblock %} 
-
-    {% include 'mariasite/sections/footer-section.html' %} 
-
+    {% block page_main %} {% endblock %} 
+    {% include 'mariasite/sections/footer-section.html' %}
     {% if hide_gallery %} 
-
     {% else %}
-
-    {% include 'mariasite/core/side-button.html' %} 
-    
-    {% endif %}
-
-    {% include 'mariasite/core/services-side-button.html' %} 
+    {% include 'mariasite/core/side-button.html' %} {% endif %} 
+    {% include 'mariasite/core/services-side-button.html' %}
 
     <script src="{% static 'mariasite/color/site-core/theme/unwind/js/new/bootstrap.min.js' %}"></script>
 
@@ -340,10 +411,7 @@
     <script src="{% static 'mariasite/color/site-core/theme/unwind/js/main.js' %}"></script>
     <script src="{% static 'mariasite/color/site-core/theme/unwind/js/custom-script.js' %}"></script>
     <script src="{% static 'mariasite/color/site-core/theme/unwind/js/service-home.js' %}"></script>
-    <script src="{% static 'mariasite/color/site-core/theme/unwind/js/search-manager.js' %}"></script>
 
-
-    {% block own_js %}
-    {% endblock %}
+    {% block own_js %} {% endblock %}
   </body>
 </html>

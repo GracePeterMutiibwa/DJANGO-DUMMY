@@ -13,7 +13,7 @@ from django.http import HttpRequest
 from .models import (Category, 
                     AboutHeading, AboutDetails, LeftCard, 
                     RightCard, OfferedService, MiddleGrid, 
-                    VenueItem, Testimonial, StatisticsMeta, Contacts, WebsiteHeadingImage, gardensTourVideoLink
+                    VenueItem, Testimonial, StatisticsMeta, Contacts, WebsiteHeadingImage, EventsServicesContacts, gardensTourVideoLink
                     )
 
 from messenger.views import ControlUtils
@@ -80,9 +80,19 @@ def getAdminHomeContext():
                 {
                     'type': eachContact.contactType.capitalize(),
                     'value': eachContact.contactValue,
-                    'id': eachContact.pk
+                    'id': eachContact.pk,
+                    'kind': 1
                 } for eachContact in Contacts.objects.all()
+            ],
+        'events_contacts': [
+                {
+                    'type': eachContact.contactType.capitalize(),
+                    'value': eachContact.contactValue,
+                    'id': eachContact.pk,
+                    'kind': 2
+                } for eachContact in EventsServicesContacts.objects.all()
             ]
+        
         }
 
 

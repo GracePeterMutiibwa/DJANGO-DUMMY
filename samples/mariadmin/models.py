@@ -275,6 +275,12 @@ class Contacts(models.Model):
     contactType = models.TextField(blank=False)
     
     contactValue = models.TextField(blank=False)
+    
+class EventsServicesContacts(models.Model):
+    contactType = models.TextField(blank=False)
+    
+    contactValue = models.TextField(blank=False)
+    
 
 class StatisticsMeta(models.Model):
     happyGuests = models.IntegerField()

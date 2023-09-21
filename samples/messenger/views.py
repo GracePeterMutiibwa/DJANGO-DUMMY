@@ -39,7 +39,7 @@ from mariadmin.models import (Category, ImageAsset,
             OfferedService, MiddleGrid, VenueItem, 
             Testimonial, StatisticsMeta, Contacts, MessageEntryNames, MessageFlow,
             SimpleContactMessages, EmailHolders, EmailReplies, PageCategory, VendorPage,
-            EmailReset, NotAccessibleYet, WebsiteHeadingImage, gardensTourVideoLink
+            EmailReset, NotAccessibleYet, WebsiteHeadingImage, gardensTourVideoLink, EventsServicesContacts
             )
 
 from userenv.views import ProcessingUtilities
@@ -279,9 +279,12 @@ class CommUtilities:
 
 
 class ControlUtils:
-    def getContactData(self):
+    def getContactData(self, whatToGet=1):
+        # get the contacts
+        contactsObject = Contacts.objects.all() if whatToGet == 1 else EventsServicesContacts.objects.all()
+        
         presentContactData = {
-            eachContact.contactType: eachContact.contactValue for eachContact in Contacts.objects.all()
+            eachContact.contactType: eachContact.contactValue for eachContact in contactsObject
         }
         
         return presentContactData
@@ -785,7 +788,8 @@ def contactPage(request):
             'name': "CONTACT"
             }, 
         'to_page': None,
-        'contacts': ControlUtils().getContactData()
+        'contacts': ControlUtils().getContactData(whatToGet=1),
+        'events_contacts': ControlUtils().getContactData(whatToGet=2)
         
     }
     
@@ -1309,9 +1313,13 @@ def updateGalleryImageState(request):
 
 @login_required(login_url='messenger:home')
 @user_passes_test(isAdmin)
-def deleteSpecificContact(request, contactId):
+def deleteSpecificContact(request, contactId, whoseContact):
     # get the instance
-    contactToDelete = get_object_or_404(Contacts, pk=contactId)
+    if whoseContact == 1:
+        contactToDelete = get_object_or_404(Contacts, pk=contactId)
+        
+    else:
+        contactToDelete = get_object_or_404(EventsServicesContacts, pk=contactId)
     
     # get the type of the deleted contact
     deletedContactType = contactToDelete.contactType
@@ -1319,8 +1327,11 @@ def deleteSpecificContact(request, contactId):
     # delete the contact
     contactToDelete.delete()
     
+    # type 
+    whoseMessage = "Mariahill Gardens" if whoseContact == 1 else "Events Services"
+    
     # alert deletion success
-    messages.success(request, f"The Contact For '{deletedContactType}' was deleted successfully!")
+    messages.success(request, f" '{deletedContactType}' Contact For {whoseMessage}  was deleted successfully!")
     
     return redirect("admin_panel:admin-home")
 
@@ -1915,10 +1926,13 @@ def makeWebsiteEdit(request, sectionId):
     # 12
     elif sectionId == 12:
         #  save the contact data
-        contactIsNew = SectionUtils(request=request).processContactData()
+        contactIsNew, whoseContacts = SectionUtils(request=request).processContactData()
+        
+        # contact type
+        contactKind = "Mariahill Gardens" if whoseContacts == 1 else "Events Services"
         
         # message
-        displayMessage = "The Contact was saved successfully!" if contactIsNew is True else "The Contact was updated successfully!"
+        displayMessage =f"The Contact for '{contactKind}' was saved successfully!" if contactIsNew is True else "The Contact was updated successfully!"
         
         # alert success
         messages.success(request, displayMessage)

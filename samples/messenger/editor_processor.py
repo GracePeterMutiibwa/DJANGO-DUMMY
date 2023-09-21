@@ -7,7 +7,8 @@ from django.contrib import messages
 from mariadmin.models import (
     AboutHeading, AboutDetails, LeftCard, RightCard, OfferedService, 
     MiddleGrid, VenueItem, Testimonial, 
-    StatisticsMeta, Contacts, MessageFlow, MessageEntryNames, WebsiteHeadingImage, gardensTourVideoLink
+    StatisticsMeta, Contacts, MessageFlow, MessageEntryNames, WebsiteHeadingImage, gardensTourVideoLink,
+    EventsServicesContacts
     )
 
 
@@ -180,7 +181,13 @@ class SectionUtils:
         
         contactValue = submittedData['contact-value']
         
-        contactInstance = Contacts.objects.filter(contactType=contactType).first()
+        whoseContact = int(submittedData['whose-contacts'])
+        
+        if whoseContact == 1:
+            contactInstance = Contacts.objects.filter(contactType=contactType).first()
+            
+        else:
+            contactInstance = EventsServicesContacts.objects.filter(contactType=contactType).first()
         
         if contactInstance:
             # update
@@ -188,17 +195,21 @@ class SectionUtils:
             
         else:
             # create a new one
-            contactInstance = Contacts.objects.create(
-                contactType=contactType,
-                contactValue=contactValue)
-            
+            if whoseContact == 1:
+                contactInstance = Contacts.objects.create(
+                    contactType=contactType,
+                    contactValue=contactValue)
+            else:
+                contactInstance = EventsServicesContacts.objects.create(
+                        contactType=contactType,
+                        contactValue=contactValue)
         # save the contact
         contactInstance.save()
         
         # new or updated
         isNew = True if contactInstance is None else False
         
-        return isNew
+        return isNew, whoseContact
 
 
     
