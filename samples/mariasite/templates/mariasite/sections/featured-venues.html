@@ -21,7 +21,7 @@
                   {% for eachVenue in featured_list %}
                     {% if forloop.counter == 1 %}
                       <div class="carousel-item active" style="display: flex !important; align-items:center !important;">
-                        <a href="" class="d-block w-100">
+                        <a href="{% url 'messenger:venue-details' eachVenue.name  %}" class="d-block w-100">
                           <img src="{{ eachVenue.image }}" class="d-block w-100" alt="...">
                           <div class="d-block" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                             <span style="color: white;" class="venue-name-featured">{{ eachVenue.name }}</span>
@@ -37,7 +37,7 @@
                     {% else %}
 
                       <div class="carousel-item">
-                        <a href="" class="d-block w-100">
+                        <a href="{% url 'messenger:venue-details' eachVenue.name  %}" class="d-block w-100">
                         <img src="{{ eachVenue.image }}" class="d-block w-100" alt="...">
                         <div class="d-block" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                           <span style="color: white;" class="venue-name-featured">{{ eachVenue.name }}</span>

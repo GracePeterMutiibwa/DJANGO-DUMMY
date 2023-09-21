@@ -1345,17 +1345,21 @@ def deletePostComments(request, postId):
 @login_required(login_url='messenger:home')
 def deleteChatsForGivenUser(request, userName): 
     # get the object
-    entryObject = get_object_or_404(MessageEntryNames, UserName=userName)
+    entryObject = MessageEntryNames.objects.filter(UserName=userName).first()
     
-    # delete the entry
-    entryObject.delete()
+    if entryObject:
+        # delete the entry
+        entryObject.delete()
 
-    # delete the associate chats
-    ChatUtilities(request=request).wipeAllChats(userName=userName)
+        # delete the associate chats
+        ChatUtilities(request=request).wipeAllChats(userName=userName)
+        
+    else:
+        # pass
+        messages.error(request, "You have no chats yet!")
     
     # print("To be deleted:", userName)
 
-    
     return redirect("userenv:useraccount")
     
 
