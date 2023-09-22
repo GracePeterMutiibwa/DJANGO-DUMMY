@@ -1,0 +1,170 @@
+{% load static %}
+
+
+<section class="ftco-section bg-light" id="booking-form">
+    <div class="container">
+        <div class="row no-gutters justify-content-center">
+            <div class="col-md-12">
+                <div class="wrapper">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div style="margin: 0 0;">
+                                <img 
+                                    {% if booking_image %}
+                                        src="{{ booking_image }}"
+                                    {% else %}
+                                        src="{% static 'mariasite/color/site-core/theme/unwind/images/bg_1.jpg' %}"
+                                    {% endif %}
+                                    alt="" class="img-fluid">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="contact-wrap w-100 p-md-5 p-4">
+                                <h3>Send a message <i class='bx bx-mail-send ms-2'></i></h3>
+                                <p class="mb-4">
+                                    {% if contact_form_text %}
+                                        {{ contact_form_text }}
+                                    {% else %}
+                                        We're open for any suggestion or just to have a chat
+                                    {% endif %}
+                                </p>
+                            
+                                <div class="row mb-4">
+                                    {% if contacts.location %}
+                                        <div class="col-md-6">
+                                            <div class="dbox w-100 d-flex align-items-start">
+                                                <div class="text">
+                                                    <p><span>Address:</span> {{ contacts.location }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if contacts.telephone %}
+                                        <div class="col-md-6">
+                                            <div class="dbox w-100 d-flex align-items-start">
+                                                <div class="text">
+                                                    <p><span>Phone:</span> {{ contacts.telephone }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+
+                                <p>
+                                    <strong>
+                                        Required fields are denoted with an asterisk (*)
+                                    </strong>
+                                </p>
+
+                                <form id="contactForm" action="{% url 'messenger:record-booking' %}" method="post" class="contactForm">
+                                    {% csrf_token %}
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="mb-2">
+                                                <div class="form-group">
+                                                    <label for="person-name">Name <strong>*</strong></label>
+                                                    <input type="text" id="person-name" class="form-control" style="padding-left: 1rem;" name="user-name" placeholder="i.e. John Doe" required>
+                                                </div>
+                                            </div>
+ 
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="mb-2">
+                                                <div class="form-group">
+                                                    <label for="person-email">Email <strong>*</strong></label>
+
+                                                    <input type="email" id="person-email" style="padding-left: 1rem;" class="form-control" name="user-email" placeholder="i.e. johndoe@gmail.com" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <div class="form-group">
+                                                    <label for="person-phone">Phone</label>
+                                                    <input type="text" class="form-control" id="person-phone" style="padding-left: 1rem;" name="user-phone" placeholder="i.e. +256 76166890">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="mb-2">
+                                                <div class="form-group">
+                                                    <label for="event-category">Event Category <strong>*</strong></label>
+                                                    <select name="event-category" id="event-category" class="form-select" required>
+                                                        {% for eachCategory in event_categories %}
+                                                            <option value="{{ eachCategory.category }}"> {{ eachCategory.category }} </option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-12">
+                                            <div class="mb-2">
+                                                <div class="form-group">
+                                                    <label for="guest-number">Number Of Guests <strong>*</strong></label>
+                                                    <input type="number" min="1" id="guest-number" value="1" class="form-control" style="padding-left: 1rem;" name="guest-number" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="user-message">Booking Message <strong>*</strong></label>
+                                                <textarea name="booking-message" style="padding-left: 1rem;" class="form-control" id="user-message" cols="30" rows="3" placeholder="Write any additional information here" required></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="submit" value="Submit Booking Details" class="btn btn-primary">
+                                                
+                                                {% if messages %}
+                                                    <div class="submitting">
+                                                        {% for eachMessage in messages %}
+                                                            <span>{{ eachMessage }}</span>
+
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="w-100 social-media mt-5">
+                                <h3>Contact Us Here</h3>
+                                    <p>
+                                        {% if events_contacts.twitter %}
+                                            <a href="{{ contacts.twitter }}"><span class="fa fa-twitter" style="font-size: 12px;"></span></a>
+                                        {% endif %}
+
+                                        {% if events_contacts.facebook %}
+                                            <a href="{{ contacts.facebook }}"><span class="fa fa-facebook" style="font-size: 12px;"></span></a>
+                                        {% endif %}
+
+                                        {% if events_contacts.instagram %}
+                                            <a href="{{ contacts.instagram }}"><span class="fa fa-instagram" style="font-size: 12px;"></span></a>
+                                        {% endif %}
+
+                                        {% if events_contacts.whatsapp %}
+                                            <a href="{{ contacts.whatsapp }}"><span class="fa fa-whatsapp" style="font-size: 12px;"></span></a>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

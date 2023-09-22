@@ -16,6 +16,8 @@ from .reset_processor import ResetUtilities, CodeValidationUtilities, PasswordRe
 
 from .venue_control import VenueUtilities, VenueTools
 
+from .mail_processor import MessengerUtils 
+
 from django.db.models import Q
 
 
@@ -39,7 +41,9 @@ from mariadmin.models import (Category, ImageAsset,
             OfferedService, MiddleGrid, VenueItem, 
             Testimonial, StatisticsMeta, Contacts, MessageEntryNames, MessageFlow,
             SimpleContactMessages, EmailHolders, EmailReplies, PageCategory, VendorPage,
-            EmailReset, NotAccessibleYet, WebsiteHeadingImage, gardensTourVideoLink, EventsServicesContacts
+            EmailReset, NotAccessibleYet, WebsiteHeadingImage, 
+            gardensTourVideoLink, EventsServicesContacts,
+            BookingFormDetail
             )
 
 from userenv.views import ProcessingUtilities
@@ -518,8 +522,8 @@ def getPageCategoryMeta():
     ]
     
     return categoriesAndCounts
-    
-def websiteHomePage(request):
+
+def getEventCategories():
     presentCategories = [
         {
             'category': str(eachCategory),
@@ -527,7 +531,9 @@ def websiteHomePage(request):
         } for eachCategory in Category.objects.all()
     ]
     
+    return presentCategories  
     
+def websiteHomePage(request):
     # get the banner image
     bannerImage = WebsiteHeadingImage.objects.all().first() 
     
@@ -541,7 +547,6 @@ def websiteHomePage(request):
         'banner_image': bannerImage.imageUrl if bannerImage else None,
         'tour_video_link': videoLinkUrl.videoUrl if videoLinkUrl else None,
         'district_list': HelperUtils().getCountryList(),
-        'categories': presentCategories,
         'heading': str(AboutHeading.objects.all().first()),
         'about_detail': str(AboutDetails.objects.all().first()),
         'left_card_data': {'heading': LeftCard.objects.all().first().leftCardHeading, 'text': LeftCard.objects.all().first().leftCardText, 'image': LeftCard.objects.all().first().leftCardImageUrl} if LeftCard.objects.all().first() else None,
@@ -776,7 +781,67 @@ def blogPostPage(request):
         'contacts': ControlUtils().getContactData()
     }
     
-    return render(request, "mariasite/pages/blog.html", context=pageContext)    
+    return render(request, "mariasite/pages/blog.html", context=pageContext)
+
+
+
+def recordBookingInformation(request):
+    submittedData = request.POST.dict()
+    
+    # get the submitted data
+    submittedName = submittedData['user-name'].title()
+    
+    submittedEmail = submittedData['user-email']
+    
+    submittedContact = submittedData['user-phone']
+    
+    submittedCategory = submittedData['event-category']
+    
+    guestNumber = int(submittedData['guest-number'])
+    
+    bookingMessage = submittedData['booking-message'].capitalize()
+    
+    # email message
+    emailMessage = f"""NAMES: {submittedName}, CONTACT: {submittedContact}, EVENT CATEGORY: {submittedCategory}, GUEST NUMBER: {guestNumber}, DETAILS : {bookingMessage}"""
+    
+    #save
+    writeMailMessageData(
+        submittedUserName=submittedName,
+        submittedUserEmail=submittedEmail,
+        submittedMessageSubject="MARIAHILL GARDENS BOOKING",
+        submittedActualMessage=emailMessage   
+    )
+    
+    # send message
+    messages.success(request, "Booking request sent successfully!")
+    
+    return redirect("messenger:book-gardens")
+    
+    
+
+def bookMariahillGardens(request):
+    # get the booking form object
+    bookingFormObject = BookingFormDetail.objects.all().first()
+    
+    bookingFormText, bookingFormImage = bookingFormObject.formText, bookingFormObject.imageUrl
+    
+    # defines page context
+    pageContext = {
+        "contact_form_text": bookingFormText,
+        "booking_image": bookingFormImage,
+        'header_name': "Book Marihill Gardens",
+        'event_categories': getEventCategories(),
+        'bg_image': None,
+        'from_page': {
+            "url": '#',
+            'name': "BOOKING"
+            }, 
+        'to_page': None,
+        'contacts': ControlUtils().getContactData(whatToGet=1),
+        
+    }
+    
+    return render(request, "mariasite/pages/booking.html", context=pageContext)
 
 def contactPage(request):
     # defines page context
@@ -1470,6 +1535,16 @@ def submitAdminReply(request):
     
     submittedReply = submittedData['reply-message'].capitalize()
     
+    
+    # perform the email sending
+    MessengerUtils().resetCoreEngine(
+        receiverEmail=submittedEmail,
+        emailSubject="REPLY FROM MARIAHILL",
+        messageToSend=submittedReply
+        
+    )
+
+    
     # get the email holder
     associatedHolder = EmailHolders.objects.filter(userEmail=submittedEmail).first()
     
@@ -1609,19 +1684,7 @@ def fetchServiceInformation(request):
     )
     
 
-def submitSimpleMessage(request):
-    # get the request
-    messageRequest = request.POST.dict()
-    
-    submittedUserName = messageRequest['user-name'].title()
-    
-    submittedUserEmail = messageRequest['user-email']
-    
-    
-    submittedMessageSubject = messageRequest['message-subject'].upper()
-    
-    submittedActualMessage = messageRequest['actual-message'].capitalize()
-    
+def writeMailMessageData(submittedUserName, submittedUserEmail, submittedMessageSubject, submittedActualMessage):
     # create the message
     newSimpleMessage = SimpleContactMessages.objects.create(
         UserName=submittedUserName,
@@ -1646,6 +1709,30 @@ def submitSimpleMessage(request):
         newHolderEntry.save()
         
         # print("Added new entry")
+        
+    return
+
+
+def submitSimpleMessage(request):
+    # get the request
+    messageRequest = request.POST.dict()
+    
+    submittedUserName = messageRequest['user-name'].title()
+    
+    submittedUserEmail = messageRequest['user-email']
+    
+    
+    submittedMessageSubject = messageRequest['message-subject'].upper()
+    
+    submittedActualMessage = messageRequest['actual-message'].capitalize()
+    
+    # send the message
+    writeMailMessageData(
+        submittedUserName=submittedUserName,
+        submittedUserEmail=submittedUserEmail,
+        submittedMessageSubject=submittedMessageSubject,
+        submittedActualMessage=submittedActualMessage)
+    
     
     # alert saving
     messages.success(request, "The message was submitted successfully!")
@@ -2140,5 +2227,49 @@ def deleteVenueImage(request):
             message = 'wiped'
         )
     )    
+    
+    
+@login_required(login_url='messenger:home')
+@user_passes_test(isAdmin)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def recordBookingFormDetail(request):
+    # request data
+    requestData = request.POST.dict()
+    
+    # get the object    
+    submittedFormImage = requestData['side-image-url']
+    
+    if submittedFormImage.endswith(".jpg") or submittedFormImage.endswith(".png") or submittedFormImage.endswith(".jpeg"):
+        # get the form text
+        submittedFormText = requestData['form-display-message']
+        
+        # get the object
+        presentObject = BookingFormDetail.objects.all().first()
+        
+        if presentObject:
+            # use present
+            pass
+        else:
+            # create new
+            presentObject = BookingFormDetail.objects.create()
+            
+        # add the details
+        presentObject.formText =  submittedFormText
+        
+        presentObject.imageUrl = submittedFormImage
+        
+        # save the detail
+        presentObject.save()
+        
+        messages.success(request, "The Booking form detail was updated successfully! 😊")
+
+
+    else:
+        # alert
+        messages.error(request, "Plesase use the image selector button to select and image!")
+
+    
+    return redirect("admin_panel:admin-home")
+        
     
     

@@ -6,6 +6,11 @@ from datetime import datetime
 
 from django.contrib.auth.models import User
 
+class BookingFormDetail(models.Model):
+    formText = models.TextField()
+    
+    imageUrl = models.TextField()
+
 class WebsiteHeadingImage(models.Model):
     imageUrl = models.TextField()
     

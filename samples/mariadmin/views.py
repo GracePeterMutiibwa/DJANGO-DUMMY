@@ -13,7 +13,9 @@ from django.http import HttpRequest
 from .models import (Category, 
                     AboutHeading, AboutDetails, LeftCard, 
                     RightCard, OfferedService, MiddleGrid, 
-                    VenueItem, Testimonial, StatisticsMeta, Contacts, WebsiteHeadingImage, EventsServicesContacts, gardensTourVideoLink
+                    VenueItem, Testimonial, StatisticsMeta, 
+                    Contacts, WebsiteHeadingImage, EventsServicesContacts, 
+                    gardensTourVideoLink, BookingFormDetail
                     )
 
 from messenger.views import ControlUtils
@@ -32,9 +34,16 @@ def getAdminHomeContext():
     # get the banner image
     bannerImage = WebsiteHeadingImage.objects.all().first()
     
-    videoLinkUrl = gardensTourVideoLink.objects.all().first() 
+    videoLinkUrl = gardensTourVideoLink.objects.all().first()
+    
+    # get the booking form object
+    bookingFormObject = BookingFormDetail.objects.all().first()
+    
+    bookingFormText, bookingFormImage = bookingFormObject.formText, bookingFormObject.imageUrl
     
     adminContext = {
+        "contact_form_text": bookingFormText,
+        "form_side_image":  bookingFormImage,
         'tour_video_link': videoLinkUrl.videoUrl if videoLinkUrl else None,
         'categories': availableCategories,
         'banner_image': bannerImage.imageUrl if bannerImage else None,

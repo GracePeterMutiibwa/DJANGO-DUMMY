@@ -69,6 +69,10 @@ urlpatterns = [
     
     path('contact/', views.contactPage, name='contact'),
     
+    path('book-mariahill-gardens/', views.bookMariahillGardens, name='book-gardens'),
+    
+    path('record-booking/', views.recordBookingInformation, name='record-booking'),
+    
     path('logout/', views.logoutUser, name='logout-user'),
     
     path('uploads/', views.fileManagerPage, name='file-manager'),
@@ -128,6 +132,8 @@ urlpatterns = [
     path('submit-reply/', views.submitAdminReply, name='send-reply'),
     
     path('save-page/', views.recordNewVendorPage, name='save-page'),
+    
+    path('save-form-detail/', views.recordBookingFormDetail, name='booking-form-detail'),
     
     path('get-page-data/', views.fetchPageMeta, name='get-page-meta'),
     

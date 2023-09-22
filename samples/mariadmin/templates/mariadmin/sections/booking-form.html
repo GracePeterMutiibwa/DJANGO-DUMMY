@@ -1,0 +1,81 @@
+{% load static %}
+
+<div class="row w-100">
+    <section id="booking-form-section">
+
+        <div class="card mb-4 mx-2">
+            <h5 class="card-header">
+                <i class='bx bxs-receipt me-2'></i>
+                Booking Form Editor
+            </h5>
+
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <form action="{% url 'messenger:booking-form-detail' %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label for="form-simple-text" class="form-label">Brief Message</label>
+
+                        <div class="input-group">
+                            <span class="input-group-text">Display Message</span>
+    
+                            <input type="text" placeholder="i.e. We are Here for you" name="form-display-message" id="form-simple-text" class="form-control"
+    
+                            {% if contact_form_text is not None %}
+                                value="{{ contact_form_text }}"
+                            {% endif %}
+    
+                            required>
+                        </div>
+    
+                        <div class="form-text">
+                            {% if contact_form_text is not None %}
+                                {{ contact_form_text }}
+                            {% else %}
+                                This text appears at the top of the form as a brief message
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="form-side-image" class="form-label">FORM SIDE IMAGE</label>
+                    
+                        <div class="input-group">
+                            <span class="input-group-text">Image Name</span>
+    
+                            <input type="text" placeholder="Select an Image" name="side-image-url" id="form-side-image" class="form-control"
+    
+                            {% if form_side_image is not None %}
+                                value="{{ form_side_image }}"
+                            {% endif %}
+    
+                            required>
+                            
+                            <button class="btn btn-outline-primary image-selectors" type="button" data-output-receiver="form-side-image">
+                                <i class="bx bxs-file-image me-2"></i> Choose Image
+                            </button>
+                        </div>
+    
+                        <div class="form-text">
+                            {% if form_side_image is not None %}
+                                <strong>Current Form Image:</strong> {{ form_side_image }}
+                            {% else %}
+                                Select an image for booking form
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <button class="btn btn-outline-primary w-100" type="submit">
+                            <i class="fa fa-check me-2"></i> 
+                            Save Changes
+                        </button>
+                    </div>
+
+                </form>
+                
+            </div>
+        </div>
+
+    </section>
+</div>
