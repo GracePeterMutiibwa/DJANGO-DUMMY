@@ -381,7 +381,7 @@ class ControlUtils:
             
             {
                 'name': eachImageMeta.imageName,
-                'data': "/media/" + eachImageMeta.imageData.url,
+                'data': eachImageMeta.imageData.url,
                 'id': eachImageMeta.pk,
                 'date': eachImageMeta.uploadDate.strftime("On %d-%b-%Y At %H:%M %p") if eachImageMeta.uploadDate else "",
                 'for_gallery': eachImageMeta.isGalleryItem
@@ -389,6 +389,8 @@ class ControlUtils:
 
             for eachImageMeta in attachedImages
         ]
+        
+        print("Data:", uploadsMetaData)
 
         return uploadsMetaData
 
@@ -402,6 +404,8 @@ class ControlUtils:
 
         # add the image
         imageObject.imageData = imageData
+        
+        # print("File Path:", imageData)
 
         # save the image to the database
         imageObject.save()
@@ -541,12 +545,13 @@ def websiteHomePage(request):
 
     videoLinkUrl = gardensTourVideoLink.objects.all().first()
 
-    # print("Link:", videoLinkUrl)
+    print("Link:", bannerImage.imageUrl)
+    
     # "/media/" + 
     homeContext = {
         'page_category_meta': getPageCategoryMeta(),
         'home_page_previews': PageTools().getPagePreviews(limit=6),
-        'banner_image': "/media/" + bannerImage.imageUrl if bannerImage else None,
+        'banner_image': bannerImage.imageUrl if bannerImage else None,
         'tour_video_link': videoLinkUrl.videoUrl if videoLinkUrl else None,
         'district_list': HelperUtils().getCountryList(),
         'heading': str(AboutHeading.objects.all().first()),
@@ -1436,6 +1441,7 @@ def deleteChatsForGivenUser(request, userName):
 
 @login_required(login_url='messenger:home')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@user_passes_test(isAdmin)
 def fileManagerPage(request):
     if request.method == "POST":
         # file
@@ -1469,6 +1475,8 @@ def fileManagerPage(request):
         return redirect("messenger:file-manager")
 
     else:
+        # print("reached here")
+        
         # get the data
         uploadsContext = {
             'uploads': ControlUtils().getUploadsData()
