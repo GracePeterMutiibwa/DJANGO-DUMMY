@@ -52,6 +52,7 @@ def getAdminHomeContext():
         'left_card_data': {'heading': LeftCard.objects.all().first().leftCardHeading, 'text': LeftCard.objects.all().first().leftCardText, 'image': LeftCard.objects.all().first().leftCardImageUrl} if LeftCard.objects.all().first() else None,
         'right_card_data': {'heading': RightCard.objects.all().first().rightCardHeading, 'text': RightCard.objects.all().first().rightCardText, 'image': RightCard.objects.all().first().rightCardImageUrl} if RightCard.objects.all().first() else None,
         'uploads': ControlUtils().getUploadsData(),
+        # 
         'services': [
             {'name': eachService.serviceName, 'details': eachService.serviceDetails, 'id':eachService.pk} for eachService in OfferedService.objects.all()],
         'ribbon': {
