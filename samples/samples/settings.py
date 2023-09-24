@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-lz13^cwgy+cz@r^9-8c!tn7tx5#*#^(!xao$iej4k83)w)+i24'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["www.mariahillgardens.com"]
 
 
 # Application definition
@@ -136,10 +136,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / "media"
 
+# MEDIA_URL = '/media/'
+
+
 MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-success',
     messages.WARNING: 'alert-warning',
     messages.INFO: 'alert-info',
     messages.ERROR: 'alert-danger',
-    messages.DEBUG: 'alert-secondary' 
+    messages.DEBUG: 'alert-secondary'
 }
