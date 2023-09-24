@@ -14,6 +14,8 @@ from pathlib import Path
 
 from django.contrib.messages import constants as messages
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,12 +29,13 @@ SECRET_KEY = 'django-insecure-lz13^cwgy+cz@r^9-8c!tn7tx5#*#^(!xao$iej4k83)w)+i24
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,12 +133,18 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# print("base:", STATIC_ROOT)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / "media"
+
+MEDIA_URL = '/media/'
 
 MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-success',

@@ -376,7 +376,9 @@ class ControlUtils:
             attachedImages = ImageAsset.objects.filter(isGalleryItem=True)
 
         # get present images data
+        # "/media/" + 
         uploadsMetaData = [
+            
             {
                 'name': eachImageMeta.imageName,
                 'data': "/media/" + eachImageMeta.imageData.url,
@@ -540,7 +542,7 @@ def websiteHomePage(request):
     videoLinkUrl = gardensTourVideoLink.objects.all().first()
 
     # print("Link:", videoLinkUrl)
-
+    # "/media/" + 
     homeContext = {
         'page_category_meta': getPageCategoryMeta(),
         'home_page_previews': PageTools().getPagePreviews(limit=6),
@@ -1448,10 +1450,11 @@ def fileManagerPage(request):
         if notDuplicate is True:
             # get the file size
             fileSize = uploadedFile.size
+            # "/media/assets/" + 
 
             # save the file
             ControlUtils().saveNewFileUpload(
-                imageName="/media/assets/" + fileName,
+                imageName=fileName,
                 imageSize=fileSize,
                 imageData=uploadedFile
                 )
