@@ -8,14 +8,14 @@
               <div class="d-md-flex g-0 flex-wrap">
                 <div class="col-md-7 d-flex py-3 justify-content-center align-items-center">
                     <a href="{% url 'messenger:venue' %}" class="btn btn-white btn-outline-white p-4 py-3 w-50">
-                      OTHER VENUES
-                      
+                      OUR VENUES
+
                     </a>
 
 
                       <a href="{% url 'messenger:restaurant' %}" class="btn btn-white btn-outline-white p-4 py-3 w-50">
                         SERVICE PROVIDERS
-                        
+
                       </a>
                 </div>
 
@@ -23,26 +23,26 @@
                   <form action="/search-by-district/" method="post">
 
                     {% csrf_token %}
-                    
+
                     <div class="input-group w-100">
                         <span class="input-group-text">
                             Search By District
                         </span>
-            
+
                         <select class="form-select" name="selected-district" required="">
                           <option disabled="disabled" type="hidden">Search by district</option>
-    
+
                           {% for eachDistrict in district_list %}
-      
+
                               <option value="{{ eachDistrict }}">{{ eachDistrict }}</option>
-      
+
                           {% endfor %}
                         </select>
-        
+
                         <button class="btn btn-primary me-2" type="submit">
                           <i class="fa fa-search"></i>
                         </button>
-            
+
                     </div>
                   </form>
                 </div>

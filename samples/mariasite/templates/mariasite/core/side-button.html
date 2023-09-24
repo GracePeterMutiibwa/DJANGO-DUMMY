@@ -1,8 +1,10 @@
 {% load static  %}
 
+{% if booking_section %}
 <a href="{% url 'messenger:gallery' %}" class="template-customizer-open-btn text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="View Our Gallery" tabindex="-1">
   <i class="fa fa-camera-retro" style="font-size: 20px;"></i>
 </a>
+{% endif %}
 
 
 <a href="{% url 'messenger:book-gardens' %}#booking-form" class="book-now-btn text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="View Our Gallery" tabindex="-1">

@@ -9,7 +9,7 @@
                     <div class="row g-0">
                         <div class="col-lg-6">
                             <div style="margin: 0 0;">
-                                <img 
+                                <img
                                     {% if booking_image %}
                                         src="{{ booking_image }}"
                                     {% else %}
@@ -18,10 +18,10 @@
                                     alt="" class="img-fluid">
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-6">
                             <div class="contact-wrap w-100 p-md-5 p-4">
-                                <h3>Send a message <i class='bx bx-mail-send ms-2'></i></h3>
+                                <h3>Message Us / Ask about pricing <i class='bx bx-mail-send ms-2'></i></h3>
                                 <p class="mb-4">
                                     {% if contact_form_text %}
                                         {{ contact_form_text }}
@@ -29,29 +29,6 @@
                                         We're open for any suggestion or just to have a chat
                                     {% endif %}
                                 </p>
-                            
-                                <div class="row mb-4">
-                                    {% if contacts.location %}
-                                        <div class="col-md-6">
-                                            <div class="dbox w-100 d-flex align-items-start">
-                                                <div class="text">
-                                                    <p><span>Address:</span> {{ contacts.location }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-
-                                    {% if contacts.telephone %}
-                                        <div class="col-md-6">
-                                            <div class="dbox w-100 d-flex align-items-start">
-                                                <div class="text">
-                                                    <p><span>Phone:</span> {{ contacts.telephone }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-
-                                </div>
 
                                 <p>
                                     <strong>
@@ -70,7 +47,7 @@
                                                     <input type="text" id="person-name" class="form-control" style="padding-left: 1rem;" name="user-name" placeholder="i.e. John Doe" required>
                                                 </div>
                                             </div>
- 
+
                                         </div>
 
                                         <div class="col-md-12">
@@ -126,7 +103,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <input type="submit" value="Submit Booking Details" class="btn btn-primary">
-                                                
+
                                                 {% if messages %}
                                                     <div class="submitting">
                                                         {% for eachMessage in messages %}

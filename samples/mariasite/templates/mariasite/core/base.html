@@ -119,7 +119,7 @@
 
     <style>
       @import url(http://fonts.googleapis.com/css?family=Gentium+Book+Basic:400,700,700italic,400italic);
-      
+
       q,
       blockquote {
         quotes: "“" "”" "‘" "’";
@@ -179,6 +179,10 @@
 
         .book-mariahill{
           width: 140px !important;
+        }
+
+        #tabs-holder{
+          display: none;
         }
       }
 
@@ -396,11 +400,11 @@
       </div>
     </nav>
 
-    {% block page_main %} {% endblock %} 
+    {% block page_main %} {% endblock %}
     {% include 'mariasite/sections/footer-section.html' %}
-    {% if hide_gallery %} 
+    {% if hide_gallery %}
     {% else %}
-    {% include 'mariasite/core/side-button.html' %} {% endif %} 
+    {% include 'mariasite/core/side-button.html' %} {% endif %}
     {% include 'mariasite/core/services-side-button.html' %}
 
     <script src="{% static 'mariasite/color/site-core/theme/unwind/js/new/bootstrap.min.js' %}"></script>
