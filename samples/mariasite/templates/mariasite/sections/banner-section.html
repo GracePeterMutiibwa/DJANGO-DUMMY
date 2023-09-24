@@ -1,7 +1,9 @@
 {% load static %}
 
+<!-- banner -->
 <section class="hero-wrap"
   {% if banner_image is None %}
+
     style="background-image: url({% static 'mariasite/color/site-core/theme/unwind/images/bg_1.jpg' %})"
   {% else %}
     style="background-image: url({{ banner_image }})"
