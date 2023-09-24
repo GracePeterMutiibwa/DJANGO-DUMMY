@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-lz13^cwgy+cz@r^9-8c!tn7tx5#*#^(!xao$iej4k83)w)+i24
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["www.mariahillgardens.com"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,9 +136,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / "media"
-
-# MEDIA_URL = '/media/'
-
 
 MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-success',

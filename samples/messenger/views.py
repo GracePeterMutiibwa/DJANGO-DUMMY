@@ -544,7 +544,7 @@ def websiteHomePage(request):
     homeContext = {
         'page_category_meta': getPageCategoryMeta(),
         'home_page_previews': PageTools().getPagePreviews(limit=6),
-        'banner_image': bannerImage.imageUrl if bannerImage else None,
+        'banner_image': "/media/" + bannerImage.imageUrl if bannerImage else None,
         'tour_video_link': videoLinkUrl.videoUrl if videoLinkUrl else None,
         'district_list': HelperUtils().getCountryList(),
         'heading': str(AboutHeading.objects.all().first()),
