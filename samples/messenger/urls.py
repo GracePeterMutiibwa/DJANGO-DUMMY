@@ -12,6 +12,8 @@ urlpatterns = [
     path('login/', views.homePage, name='home'),
 
     path('update-avatar/', views.updateUserAvatar, name='update-avatar'),
+    
+    path('deactivate-account/', views.deactivateUserAccount, name='deactivate-account'),
 
     path('save-venue-image/', views.saveVenueImage, name='write-venue-image'),
 

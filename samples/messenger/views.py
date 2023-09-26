@@ -36,6 +36,7 @@ from django.http import HttpRequest
 
 from datetime import datetime
 
+
 from mariadmin.models import (Category, ImageAsset,
             AboutHeading, AboutDetails, LeftCard, RightCard,
             OfferedService, MiddleGrid, VenueItem,
@@ -43,7 +44,7 @@ from mariadmin.models import (Category, ImageAsset,
             SimpleContactMessages, EmailHolders, EmailReplies, PageCategory, VendorPage,
             EmailReset, NotAccessibleYet, WebsiteHeadingImage,
             gardensTourVideoLink, EventsServicesContacts,
-            BookingFormDetail
+            BookingFormDetail, AboutImage
             )
 
 from userenv.views import ProcessingUtilities
@@ -54,14 +55,19 @@ def isAdmin(userInstance):
 class CommUtilities:
     def deleteMessageThread(self, userName, userEmail):
         # delete the holder
-        associatedHolder = EmailHolders.objects.get(userEmail=userEmail)
+        associatedHolder = EmailHolders.objects.filter(userEmail=userEmail).first()
 
-        associatedHolder.delete()
+        if associatedHolder:
+            associatedHolder.delete()
+            
+        else:
+            pass
 
         # delete the messages thread
         messageThread = SimpleContactMessages.objects.filter(UserName=userName)
 
-        messageThread.delete()
+        if messageThread:
+            messageThread.delete()
 
         return
 
@@ -191,16 +197,30 @@ class CommUtilities:
         # print("Object:", userName)
 
         if section == 1:
-            # get the time the message was sent
-            lastSentMessageTime = latestMessageObject.dateSent.strftime("%H:%M %p")
+            if not latestMessageObject is None:
+                # get the time the message was sent
+                lastSentMessageTime = latestMessageObject.dateSent.strftime("%H:%M %p")
+                
+            else:
+                lastSentMessageTime = None
 
             return lastSentMessageTime
 
-        else:
-            # get the actual message
-            lastSentMessageBody = latestMessageObject.messageMeta
+        elif section == 2:
+            if not latestMessageObject is None:
+                # get the actual message
+                lastSentMessageBody = latestMessageObject.messageMeta
+                
+            else:
+                lastSentMessageBody = None
 
             return lastSentMessageBody
+        
+        else:
+            # get the status
+            validityStatus = True if latestMessageObject else False
+            
+            return validityStatus
 
 
 
@@ -208,7 +228,6 @@ class CommUtilities:
     def getAvailableContactInfoOnChatUsers(self):
         # get users with chats
         havingChats = self.getContactsWithChats()
-
 
 
         # preparedData
@@ -220,7 +239,7 @@ class CommUtilities:
                 'avatar': self.getUserAvatar(userName=eachContactName),
                 'initials': eachContactName.split(" ")[0][0].upper()
 
-            } for eachContactName in havingChats
+            } for eachContactName in havingChats if self.getLatestMessageAndTime(userName=eachContactName, section=3)
         ]
 
         # print("Chats:", len(preparedMessageData))
@@ -249,6 +268,7 @@ class CommUtilities:
 
 
     def getUserAvatar(self, userName):
+        print("Found Name:", userName)
         # get the user instance
         userObject = User.objects.filter(username=userName).first()
 
@@ -438,6 +458,8 @@ class ControlUtils:
 
         # validate
         userInstance = User.objects.filter(email=userEmail).first()
+        
+        print("Is Present:", userInstance)
 
         # get user status
         validationResult = False if not userInstance else userInstance.check_password(raw_password=userPassword)
@@ -545,11 +567,15 @@ def websiteHomePage(request):
     bannerImage = WebsiteHeadingImage.objects.all().first()
 
     videoLinkUrl = gardensTourVideoLink.objects.all().first()
+    
+    aboutImageObject = AboutImage.objects.all().first()
 
-    print("Link:", bannerImage.imageUrl)
+    # print("Link:", bannerImage.imageUrl)
     
     # "/media/" + 
     homeContext = {
+        'home_page': True,
+        'about_image_url': aboutImageObject.aboutImageUrl if aboutImageObject else None,
         'page_category_meta': getPageCategoryMeta(),
         'home_page_previews': PageTools().getPagePreviews(limit=6),
         'banner_image': bannerImage.imageUrl if bannerImage else None,
@@ -564,7 +590,6 @@ def websiteHomePage(request):
             ],
         'ribbon': ControlUtils().getRibbonDetails(),
         'featured_list': ControlUtils().getVenueInfo(2),
-        'testimonials': ControlUtils().getTestimonials(),
         'statistics': {
                 'guests': StatisticsMeta.objects.all().first().happyGuests,
                 'events': StatisticsMeta.objects.all().first().hostedEvents,
@@ -586,6 +611,7 @@ def aboutPage(request):
 
     pageContext = {
         'banner_image': bannerImage.imageUrl if bannerImage else None,
+        'testimonials': ControlUtils().getTestimonials(),
         'header_name': "About Us",
         'bg_image': None,
         'from_page': {
@@ -1844,7 +1870,14 @@ def chatPage(request):
     # get initial chat
     initialUserName, initialUserEmail, initialUserChats = CommUtilities().getInitialChat()
 
-    # print('name:', initialUserName)
+    initialChat =  {
+            'name': initialUserName,
+            'email': initialUserEmail,
+            'avatar': CommUtilities().getUserAvatar(userName=initialUserName),
+            'chats': initialUserChats,
+            'initials': initialUserName.split(" ")[0][0].upper()
+
+        } if not initialUserName is None else None
 
     # print('email:', initialUserEmail)
 
@@ -1853,14 +1886,7 @@ def chatPage(request):
     pageContext = {
         'available_contacts': CommUtilities().getAvailableContacts(),
         'available_chats': CommUtilities().getAvailableContactInfoOnChatUsers(),
-        'initial_chat': {
-            'name': initialUserName,
-            'email': initialUserEmail,
-            'avatar': CommUtilities().getUserAvatar(userName=initialUserName),
-            'chats': initialUserChats,
-            'initials': initialUserName.split(" ")[0][0].upper()
-
-        }
+        'initial_chat': initialChat
 
     }
 
@@ -2066,6 +2092,12 @@ def makeWebsiteEdit(request, sectionId):
     elif sectionId == 16:
         # save the video
         SectionUtils(request=request).processGardensTourVideoLink()
+
+        return redirect("admin_panel:admin-home")
+    
+    elif sectionId == 17:
+        # save the about image
+        SectionUtils(request=request).processAboutImage()
 
         return redirect("admin_panel:admin-home")
 
@@ -2284,5 +2316,34 @@ def recordBookingFormDetail(request):
 
 
     return redirect("admin_panel:admin-home")
+
+
+@login_required(login_url='messenger:home')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def deactivateUserAccount(request):
+    # get the users details
+    usersObject = request.user
+    
+    emailAddress, userName = usersObject.email, usersObject.username
+    
+    # print("data:", emailAddress, " ", userName)
+    # delete any conversations
+    CommUtilities().deleteMessageThread(userName=userName, userEmail=emailAddress)
+    
+    # delete message flows if its a regular user
+    if usersObject.is_superuser is False:
+        ProcessingUtilities().deleteAllMessageForUser(userName=userName)
+        
+    else:
+        pass
+    
+    # delete the user object
+    usersObject.delete()
+    
+    # alert success
+    messages.success(request, "We are in grief to see you go.. 😥")
+
+    return redirect("userenv:useraccount")
+    
 
 

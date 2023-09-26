@@ -8,8 +8,8 @@ from mariadmin.models import MessageFlow, WebsiteHeadingImage
 
 from django.db.models import Q
 
-class ProcessingUtilities:    
-    def getTheAvailableMessagesFlow(self, userName):
+class ProcessingUtilities:
+    def getUserMessageFlows(self, userName):
         # get the lookup parameters
         parameterOne = f"admin>>>{userName}"
         
@@ -21,12 +21,30 @@ class ProcessingUtilities:
         # execute the query
         userMessageFlow = MessageFlow.objects.filter(lookupQuery)
         
+        return userMessageFlow
+    
+    def deleteAllMessageForUser(self, userName):
+        userMessageFlow = self.getUserMessageFlows(userName=userName)
+        
+        # delete
+        if userMessageFlow:
+            userMessageFlow.delete()
+            
+        else:
+            pass
+        
+        return
+            
+    def getTheAvailableMessagesFlow(self, userName):
+        # get the messages
+        userMessageFlow = self.getUserMessageFlows(userName=userName)
+        
         # results
         messageFlowData = [
             {
                 'time': eachMessageObject.dateSent.strftime("%d-%m-%Y, %H:%M %p"),
                 'message': eachMessageObject.messageMeta,
-                'userGroup': 1 if (eachMessageObject.fromToMeta == parameterOne) else 2
+                'userGroup': 1 if (eachMessageObject.fromToMeta == f"admin>>>{userName}") else 2
             } for eachMessageObject in userMessageFlow
         ]
         

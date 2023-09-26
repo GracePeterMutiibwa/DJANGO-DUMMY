@@ -1,7 +1,7 @@
 {% load static %}
 
 <section
-  class="img vid-section"
+  class="img vid-section mb-4"
   {% if banner_image is None %}
   style="background-image: url({% static 'mariasite/color/site-core/theme/unwind/images/bg_2.jpg' %})"
   {% else %}
@@ -9,29 +9,29 @@
 
   {% endif %}
 >
-<div class="overlay"></div>
-<div class="container-xl">
-  <div class="row justify-content-center">
-    <div
-      class="col-md-10 vid-height d-flex align-items-center justify-content-center text-center"
-    >
-      <div class="video-wrap" data-aos="fade-up">
-        <span class="subheading">Watch our beautiful gardens</span>
-        <h3>Take A Tour</h3>
-        <a
-          target="_blank"
-        {% if tour_video_link is not None %}
-          href="{{ tour_video_link }}"
-        {% else %}
-          href="https://vimeo.com/115041822"
-        {% endif %}
+  <div class="overlay"></div>
+  <div class="container-xl">
+    <div class="row justify-content-center">
+      <div
+        class="col-md-10 vid-height d-flex align-items-center justify-content-center text-center"
+      >
+        <div class="video-wrap" data-aos="fade-up">
+          <span class="subheading">Watch our beautiful gardens</span>
+          <h3>Take A Tour</h3>
+          <a
+            target="_blank"
+          {% if tour_video_link is not None %}
+            href="{{ tour_video_link }}"
+          {% else %}
+            href="https://vimeo.com/115041822"
+          {% endif %}
 
-          class="video-icon glightbox d-flex align-items-center justify-content-center"
-        >
-          <span class="ion-ios-play"></span>
-        </a>
+            class="video-icon glightbox d-flex align-items-center justify-content-center"
+          >
+            <span class="ion-ios-play"></span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </section>

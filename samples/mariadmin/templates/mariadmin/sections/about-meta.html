@@ -6,7 +6,7 @@
                 <div class="mb-4">
                     <form action="{% url 'messenger:edit-website' 1 %}" method="post">
                         {% csrf_token %}
-                        <label for="about-heading" class="form-label">Heading at about section</label>
+                        <label for="about-heading" class="form-label">About Section Ribbon</label>
                         <div class="input-group">
                             <input type="text" name="about-heading" class="form-control" id="about-heading" placeholder="We are Maria Hill Gardens" required>
                             <button class="btn btn-outline-primary" type="submit">
@@ -18,6 +18,33 @@
 
                     <div class="form-text">
                         {{ heading }}
+                    </div>
+                </div>
+
+
+                <div class="mb-4">
+                    <form action="{% url 'messenger:edit-website' 17 %}" method="post">
+                        {% csrf_token %}
+                        <label for="about-image-holder" class="form-label">About Ribbon Image</label>
+                        <div class="input-group">
+                            <input type="text" name="about-image-url" class="form-control" id="about-image-holder" placeholder="Select and Image" required>
+                            <button class="btn btn-outline-primary image-selectors" type="button" data-output-receiver="about-image-holder">
+                                <i class="fa-solid fa-file-image me-2"></i> Choose Image
+                            </button>
+
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa-solid fa-circle-plus me-2"></i></i> Save
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="form-text">
+                        {% if not about_image_url is None %}
+                            {{ about_image_url }}
+                        {% else %}
+                        This image appears on the left of the about quotation
+
+                        {% endif %}
                     </div>
                 </div>
     

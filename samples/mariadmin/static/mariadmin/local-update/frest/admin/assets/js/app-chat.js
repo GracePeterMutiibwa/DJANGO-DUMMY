@@ -217,8 +217,12 @@ document.addEventListener("DOMContentLoaded", function () {
         busy: "avatar-busy",
       };
     function a() {
-      i.scrollTo(0, i.scrollHeight);
+      if (i){
+        i.scrollTo(0, i.scrollHeight);
+      }
+      
     }
+
     function l(e, a, c, t) {
       e.forEach((e) => {
         var t = e.textContent.toLowerCase();

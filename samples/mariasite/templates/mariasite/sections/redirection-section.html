@@ -1,55 +1,39 @@
 {% load static %}
 
 <section class="ftco-section ftco-no-pb ftco-no-pt ftco-booking">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="booking-form py-3">
-              <div class="d-md-flex g-0 flex-wrap">
-                <div class="col-md-7 d-flex py-3 justify-content-center align-items-center">
-                    <a href="{% url 'messenger:venue' %}" class="btn btn-white btn-outline-white p-4 py-3 w-50">
-                      OUR VENUES
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="booking-form py-3">
+          <div class="d-md-flex g-0 flex-wrap">
+            <div class="col-md-7 d-flex py-3 justify-content-center align-items-center">
+              <a href="{% url 'messenger:venue' %}" class="btn btn-white btn-outline-white p-4 py-3 w-50">OUR VENUES</a>
 
-                    </a>
+              <a href="{% url 'messenger:restaurant' %}" class="btn btn-white btn-outline-white p-4 py-3 w-50">SERVICE PROVIDERS</a>
+            </div>
 
+            <div class="col-md-5 justify-content-center d-flex py-3 align-items-center">
+              <form action="/search-by-district/" method="post">
+                {% csrf_token %}
 
-                      <a href="{% url 'messenger:restaurant' %}" class="btn btn-white btn-outline-white p-4 py-3 w-50">
-                        SERVICE PROVIDERS
+                <div class="input-group w-100">
+                  <span class="input-group-text ms-2">Search By District</span>
 
-                      </a>
+                  <select class="form-select" name="selected-district" required="">
+                    <option disabled="disabled" type="hidden">Search by district</option>
+
+                    {% for eachDistrict in district_list %}
+                      <option value="{{ eachDistrict }}">{{ eachDistrict }}</option>
+                    {% endfor %}
+                  </select>
+
+                  <button class="btn btn-primary me-2" type="submit"><i class="fa fa-search"></i></button>
                 </div>
-
-                <div class="col-md-5 justify-content-center d-flex py-3 align-items-center">
-                  <form action="/search-by-district/" method="post">
-
-                    {% csrf_token %}
-
-                    <div class="input-group w-100">
-                        <span class="input-group-text">
-                            Search By District
-                        </span>
-
-                        <select class="form-select" name="selected-district" required="">
-                          <option disabled="disabled" type="hidden">Search by district</option>
-
-                          {% for eachDistrict in district_list %}
-
-                              <option value="{{ eachDistrict }}">{{ eachDistrict }}</option>
-
-                          {% endfor %}
-                        </select>
-
-                        <button class="btn btn-primary me-2" type="submit">
-                          <i class="fa fa-search"></i>
-                        </button>
-
-                    </div>
-                  </form>
-                </div>
-
-              </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </section>

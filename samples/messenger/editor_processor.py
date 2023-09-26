@@ -8,7 +8,7 @@ from mariadmin.models import (
     AboutHeading, AboutDetails, LeftCard, RightCard, OfferedService, 
     MiddleGrid, VenueItem, Testimonial, 
     StatisticsMeta, Contacts, MessageFlow, MessageEntryNames, WebsiteHeadingImage, gardensTourVideoLink,
-    EventsServicesContacts
+    EventsServicesContacts, AboutImage
     )
 
 
@@ -110,6 +110,41 @@ class ExistenceCheck:
 class SectionUtils:
     def __init__(self, request:HttpRequest):
         self.submissionRequest = request
+        
+    
+    def processAboutImage(self):
+        submittedData = self.submissionRequest.POST.dict()
+        
+        # get the image url
+        submittedImageUrl = submittedData['about-image-url']
+        
+        if submittedImageUrl.endswith(".jpg") or submittedImageUrl.endswith(".png") or submittedImageUrl.endswith(".jpeg"):
+            pass
+        
+        else:
+            # alert 
+            messages.error(self.submissionRequest, "Please select an image, then a valid image path will be provided 😌")
+            
+            return
+        
+        aboutImageInstance = AboutImage.objects.all().first()
+        
+        if aboutImageInstance:
+            # update if present
+            aboutImageInstance.aboutImageUrl = submittedImageUrl
+            
+        else:
+            # create a new entry
+            aboutImageInstance = AboutImage.objects.create(
+                aboutImageUrl=submittedImageUrl
+            )
+            
+        # save the contact
+        aboutImageInstance.save()
+        
+        messages.success(self.submissionRequest, "The About Image was updated successfully! 🥳")
+
+        return 
         
     
     def processGardensTourVideoLink(self):

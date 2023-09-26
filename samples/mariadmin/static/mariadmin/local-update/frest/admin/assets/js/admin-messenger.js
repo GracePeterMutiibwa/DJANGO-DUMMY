@@ -51,84 +51,87 @@ function messageRelay(messageToSend, validityToken, messageReceiver){
 
 }
 
-// manage any form submissions
-chatMessageForm.addEventListener("submit", (submittedFormEvent) => {
-    // prevent the form submission
-    submittedFormEvent.preventDefault();
 
-    // get the submitted form message
-    var submittedMessage = messageArea.value.trim();
+if (chatMessageForm){
+    // manage any form submissions
+    chatMessageForm.addEventListener("submit", (submittedFormEvent) => {
+        // prevent the form submission
+        submittedFormEvent.preventDefault();
 
-    if (submittedMessage.length > 0){
-        // get the validity token
-        var validationCode = chatMessageForm.querySelector('input[name="csrfmiddlewaretoken"]').value;
+        // get the submitted form message
+        var submittedMessage = messageArea.value.trim();
 
-        // debug
-        // console.log("Token:", validationCode);
+        if (submittedMessage.length > 0){
+            // get the validity token
+            var validationCode = chatMessageForm.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
-        // get the receiver
-        var receiver = document.getElementById("user-name-holder").getAttribute("data-user-name");
+            // debug
+            // console.log("Token:", validationCode);
 
-        // send the message to the server
-        messageRelay(submittedMessage, validationCode, receiver);
+            // get the receiver
+            var receiver = document.getElementById("user-name-holder").getAttribute("data-user-name");
 
-        // then show the message on the users end
+            // send the message to the server
+            messageRelay(submittedMessage, validationCode, receiver);
 
-        // create a temporary div element
-        var temporaryDivElement = document.createElement("div");
+            // then show the message on the users end
 
-        
-        // add the necessary classes to the message node
-        temporaryDivElement.classList.add("chat-message");
-        temporaryDivElement.classList.add("chat-message-right");
+            // create a temporary div element
+            var temporaryDivElement = document.createElement("div");
 
-        var imageNode = `
-                        <div class="avatar ms-3">
-                            <span class="avatar-initial rounded-circle bg-label-info">
-                                <i class="bx bx-support"></i>
-                            </span>
-                        </div>
-                        `;
+            
+            // add the necessary classes to the message node
+            temporaryDivElement.classList.add("chat-message");
+            temporaryDivElement.classList.add("chat-message-right");
 
-        
-        // get the current time
-        var currentDateTimeObject = new Date();
+            var imageNode = `
+                            <div class="avatar ms-3">
+                                <span class="avatar-initial rounded-circle bg-label-info">
+                                    <i class="bx bx-support"></i>
+                                </span>
+                            </div>
+                            `;
 
-        // get the time
-        var currentHours = currentDateTimeObject.getHours();
+            
+            // get the current time
+            var currentDateTimeObject = new Date();
 
-        var currentMinutes = currentDateTimeObject.getMinutes();
+            // get the time
+            var currentHours = currentDateTimeObject.getHours();
 
-        // load the data components
-        temporaryDivElement.innerHTML = `
-                                    <div class="d-flex overflow-hidden">
-                                        <div class="chat-message-wrapper flex-grow-1">
-                                            <div class="chat-message-text">
-                                                <p class="mb-0">${submittedMessage}</p>
+            var currentMinutes = currentDateTimeObject.getMinutes();
+
+            // load the data components
+            temporaryDivElement.innerHTML = `
+                                        <div class="d-flex overflow-hidden">
+                                            <div class="chat-message-wrapper flex-grow-1">
+                                                <div class="chat-message-text">
+                                                    <p class="mb-0">${submittedMessage}</p>
+                                                </div>
+                                                <div class="text-end text-muted mt-1">
+                                                    <small>${currentHours}:${currentMinutes}</small>
+                                                </div>
                                             </div>
-                                            <div class="text-end text-muted mt-1">
-                                                <small>${currentHours}:${currentMinutes}</small>
+                                            <div class="user-avatar flex-shrink-0 ms-3">
+                                                ${imageNode}
                                             </div>
-                                        </div>
-                                        <div class="user-avatar flex-shrink-0 ms-3">
-                                            ${imageNode}
-                                        </div>
-                                    </div>`;
+                                        </div>`;
 
-        // add the message to last message wrapper
-        document.querySelector("#chats-holder-container").appendChild(temporaryDivElement);
+            // add the message to last message wrapper
+            document.querySelector("#chats-holder-container").appendChild(temporaryDivElement);
 
-        
-        // wipe the message input area
-        messageArea.value = ""
+            
+            // wipe the message input area
+            messageArea.value = ""
 
-        // scroll to the new message
-        scrollToNewMessage();
+            // scroll to the new message
+            scrollToNewMessage();
 
-    }else{
-        return;
-    }
+        }else{
+            return;
+        }
 
 
 
-});
+    });
+}

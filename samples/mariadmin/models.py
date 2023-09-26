@@ -1,8 +1,8 @@
+from datetime import datetime
+
 from django.db import models
 
 from django.utils import timezone
-
-from datetime import datetime
 
 from django.contrib.auth.models import User
 
@@ -274,6 +274,7 @@ class MessageFlow(models.Model):
     
     def __str__(self):
         return f"On {self.dateSent}, {self.fromToMeta}: {self.messageMeta}"
+    
 
 
 class Contacts(models.Model):
@@ -384,6 +385,9 @@ class AboutDetails(models.Model):
     
     def __str__(self):
         return self.aboutMore
+    
+class AboutImage(models.Model):
+    aboutImageUrl = models.TextField()
 
 class AboutHeading(models.Model):
     headingName = models.TextField(max_length=250, blank=False)
