@@ -324,6 +324,8 @@ class VenueItem(models.Model):
     
     venueCategory = models.TextField(default='Social Event')
     
+    venueContact = models.TextField(default='Missing')
+    
     def hasImages(self, checkState=1):
         # get them
         firstImage = self.attached_venue_images.all().first()

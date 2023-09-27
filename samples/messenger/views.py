@@ -322,6 +322,22 @@ class ControlUtils:
             }
 
         return ribbonDetails
+    
+    def getVenueEditDetails(self, venueId):
+        venueToView = get_object_or_404(VenueItem, pk=venueId)
+        
+        # get the details
+        venueDetails = {
+            'name': venueToView.venueName,
+            'description': venueToView.venueDescription,
+            'categories': venueToView.venueCategory.split("|||"),
+            'capacity': venueToView.venueCapacity,
+            'contact': venueToView.venueContact,
+            'id': venueToView.pk
+            }
+        
+        return venueDetails
+    
     def getVenueDetails(self, venueName):
         # get the instance
         venueToView = get_object_or_404(VenueItem, venueName=venueName)
@@ -332,19 +348,19 @@ class ControlUtils:
                                 'name': eachVenue.venueName,
                                 'description': eachVenue.venueDescription,
                                 'capacity': eachVenue.venueCapacity,
-                            } for eachVenue in VenueItem.objects.exclude(pk=venueToView.pk) if (eachVenue.hasImages(checkState=1) is True)
+                            } for eachVenue in VenueItem.objects.exclude(pk=venueToView.pk) if (eachVenue.hasImages(checkState=1) is True and eachVenue.venueContact != "Missing")
                         ]
 
         # get the details
-        venueDetails = {
-            'name': venueName,
-            'venue_images': VenueTools().getAllVenueImages(venueId=venueToView.pk),
-            'description': venueToView.venueDescription,
-            'capacity': venueToView.venueCapacity,
-            'categories': venueToView.venueCategory.split("|||"),
-            'id': venueToView.pk,
-            'excluded': excludedVenues
-        }
+        venueDetails = self.getVenueEditDetails(venueId=venueToView.pk)
+        
+        # add the images and the excluded ones
+        venueDetails['venue_images'] = VenueTools().getAllVenueImages(venueId=venueToView.pk)
+        
+        venueDetails['excluded'] = excludedVenues
+        
+        print(venueDetails)
+        
 
         return venueDetails
 
@@ -359,29 +375,41 @@ class ControlUtils:
             ]
 
         return presentTestimonials
+    
+    
+    def venueInfoDispensary(self, venueObject, getState):
+        if getState == 1:
+            venueInfo = {
+                        'url': '#',
+                        'image': venueObject.hasImages(checkState=2),
+                        'name': venueObject.venueName,
+                        'contact': venueObject.venueContact,
+                        'description': venueObject.venueDescription,
+                        'capacity': venueObject.venueCapacity
+                            }
+        
+        else:
+            venueInfo = {
+                        'url': '#',
+                        'image': venueObject.hasImages(checkState=2),
+                        'name': venueObject.venueName,
+                        'description': venueObject.venueDescription,
+                        'capacity': venueObject.venueCapacity,
+                        }
+            
+        
+        return venueInfo
 
 
     def getVenueInfo(self, whatToGet):
         if whatToGet == 1:
             venueData = [
-                            {
-                                'url': '#',
-                                'image': eachVenue.hasImages(checkState=2),
-                                'name': eachVenue.venueName,
-                                'description': eachVenue.venueDescription,
-                                'capacity': eachVenue.venueCapacity,
-                            } for eachVenue in VenueItem.objects.all() if (eachVenue.hasImages(checkState=1) is True)
+                        self.venueInfoDispensary(venueObject=eachVenue, getState=whatToGet)    for eachVenue in VenueItem.objects.all() if (eachVenue.hasImages(checkState=1) is True and eachVenue.venueContact != "Missing")
                         ]
 
         else:
             venueData = [
-                            {
-                                'url': '#',
-                                'image': eachVenue.hasImages(checkState=2),
-                                'name': eachVenue.venueName,
-                                'description': eachVenue.venueDescription,
-                                'capacity': eachVenue.venueCapacity,
-                            } for eachVenue in VenueItem.objects.filter(isFeatured=True) if (eachVenue.hasImages(checkState=1) is True)
+                        self.venueInfoDispensary(venueObject=eachVenue, getState=whatToGet)      for eachVenue in VenueItem.objects.filter(isFeatured=True) if (eachVenue.hasImages(checkState=1) is True)
                         ]
 
         return venueData
@@ -410,7 +438,7 @@ class ControlUtils:
             for eachImageMeta in attachedImages
         ]
         
-        print("Data:", uploadsMetaData)
+        # print("Data:", uploadsMetaData)
 
         return uploadsMetaData
 
@@ -610,6 +638,7 @@ def aboutPage(request):
     bannerImage = WebsiteHeadingImage.objects.all().first()
 
     pageContext = {
+        'page_category_meta': getPageCategoryMeta(),
         'banner_image': bannerImage.imageUrl if bannerImage else None,
         'testimonials': ControlUtils().getTestimonials(),
         'header_name': "About Us",
@@ -671,6 +700,7 @@ def galleryPage(request):
 
 def venuePage(request):
     pageContext = {
+        'page_category_meta': getPageCategoryMeta(),
         'header_name': "Our Venues",
         'bg_image': None,
         'from_page': {
@@ -682,6 +712,27 @@ def venuePage(request):
 
     }
     return render(request, "mariasite/pages/venues.html", context=pageContext)
+
+@login_required(login_url='messenger:home')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@user_passes_test(isAdmin)
+def extractVenueEditDetails(request):
+    # extract the details
+    requestData = request.POST.dict()
+    
+    venueId = requestData['venue-id']
+    
+    venueInformation = ControlUtils().getVenueEditDetails(venueId=venueId)
+    
+    return JsonResponse(
+        dict(
+            info = venueInformation
+        )
+    )
+    
+    
+    
+    
 
 def viewVenueDetails(request, venueName):
     pageContext = {
@@ -882,6 +933,7 @@ def bookMariahillGardens(request):
 def contactPage(request):
     # defines page context
     pageContext = {
+        'page_category_meta': getPageCategoryMeta(),
         'header_name': "Contact us",
         'bg_image': None,
         'from_page': {
@@ -2021,14 +2073,20 @@ def makeWebsiteEdit(request, sectionId):
 
     elif sectionId == 9:
         # save venue
-        isVenueDuplicate, venueName = SectionUtils(request=request).processVenueData()
-
-        displayMessage = f"The venue name {venueName} already exists maybe delete it first!" if isVenueDuplicate else f"The venue {venueName} was saved successfully!"
+        isVenueDuplicate, venueName, saveState = SectionUtils(request=request).processVenueData()
 
         # alert success or error
         if isVenueDuplicate is True:
+            displayMessage = f"The venue name {venueName} already exists maybe delete it first!"
+
             messages.warning(request, displayMessage)
+            
         else:
+            # state message
+            stateMessage = "saved" if saveState is False else "updated"
+            
+            displayMessage = f"The venue {venueName} was {stateMessage} successfully!"
+            
             messages.success(request, displayMessage)
 
         return redirect("admin_panel:admin-home")

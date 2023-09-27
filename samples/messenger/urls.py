@@ -36,6 +36,8 @@ urlpatterns = [
     path('venues/', views.venuePage, name='venue'),
 
     path('venue-detail/<str:venueName>/', views.viewVenueDetails, name='venue-details'),
+    
+    path('fetch-venue-edit-details/', views.extractVenueEditDetails, name='venue-edit-details'),
 
     path('chat/', views.chatPage, name='chat-page'),
 

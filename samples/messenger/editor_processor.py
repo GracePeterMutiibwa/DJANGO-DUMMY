@@ -342,6 +342,56 @@ class SectionUtils:
         selectedVenue.save()
         
         return
+    
+    
+    def writeVenueDetails(self, saveState):
+        # get request data
+        submittedData = self.submissionRequest.POST.dict()
+        
+        if saveState == 1:
+            # create new
+            newVenue = VenueItem.objects.create(isFeatured=False)
+            
+        else:
+            # update id
+            updateId = int(submittedData['venue-edit-id'])
+            
+            # update
+            newVenue = VenueItem.objects.filter(pk=updateId).first()
+            
+            
+        # get the rest of the data
+        venueName = submittedData['venue-name'].title()
+        
+        venueDescription = submittedData['venue-description'].capitalize()
+        
+        venueCapacity = submittedData['venue-capacity']
+        
+        venueContact = submittedData['venue-contact']
+        
+        
+        # load venue details
+        newVenue.venueName = venueName
+        
+        newVenue.venueDescription = venueDescription
+        
+        newVenue.venueCapacity = venueCapacity
+        
+        newVenue.venueContact = venueContact
+        
+            
+        # get category info
+        selectedCategories = [infoEntry for infoEntry, infoValue in submittedData.items() if infoValue == 'on']
+        
+        # print("Available:", selectedCategories)
+
+        newVenue.venueCategory = '|||'.join(selectedCategories) if len(selectedCategories) > 0 else "Social Events"
+
+        # save the venue
+        newVenue.save()
+        
+        return
+
         
     
     def processVenueData(self):
@@ -352,50 +402,33 @@ class SectionUtils:
         # # validate duplicates
         venueName = submittedData['venue-name'].title()
         
-        isDuplicate = True if VenueItem.objects.filter(venueName=venueName).first() else False
+        # get the object
+        referenceObject = VenueItem.objects.filter(venueName=venueName).first()
+        
+        # edit status
+        editMode = False
+        
+        if 'venue-edit-id' in submittedData:
+            # alert
+            editMode = True
+            
+            isDuplicate = True if referenceObject and VenueItem.objects.exclude(pk=referenceObject.pk).filter(venueName=venueName).first() else False
+            
+        else:
+            isDuplicate = True if referenceObject else False
+        
         
         if isDuplicate is False:
-            # get the rest of the data
-            venueDescription = submittedData['venue-description'].capitalize()
-            
-            venueCapacity = submittedData['venue-capacity']
-            
-            isFeatured = False
-            
-            # get category info
-            selectedCategories = [infoEntry for infoEntry, infoValue in submittedData.items() if infoValue == 'on']
-            
-            # print("Available:", selectedCategories)
-            
-            # create new venue
-            newVenue = VenueItem.objects.create(isFeatured=isFeatured)
-            
-            # load venue details
-            newVenue.venueName = venueName
-            
-            newVenue.venueDescription = venueDescription
-            
-            
-            newVenue.venueCapacity = venueCapacity
-            
-            # store the category along
-            if len(selectedCategories) > 0:
-                newVenue.venueCategory = '|||'.join(selectedCategories)
-                
-                # print("Gave category")
-                
-            else:
-                # a default value of social events is given
-                # print("Did not give category")
-                pass
+            # state
+            saveState = 1 if editMode is False else 2
             
             # save the venue
-            newVenue.save()
+            self.writeVenueDetails(saveState=saveState)
             
         else:
             pass
         
-        return isDuplicate, venueName
+        return isDuplicate, venueName, editMode
         
         
         

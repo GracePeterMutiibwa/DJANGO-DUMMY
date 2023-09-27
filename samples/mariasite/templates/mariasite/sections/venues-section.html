@@ -13,7 +13,16 @@
                                 <div class="text p-5 text-center">
                                     <h3><a href="{% url 'messenger:venue-details' eachVenue.name %}">{{ eachVenue.name.title }}</a></h3>
                                     <p>{{ eachVenue.description }}</p>
-                                    <p class="mb-0 mt-2"><span class="me-3 price">{{ eachVenue.capacity }}</span><a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">Book Now</a></p>
+                                    <p class="mb-0 mt-2">
+                                        <span class="me-3 price">
+                                        Guests: {{ eachVenue.capacity }}
+                                        </span>
+                                        <a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">
+                                            <i class='bx bx-sticker bx-burst-hover'></i>
+                                            Check out
+
+                                        </a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -28,10 +37,11 @@
                                     <p>{{ eachVenue.description }}</p>
                                     <p class="mb-0 mt-2">
                                         <span class="me-3 price">
-                                        {{ eachVenue.capacity }}
+                                            Guests: {{ eachVenue.capacity }}
                                         </span>
                                         <a href="{% url 'messenger:venue-details' eachVenue.name %}" class="btn-custom">
-                                            Book Now
+                                            <i class='bx bx-sticker bx-burst-hover'></i>
+                                            Check out
 
                                         </a>
                                     </p>

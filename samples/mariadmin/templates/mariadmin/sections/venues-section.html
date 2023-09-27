@@ -10,13 +10,17 @@
                     <div class="card mb-3">
     
                         <div class="card-body">
-                            <form action="{% url 'messenger:edit-website' 9 %}" method="post">
+                            <form action="{% url 'messenger:edit-website' 9 %}" method="post" id="venues-register-form">
                                 {% csrf_token %}
+                                <div id="venue-detail-edit-holder">
+
+                                </div>
+
                                 <div class="mb-4">
-                                    <label for="venue-name" class="form-label">add new venue</label>
+                                    <label for="venue-name-entry" class="form-label">add new venue</label>
                                     <div class="input-group">
-                                        <input type="text" placeholder="Name of Venue" name="venue-name" id="venue-name" class="form-control" required>
-                                        <textarea class="form-control" name="venue-description" placeholder="Detailed Venue description" required></textarea>
+                                        <input type="text" placeholder="Name of Venue" name="venue-name" id="venue-name-entry" class="form-control" required>
+                                        <textarea class="form-control" name="venue-description" id="venue-description-entry" placeholder="Detailed Venue description" required></textarea>
                                     </div>
                                     
                                     <div class="form-text">
@@ -26,7 +30,7 @@
 
                                 <div class="mb-4">
                                     <div class="input-group">
-                                        <label for="venue-category" class="input-group-text">Venue Category</label>
+                                        <label for="venue-category-entry" class="input-group-text">Venue Category</label>
                                         
                                         <div class="row d-flex justify-content-between align-items-center">
                                             {% for eachCategory in categories %}
@@ -60,20 +64,42 @@
 
                                 <div class="mb-4">
                                     <div class="input-group">
-                                        <label for="venue-capacity" class="input-group-text">Venue Capacity</label>
+                                        <label for="venue-capacity-entry" class="input-group-text">Venue Capacity</label>
 
-                                        <input type="number" min="1" value="1" placeholder="Hosting capacity say 20 people" name="venue-capacity" id="venue-capacity" class="form-control" required>
+                                        <input type="number" min="1" value="1" placeholder="Hosting capacity say 20 people" name="venue-capacity" id="venue-capacity-entry" class="form-control" required>
 
                                     </div>
                                     <p class="card-text"><small class="text-muted">Default capacity is 0, however above minimum has to be 1</small></p>
                                 
 
                                 </div>
+
+                                <div class="mb-4">
+                                    <label for="venue-contact-entry" class="form-label">VENUE OWNER WHATSAPP CONTACT</label>
+
+                                    <div class="input-group">
+                                        <label for="venue-contact" class="input-group-text">+256</label>
+
+                                        <input type="text" placeholder="705609145" name="venue-contact" id="venue-contact-entry" class="form-control" required>
+
+                                    </div>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            <strong>Note</strong>: An active whatsapp contact for the venue owner must be provided
+                                        </small>
+                                    </p>
+                                
+
+                                </div>
                                         
                                 <div class="mt-5">
-                                    <button class="btn btn-outline-primary w-100" type="submit">
-                                        <i class="fa-solid fa-circle-plus me-2"></i></i> Save Venue
+                                    <button class="btn btn-outline-primary w-100" type="submit" id="venue-edit-submitter">
+                                        <i class="fa-solid fa-circle-plus me-2"></i> Save Venue
                                     </button>
+
+                                    <a class="btn btn-outline-secondary d-none" type="button" id="venue-edit-cancel">
+                                        <i class='bx bxs-x-circle me-1'></i> Cancel Edit
+                                    </a>
                                 </div>
     
                             </form>
@@ -93,6 +119,7 @@
                             <th>Venue Details</th>
                             <th>Featured</th>
                             <th>Image</th>
+                            <th>Controls</th>
                           </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
@@ -133,6 +160,8 @@
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                                                 <div class="dropdown-menu">
+                                                    <a class="dropdown-item venue-detail-trigger" data-edit-id="{{ eachVenue.id }}" href="#"><i class='bx bx-edit-alt me-1'></i> Edit Details</a>
+                                                    <hr class="dropdown-divider">
                                                     <a class="dropdown-item" href="{% url 'messenger:wipe-venue' eachVenue.id %}"><i class="bx bx-trash me-1"></i> Delete Venue</a>
                                                 </div>
                                             </div>
