@@ -1,8 +1,8 @@
 // global declaration
-var bootstrapModalInstance;
+var imageDisplayCanvasInstance;
 
 document.addEventListener('DOMContentLoaded', ()=>{
-    var modalCloseButton = document.getElementById("imageViewerCloseButton");
+    // var modalCloseButton = document.getElementById("imageViewerCloseButton");
 
     // get all trigger buttons
     document.querySelectorAll('.image-display-trigger').forEach(eachButton =>{
@@ -14,30 +14,22 @@ document.addEventListener('DOMContentLoaded', ()=>{
             var imageUrl = eachButton.getAttribute('data-image-url');
 
             // get the modal image element
-            document.getElementById("modal-image-display").setAttribute("src", imageUrl);
+            document.getElementById("image-to-display-holder").setAttribute("src", imageUrl);
 
-            // get the modal
-            var previewModal = document.getElementById("image-display-modal");
+            // get the canvas - image-display-modal
+            var previewCanvas = document.getElementById("view-image-data");
 
-            // create a bootstrap modal
-            bootstrapModalInstance = new bootstrap.Modal(previewModal);
+            // create a bootstrap offcanvas
+            imageDisplayCanvasInstance = new bootstrap.Offcanvas(previewCanvas);
 
             // display the modal
-            bootstrapModalInstance.show();
+            imageDisplayCanvasInstance.show();
 
 
         });
 
     });
 
-    // get the modal close button
-    modalCloseButton.addEventListener('click', (event)=>{
-        // close the modal
-        bootstrapModalInstance.hide();
-
-        // clean the image preview button
-        document.getElementById("modal-image-display").setAttribute("src", "");
-    }); 
 
 });
 
