@@ -162,3 +162,397 @@
 
     </div>
 </div>
+
+
+<div class="offcanvas offcanvas-end" id="profile-bookings-manager" role="dialog" data-bs-backdrop="false">
+    <div class="offcanvas-header border-bottom">
+
+        <h5 class="offcanvas-title">
+            <i class='fa fa-book me-3'></i>
+            Booking Requests
+        </h5>
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+
+        <div class="mb-4">
+            <button type="button" class="btn btn-primary w-100 py-2 collapsed" id="booking-register-trigger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample">
+                <i class='fa fa-add me-3' id="booking-button-icon"></i>
+                <span id="booking-button-text">Add Booking</span>
+            </button>
+        </div>
+
+        <div class="mb-3">
+            <div class="collapse" id="collapseExample" style="">
+                <div class="d-grid d-sm-flex p-3 border">
+                    <form method="post" action="{% url 'userenv:register-booking' %}">
+                        {% csrf_token %}
+        
+                        <div class="row">
+                            <div class="mb-2 col-md-12 form-password-toggle">
+                                <label for="event-category" class="form-label">EVENT CATEGORY</label>
+
+                                <select class="form-select" id="event-category" name="event-category">
+                                    {% for eachEvent in event_categories %}
+                                        <option value="{{ eachEvent }}">{{ eachEvent }}</option>
+
+                                    {% endfor %}
+                                </select>
+
+                                <div class="form-text">What kind of event shall it be.</div>
+                            </div>
+                                
+                            
+        
+                        </div>
+        
+                        <div class="row">
+                            <div class="mb-2">
+                                <label class="form-label" for="currentPassword">NUMBER OF GUESTS</label>
+        
+                                <input class="form-control" type="number" value="1" min="1" name="guest-count" required>
+
+                                <div class="form-text">Number of Guests expected.</div>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="mb-2">
+                                <label class="form-label" for="currentPassword">DATE OF EVENT</label>
+                                
+                                <input type="text" class="form-control flatpickr-input active" name="event-date" placeholder="YYYY-MM-DD to YYYY-MM-DD" id="flatpickr-range" readonly="readonly" required>
+    
+                                <div class="form-text"><strong>Double click the same date</strong> if the event is for one day</div>
+        
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-2">
+                                <label class="form-label" for="currentPassword">HOURS OF USE</label>
+
+                                <div class="input-group input-daterange">
+                                    <input class="form-control" name="from-time" type="time" value="07:00:00">
+                                    
+                                    <span class="input-group-text">to</span>
+
+                                    <input class="form-control" name="to-time" type="time" value="18:00:00">
+                                </div>
+        
+                                <div class="form-text">Time you will use the venue</div>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="booking-partiulars" class="form-label">ANY OTHER PARTICULARS</label>
+        
+                                <textarea class="form-control" id="booking-partiulars" rows="3" name="other-details" placeholder="Anything else that we should know about your event"></textarea>
+                            </div>
+                        </div>
+                        
+        
+                        <div class="card-body">
+                            <div class="col-12 mb-0">
+                                <div class="alert alert-secondary">
+                                    <p class="mb-0">
+                                        When the booking is approved by our personnel, a payment link will be visible under
+                                        your payment links panel, <strong>when clicked , it will be used to make the necessary payments.</strong>
+        
+                                    </p>
+                                </div>
+                            </div>
+        
+                        </div>
+        
+                        <button type="submit" class="btn btn-primary" type="submit">Submit Booking Request</button>
+        
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        
+        
+        <div class="card-body">
+            <div class="col-12 mb-0">
+                <div class="row">
+                    <div class="alert alert-secondary">
+                        <p class="mb-0">
+                            Below are the bookings not yet approved
+    
+                        </p>
+                    </div>
+                </div>
+
+                <div id="bookings-list">
+                    {% for eachRequest in booking_requests %}
+                        <div class="row mt-3">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    
+                                    <div class="d-flex justify-content-start">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                            
+                                            <div class="dropdown-menu" style="">
+                                                <a class="dropdown-item delete-request-tag" href="#" proceed-link="{% url 'userenv:delete-request' eachRequest.id %}">
+                                                    <i class="bx bx-trash me-1"></i> Delete / Cancel
+                                                </a>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
+                                        
+                                    
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                        
+                                            <div class="d-flex justify-content-center mb-3">
+                                                <span class="badge bg-label-primary rounded-pill">{{ eachRequest.info.date }}</span>
+                                            </div>
+                                            
+                                            <div class="mb-2">
+                                                <label class="form-label">
+                                                    {% if eachRequest.info.same_date is True %}
+                                                        ON
+                                                    {% else %}
+                                                        FROM
+
+                                                    {% endif %}
+
+                                                </label>
+
+                                                <input type="text" class="form-control" value="{{ eachRequest.info.sDate }}" readonly>
+                                            </div>
+
+                                            {% if eachRequest.info.same_date is False %}
+                                                <div class="mb-2">
+                                                    <label class="form-label">
+                                                        TO
+                                                    </label>
+
+                                                    <input type="text" class="form-control" value="{{ eachRequest.info.eDate }}" readonly>
+                                                </div>
+                                            {% endif %}
+
+                                            <div class="input-group mb-2">
+                                                <span class="input-group-text">GUESTS</span>
+                                                <input type="text" class="form-control" value="{{ eachRequest.info.guests }}" readonly>
+            
+                                            </div>
+
+                                            <div class="input-group mb-2">
+                                                <span class="input-group-text px-4">TIME</span>
+                                                <input type="text" class="form-control" value="{{ eachRequest.info.time }}" readonly>
+            
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <label class="form-label">
+                                                    CATEGORY
+                                                </label>
+
+                                                <input type="text" class="form-control" value="{{ eachRequest.info.category  }}" readonly>
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <label class="form-label">
+                                                    DETAILS
+                                                </label>
+
+                                                <div class="alert alert-primary">
+                                                    <p class="mb-0">
+                                                        {{ eachRequest.info.details }}
+                                
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% empty %}
+
+                        <p class="lead p-5">No Booking Requests Submitted</p>
+
+                    {% endfor %}
+
+                    <div class="modal animate__animated animate__rollIn" id="confirmationModal" tabindex="-1" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalCenterTitle">Please provide Confirmation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-3 d-flex justify-content-center">
+                                            <div class="avatar avatar-xl me-2">
+                                                <span class="avatar-initial rounded-circle bg-label-info">
+                                                    <i class="bx bx-bell"></i>
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="col-9 d-flex justify-content-center">
+                                            <div class="alert alert-light">
+                                                <p class="mb-0">
+                                                    Are you sure you wish to <strong>continue? </strong>
+                            
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                                    
+                                    <a href="#" id="proceed-button" class="btn btn-primary text-nowrap">
+                                        <i class="fa fa-check me-2"></i>PROCEED
+                                
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>        
+
+    </div>
+
+    
+
+</div>
+
+
+<div class="offcanvas offcanvas-end" id="profile-payment-manager" role="dialog" data-bs-backdrop="false">
+    <div class="offcanvas-header border-bottom">
+
+        <h5 class="offcanvas-title">
+            <i class='fa fa-dollar me-3'></i>Authorize Booking Payments
+        </h5>
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+        
+        <div class="card-body">
+            <div class="payment-links">
+
+                {% for eachLink in payment_links %}
+                    <div class="mb-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title header-elements">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                        
+                                        <div class="dropdown-menu" style="">
+                                            <a class="dropdown-item" href="javascript:void(0);">
+                                                <i class="bx bx-trash me-1"></i> Delete
+                                            </a>
+                                        </div>
+                                    </div>
+        
+                                    <div class="card-title-elements ms-auto">
+                                        <span class="badge bg-label-primary rounded-pill"><strong>LINK ISSUED ON:</strong> {{ eachLink.date }}</span>
+                                    </div>
+                                </div>
+        
+                                <div class="px-2 py-1">
+                                    <div class="mb-3">
+                                        <label for="event-date-link" class="form-label">EVENT DATES</label>
+                                        <input class="form-control" type="text" id="event-date-link" value="{{ eachLink.dates }}" readonly="">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="event-time-link" class="form-label">TIME OF EVENT</label>
+                                        <input class="form-control" type="text" id="event-time-link" value="{{ eachLink.time }}" readonly="">
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label for="event-time-link" class="form-label">BILL TO PAY</label>
+
+                                        <div class="input-group">
+                                            <span class="input-group-text">Shs.</span>
+                                            <input type="text" class="form-control" id="event-bill-link" value="{{ eachLink.bill }}" readonly="">
+                                            <span class="input-group-text">Only</span>
+                                        </div>
+                                    </div>
+                                    
+
+                    
+                                </div>
+        
+                                <div class="mt-3">
+                                    <button type="button" class="btn btn-label-linkedin w-100" type="button" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                                        <i class='fa fa-bank me-3'></i>
+                                        Authorize
+                                    </button>
+
+                                    <div class="modal animate__animated animate__rollIn" id="modalCenter" tabindex="-1" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalCenterTitle">Enter Mobile Money Number</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col mb-3">
+                                                            <label for="funds-contact" class="form-label">PHONE NUMBER WITH FUNDS</label>
+                                                            <input type="text" id="funds-contact" class="form-control" placeholder="i.e. 07616678910">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-label-linkedin">
+                                                        <i class="fa fa-dollar me-2"></i>
+                                                        INITIATE PAYMENT
+
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+
+                {% empty %}
+                    <div class="d-flex justify-content-center">
+                        <p class="lead">No Payment Links</p>
+                    </div>  
+
+                {% endfor %}
+                
+            </div>
+            
+        </div>
+        
+
+    </div>
+
+</div>

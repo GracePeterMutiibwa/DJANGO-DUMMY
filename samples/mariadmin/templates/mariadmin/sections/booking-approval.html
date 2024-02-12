@@ -1,0 +1,245 @@
+<div class="offcanvas offcanvas-end" id="booking-approval-panel" role="dialog" data-bs-backdrop="false">
+    <div class="offcanvas-header border-bottom">
+
+        <h5 class="offcanvas-title">
+            <i class='fa fa-cogs me-3'></i>Approve Booking Request
+        </h5>
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body flex-grow-1">
+        
+        <div class="card-body">
+            <div class="payment-links">
+
+                <div class="mb-3">
+                    <div class="card mb-4">
+                        <div class="card-body">  
+                            <div class="mb-2">
+                                <button type="button" class="btn btn-label-linkedin w-100 collapsed" data-bs-toggle="collapse" data-bs-target="#booking-info-display">
+                                    <i class="tf-icons fa fa-info me-1"></i>Request Details
+                                </button>
+                            </div>
+
+                            <div class="form-text">
+                                    Click Here to view more request details
+                            </div>
+
+                            <div class="mb-1">
+                                <div class="collapse" id="booking-info-display" style="">
+                                    <div class="px-3 py-1">
+                                        <div class="mb-3">
+                                            <label for="booking-client-name" class="form-label">Client Name</label>
+                                            <input type="text" class="form-control" id="booking-client-name" value="" placeholder="Name Of Client" readonly>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="booking-client-email" class="form-label">Client Email</label>
+                                            <input type="text" class="form-control" id="booking-client-email" value="" placeholder="Email address of the client" readonly>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="booking-client-category" class="form-label">Event Category</label>
+                                            <input type="text" class="form-control" id="booking-client-category" value="" placeholder="Category of the event" readonly>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Event Details</label>
+                                            <div class="alert alert-secondary">
+                                                <p class="mb-0" id="booking-client-details">
+                                                    Any other details about the event
+                
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+        </div>
+
+        <div class="mt-3">
+            <div class="mb-3">
+                <div class="d-grid d-sm-flex p-2 border">
+                    <label for="booking-client-start-date" class="form-label">
+                        EVENT TIMELINE
+                    </label>
+
+                    <ul class="timeline">
+                        <li class="timeline-item timeline-item-transparent ps-4">
+                            <span class="timeline-point timeline-point-primary"></span>
+
+                            <div class="timeline-header mb-1">
+                                
+                                    <p class="mb-2">
+                                        <strong>From</strong>
+                                        <span id="start-date-holder">: 12-34-2023</span>
+                                    </p>
+                                
+                            </div>
+
+                            <div class="timeline-event mt-4 pt-3">
+                                <div class="d-grid d-sm-flex px-3 py-4 border">
+                                    <p class="mt-2">
+                                        <strong>Start Time </strong>
+                                        <span id="start-time-show">12:00 PM</span>
+                                    </p>
+    
+                                    <p class="mt-2">
+                                        <strong>End Time </strong>
+                                        <span id="end-time-show">12:00 PM </span>
+                                    </p>
+                                </div>
+                            
+                                
+                            
+                            </div>
+                        </li>
+
+                        <li class="timeline-item timeline-item-transparent ps-4">
+                            <span class="timeline-point timeline-point-warning"></span>
+
+                            <div class="timeline-header mb-1">
+                                
+                                <p class="mb-2">
+                                    <strong>To</strong>
+                                    <span id="end-date-holder">: 12-34-2023</span>
+                                </p>
+                            
+                            </div>
+                        </li>
+
+                        <li class="timeline-end-indicator">
+                            <i class="bx bx-check-circle"></i>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Period</span>
+
+                <input type="number" min="1" value="1" class="form-control" id="days-of-event" placeholder="Number of days" readonly>
+
+                <span class="input-group-text">day (s)</span>
+            </div>
+
+            <div class="input-group mb-4">
+                <span class="input-group-text">Guests</span>
+
+                <input type="number" min="1" value="1" class="form-control" id="guests-of-event" placeholder="Number of Guests" readonly>
+
+                <span class="input-group-text">person(s)</span>
+            </div>
+
+            <form action="{% url 'userenv:issue-link' %}" method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="booking-charge-entry" class="form-label">
+                        BOOKING CHARGE
+                    </label>
+    
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">Shs.</span>
+                        
+                        <input type="number" min="1" value="10000" class="form-control" placeholder="Amount" name="booking-charge" id="booking-charge-entry">
+                        
+                        <span class="input-group-text">.00</span>
+                    </div>
+
+                    <div class="form-text">
+                        <strong>Adjust the charge accordingly</strong>, if not entered the default charge above is submitted instead
+                    </div>
+    
+                </div>
+    
+                <div>
+                    <input type="hidden" id="id-holder" name="id-holder" value="">
+                </div>
+    
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" name="link-visibility" type="checkbox" id="is-link-visible">
+                    <label class="form-check-label" for="is-link-visible">Make Link Visible</label>
+                </div>
+    
+                <div class="form-text mb-3">
+                    <strong>By the default the link is invisible to the client</strong>, so that you can cancel the link in case of a mistake
+                </div>
+    
+                <div class="mb-2">
+                    <button type="button" class="btn btn-primary w-100 mb-1" type="button" id="payment-issue-trigger">
+                        <i class='bx bx-paper-plane bx-xs me-3'></i>
+                        Issue Payment Link
+                    </button>
+
+                    <button type="submit" id="payment-link-accepted" class="btn btn-primary w-100 mb-1 d-none">
+                        Submit Payment
+
+                    </button>
+    
+                    <div class="form-text mb-2">
+                        Payment links will expire when the days of booking pass
+                    </div>
+                </div>
+    
+            </form>
+
+
+            <div class="modal animate__animated animate__rollIn" id="linkConfirmationIssuance" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalCenterTitle">Please provide Confirmation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-3 d-flex justify-content-center">
+                                    <div class="avatar avatar-xl me-2">
+                                        <span class="avatar-initial rounded-circle bg-label-info">
+                                            <i class="bx bx-bell"></i>
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="col-9 d-flex justify-content-center">
+                                    <div class="alert alert-light">
+                                        <p class="mb-0">
+                                            Are you sure you wish to <strong>continue? </strong>
+                    
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                            
+                            <button id="accept-link-issuance" class="btn btn-label-linkedin">
+                                <i class="fa fa-check me-2"></i>PROCEED
+                        
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>

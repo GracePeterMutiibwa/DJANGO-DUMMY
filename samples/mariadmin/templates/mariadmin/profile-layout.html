@@ -4,8 +4,20 @@
 
 {% block layout_css %}
   <!-- req -->
-  <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}">
   <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/flatpickr/flatpickr.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css' %}">
+
+  <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/pickr/pickr-themes.css' %}">
+
   <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}">
 
   <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}">
@@ -30,6 +42,8 @@
   <!-- step -->
   <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bs-stepper/bs-stepper.css' %}" />
 
+  <!-- tables -->
+  <link rel="stylesheet" href="{% static 'mariadmin/local-update/data-tables/css/jquery.dataTables.min.css' %}" />
 
   <link
   rel="stylesheet"
@@ -337,12 +351,126 @@
                     </button>
                   </div>
                 </div>
-                                    
+
+                <hr class="my-0">
+    
+                <div class="card-body">
+                  <div class="mt-3">
+                    <button type="button" class="btn btn-primary w-100 menu-toggler py-2" data-attached-target="profile-bookings-manager">
+                      <i class='fa fa-book me-3'></i>
+                      Bookings
+
+                      {% if booking_size > 0 %}
+                        <span class="badge bg-dark rounded-pill ms-1">{{ booking_size }}</span>
+
+                      {% endif %}
+                    </button>
+                  </div>
+                </div>
+
+                <hr class="my-0">
+
+                <div class="card-body">
+                  <div class="mt-3">
+                    <button type="button" class="btn btn-label-secondary w-100 menu-toggler py-2" data-attached-target="profile-payment-manager">
+                      <i class='fa fa-dollar me-3'></i>
+
+                      Payment Links
+                      {% if links_size > 0 %}
+                        <span class="badge bg-dark rounded-pill ms-1">{{ links_size }}</span>
+                      {% endif %}
+                      
+                    </button>
+                  </div>
+                </div>
 
               </div>
             </div>
         </div>
 
+      </div>
+
+      <div class="row w-100 ms-1 mt-4">
+        <div class="col-md-12 col-12">
+          <div class="card">
+            <h5 class="card-header">
+              <i class='fa fa-cogs me-2'></i>
+              Transaction History
+            </h5>
+
+            <hr class="my-0">
+  
+            <div class="card-body">
+              <div class="mt-1">
+                <table class="table mb-3" id="user-transactions">
+                  <thead>
+                      <tr>
+                          <th>No.</th>
+                          <th>date</th>
+                          <th>details</th>
+                      </tr>
+                  </thead>
+
+                  <tbody class="table-border-bottom-0">
+                      {% for eachVendorPage in present_pages %}
+                      <tr>
+                          <td>
+                              <strong>{{ forloop.counter  }}</strong>
+                          </td>
+
+                          <td>{{ eachVendorPage.name }}</td>
+
+                          <td>{{ eachVendorPage.category }}</td>
+
+                          <td>
+
+                          <div class="dropdown">
+                              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                  <i class="fa fa-wrench"></i>
+                              </button>
+
+                              <div class="dropdown-menu">
+                                  <form action="#" id="fetch-{{ eachVendorPage.id }}">
+                                      {% csrf_token %}
+                                  </form>
+
+                                  <a class="dropdown-item page-viewer-trigger" href="#" data-page-id="{{ eachVendorPage.id }}">
+                                      <i class="fa fa-eye me-1"></i>
+                                      View
+                                  </a>
+
+                                  <hr class="dropdown-divider">
+
+                                  <a class="dropdown-item" href="{% url 'messenger:manage-vendor-page' eachVendorPage.id %}">
+                                      <i class="fa fa-cog me-1"></i>
+                                      Manage
+                                  </a>
+
+                                  <hr class="dropdown-divider">
+
+                                  <a class="dropdown-item" href="{% url 'messenger:wipe-vendor-page' eachVendorPage.id %}">
+                                      <i class="fa fa-trash me-1"></i>
+                                      Delete Page
+                                  </a>
+                              </div>
+                          </div>
+                          </td>
+                      </tr>
+
+                      {% endfor %}
+                  </tbody>
+              </table>
+
+              <div class="form-text">
+                  All records of approved payments appear in this table
+              </div>
+              </div>
+            </div>
+
+  
+          </div>
+        </div>
+        
       </div>
 
 
@@ -370,15 +498,27 @@
 
 
 {% block vendor_js %}
-<script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/select2/select2.js' %}"></script>
-<script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/cleavejs/cleave.js' %}"></script>
-<script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
-<script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/sweetalert2/sweetalert2.js' %}"></script>
-<script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/moment/moment.js' %}"></script>
-<script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
-<script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js' %}"></script>
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/select2/select2.js' %}"></script>
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/sweetalert2/sweetalert2.js' %}"></script>
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/moment/moment.js' %}"></script>
 
-<script src="{% static 'mariadmin/local-update/frest/admin/assets/cropper/js/cropper.min.js' %}"></script>
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/flatpickr/flatpickr.js' %}"></script>
+
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js' %}"></script>
+  
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js' %}"></script>
+
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js' %}"></script>
+
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/pickr/pickr.js' %}"></script>
+
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js' %}"></script>
+
+  <script src="{% static 'mariadmin/local-update/frest/admin/assets/cropper/js/cropper.min.js' %}"></script>
+
+  <script src="{% static 'mariadmin/local-update/data-tables/js/jquery.dataTables.min.js' %}"></script>
 
 
 {% endblock %}
@@ -386,15 +526,29 @@
 
 
 {% block page_js %}
+    <script>
+      $(document).ready( function () {
+          $('#user-transactions').DataTable();
+      } );
+      
+    </script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/forms-pickers.js' %}"></script>
+
+    <!-- some page -->
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/booking-tools.js' %}"></script>
+
     <!-- Page JS -->
     <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/app-chat.js' %}"></script>
+    
     <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/chat-messenger.js' %}"></script>
+    
     <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/menu-toggles.js' %}"></script>
 
     <script src="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/toastr/toastr.js' %}"></script>
 
     <script src="{% static 'mariadmin/local-update/frest/admin/assets/cropper/js/profile-image-cropper.js' %}"></script>
-
+    
 
 {% endblock %}
 

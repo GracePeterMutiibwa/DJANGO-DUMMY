@@ -14,12 +14,14 @@
     "mariadmin",
     "mariahill",
     "mariasite",
+    "menues",
     "Reconstructor",
     "reglog",
     "resizer",
     "Resto",
     "useraccount",
     "userenv",
-    "userimage"
+    "userimage",
+    "whitenoise"
   ]
 }

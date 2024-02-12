@@ -554,7 +554,7 @@ class PageManager:
                 operationName = 'updated'
                 
             # create a display message
-            messages.success(self.requestObject, f"A new Page Named '{pageName}' was {operationName} successfully! !")
+            messages.success(self.requestObject, f"The page Named '{pageName}' was {operationName} successfully! !")
                 
         return
         

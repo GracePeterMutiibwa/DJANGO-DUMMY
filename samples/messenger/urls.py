@@ -84,6 +84,9 @@ urlpatterns = [
     path('alter-primary-credentials/', views.managePrimaryCredentials, name='primary-credentials'),
 
     path('user-access/', views.manageNextOfKins, name='next-of-kins'),
+    
+    # bookings
+    path('booking-requests/', views.manageBookingRequests, name='booking-requests'),
 
     path('register-admin/', views.registerNewAdmin, name='register-admin'),
 

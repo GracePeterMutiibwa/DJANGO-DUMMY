@@ -6,6 +6,8 @@ from django.utils import timezone
 
 from django.contrib.auth.models import User
 
+
+
 class BookingFormDetail(models.Model):
     formText = models.TextField()
     
@@ -427,4 +429,212 @@ class ImageAsset(models.Model):
         super().delete(*args, **kwargs)
         
         return
+    
+
+class BookingRequest(models.Model):
+    # the name of the client making the request
+    clientName = models.TextField(blank=False)
+    
+    # address of the client that placed the request
+    clientEmailAddress = models.TextField(blank=False)
+    
+    # date and time the client placed the request
+    dateOfRequest = models.DateTimeField(auto_now_add=True, blank=False, null=True)
+    
+    # other details that may be in text format
+    requestParticulars = models.TextField(default='')
+    
+    eventCategory = models.TextField(default='')
+    
+    # date when the client thinks they can use the venue
+    venueUsageDate = models.DateField()
+    
+    # end time of venue usage
+    venueEndDate = models.DateField(null=True)
+    
+    # expected number of guests
+    numberOfGuests = models.IntegerField()
+    
+    isComplete = models.BooleanField(default=False)
+    
+    # other details
+    numberOfDays = models.IntegerField(default=1)
+    
+    # timePeriods
+    timeStamps = models.TextField(default='')
+    
+    # has link issued
+    hasLinkIssued = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ("-dateOfRequest",)
         
+    
+    def getDateSummary(self):
+        # check if dates are the same
+        areTheSame = self.checkIfDatesAreSame()
+        
+        if areTheSame:
+            dateSummary = self.venueUsageDate.strftime('%d-%m-%Y')
+        
+        else:
+            dateSummary = "From {} to {}".format(self.venueUsageDate.strftime('%d-%m-%Y'), self.venueEndDate.strftime('%d-%m-%Y'))
+            
+        
+        return dateSummary
+            
+        
+    
+    def checkIfDatesAreSame(self):
+        isSameDate = self.venueUsageDate == self.venueEndDate
+        
+        return isSameDate
+    
+    def twentyFourToTwelveCaster(self, timeObject):
+        # isolate the hour portion
+        timeTokens = timeObject.split(':')
+
+        # get the hour token
+        hourValue = int(timeTokens[0])
+
+        # convert the time to 12 hour clock
+        newValue = (hourValue - 12) if hourValue > 12 else hourValue
+
+        # replace the hour token
+        timeTokens[0] = str(newValue)
+
+        # generate a new time object
+        newTimeObject = ':'.join(timeTokens)
+        
+        return newTimeObject
+    
+
+    def getCastTimes(self, getMode=1):
+        # get the time objects
+        startTime, endTime = [eachTimeObject.strip() for eachTimeObject in self.timeStamps.split('-')]
+        
+        startTimeObject = self.twentyFourToTwelveCaster(timeObject=startTime)
+        
+        stopTimeObject = self.twentyFourToTwelveCaster(timeObject=endTime)
+        
+        if getMode == 1:
+            castResponse = (startTimeObject, stopTimeObject)
+            
+        else:
+            castResponse = f'From {startTimeObject} to {stopTimeObject}'
+            
+        return castResponse
+    
+    
+    def getFullDetails(self):
+        # get the very basic details
+        fullDetails = self.getBasicDetails()
+        
+        fullDetails['days'] = self.numberOfDays
+        
+        fullDetails['email'] = self.clientEmailAddress
+        
+        
+        # key view details
+        fullDetails['name'] = self.clientName.title()
+        
+        fullDetails['id'] = self.pk
+        
+        fullDetails['sDate'] = self.venueUsageDate.strftime('%d-%m-%Y')
+            
+        fullDetails['eDate'] = self.venueEndDate.strftime('%d-%m-%Y')
+        
+        fullDetails['start'], fullDetails['stop'] = self.getCastTimes(getMode=1)
+        
+            
+        
+        return fullDetails
+        
+    
+    
+    def getBasicDetails(self):
+        basicDetails = {
+            'guests': self.numberOfGuests,
+            'category': self.eventCategory,
+            'details': self.requestParticulars if self.requestParticulars else 'No details'
+            }
+        
+        return basicDetails   
+    
+    def getRequestDetails(self, fetchMode=1):
+        
+        requestDetails = self.getBasicDetails()
+        
+        if fetchMode == 1:
+            requestDetails['date'] = self.dateOfRequest.strftime('Created on %d %B, %Y at %H:%M:%S %p')
+            
+            requestDetails['same_date'] = self.checkIfDatesAreSame()
+            
+            requestDetails['sDate'] = self.venueUsageDate.strftime('%d %B, %Y')
+            
+            requestDetails['eDate'] = self.venueEndDate.strftime('%d %B, %Y')
+            
+            # format the time
+            startTime, endTime = [eachTimeObject.strip() for eachTimeObject in self.timeStamps.split('-')]
+            
+            # convert time to 12 hour clock
+            startTimeObject = self.twentyFourToTwelveCaster(timeObject=startTime)
+        
+            endTimeObject = self.twentyFourToTwelveCaster(timeObject=endTime)
+            
+            requestDetails['time'] = '-'.join([startTimeObject, endTimeObject])
+        
+        else:
+            # for admin
+            requestDetails = {
+                        'name':self.clientName.title(),
+                        'id':self.pk,
+                        'date':self.dateOfRequest.strftime('%d-%m-%Y, %H:%M:%S %p')
+            }
+            
+        return requestDetails
+        
+    def isRequestExpired(self):
+        # get the difference between time objects
+        # calculate if the time is expired
+        currentTimeInstance = datetime.now(timezone.utc)
+        
+        # converted expiry time
+        timeToExpire = self.venueUsageDate.replace(tzinfo=timezone.utc)
+        
+        isRequestExpiredYet = False if timeToExpire >= currentTimeInstance else True
+        
+        return isRequestExpiredYet
+    
+
+    
+class BookingTransaction(models.Model):
+    # if link is accessible by client
+    isVisible = models.BooleanField(default=False)
+    
+    # has the client paid the bill yet
+    isSatisfied = models.BooleanField(default=False)
+    
+    # amount
+    transactionBill = models.IntegerField()
+    
+    # date when the client pays 
+    satisfiedDate = models.DateTimeField(blank=True, null=True)
+    
+    # date the transaction will be used
+    issuedDate = models.DateTimeField(auto_now_add=True, blank=False, null=True)
+    
+    # what admin issued the transaction
+    whoIssuedTransaction = models.TextField()
+    
+    # transaction details
+    detailsOfTransaction = models.TextField(default='')
+    
+    # details of the client
+    clientDetails = models.ForeignKey(BookingRequest, on_delete=models.CASCADE, related_name='client_transaction')
+    
+    clientEmailAddress = models.TextField(default='')
+
+    class Meta:
+        ordering = ("-issuedDate",)
+

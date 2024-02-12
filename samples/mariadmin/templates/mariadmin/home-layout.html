@@ -84,6 +84,11 @@
   
     <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css' %}" />
 
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/animate-css/animate.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/libs/spinkit/spinkit.css' %}" />
+
+
     <link rel="stylesheet" href="{% static 'mariadmin/local-update/frest/admin/assets/vendor/css/pages/app-chat.css' %}">
 
 
@@ -376,16 +381,27 @@
             
 
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">BOOKINGS</span>
+              <span class="menu-header-text">BOOKINGS CONTROL</span>
             </li>
 
             <li class="menu-item">
-              <span class="menu-link">
-                <i class="menu-icon tf-icons fa-solid fa-file-invoice-dollar bx-burst-hover"></i>
-
-                Transactions
-              </span>
+              <a href="{% url 'messenger:booking-requests' %}#booking-requests-section" class="menu-link">
+                <div data-i18n="Booking Requests">
+                  Booking Requests
+                </div>
+              </a>
             </li>
+
+
+            <li class="menu-item">
+              <a href="{% url 'messenger:booking-requests' %}#booking-transactions-section" class="menu-link">
+                <div data-i18n="Transactions">
+                  Transactions
+                </div>
+              </a>
+            </li>
+
+
 
             {% endif %}
 

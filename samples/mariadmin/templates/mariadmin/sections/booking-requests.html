@@ -1,0 +1,321 @@
+{% extends "mariadmin/home-layout.html" %}
+
+{% load static %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'mariadmin/local-update/data-tables/css/jquery.dataTables.min.css' %}" />
+
+{% endblock %}
+
+{% block page_content %}
+    <div class="row w-100">
+        <section id="booking-requests-section">
+            <div class="card mb-4 mx-2">
+
+                <h5 class="card-header">
+                    <i class="fa fa-book me-2"></i>
+                    Available Booking Requests
+                </h5>
+
+                <div class="card-body demo-vertical-spacing demo-only-element">
+                    <div class="mb-1">
+                        <table class="table mb-3" id="transaction-table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>DATE ADDED</th>
+                                    <th>CLIENT NAME</th>
+                                    <th>CONTROLS</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody class="table-border-bottom-0">
+                                {% for eachRequest in new_requests %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ forloop.counter  }}</strong>
+                                    </td>
+        
+                                    <td>{{ eachRequest.date }}</td>
+
+                                    <td>{{ eachRequest.name }}</td>
+        
+                                    <td>
+
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                            <i class="fa fa-wrench"></i>
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <form action="#" id="form-{{ eachRequest.id }}">
+                                                {% csrf_token %}
+                                            </form>
+                                            
+
+                                            <a class="dropdown-item booking-approval-trigger" href="#" attached-booking="{{ eachRequest.id }}">
+                                                <i class="fa fa-check me-1"></i>
+                                                Approve
+                                            </a>
+
+                                            <hr class="dropdown-divider">
+
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa fa-trash me-1"></i>
+                                                Decline
+                                            </a>
+                                        </div>
+                                    </div>
+                                    </td>
+                                </tr>
+        
+                                {% empty %}
+        
+                                <p class="lead">No Booking Requests Made Yet</p>
+        
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    
+                        <div class="form-text">
+                            <strong>Note:</strong>
+                            <span id="error-alert-label">
+                                Bookings will be approved first before a payment link can be issued
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <hr class="my-0">
+
+                <div class="card-body">
+                    <div>
+                        <!-- here -->
+                        <button type="button" class="btn btn-label-secondary">
+                        <i class='fa fa-trash me-3'></i>
+                        Delete All
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="row w-100 mt-4">
+        <section id="booking-requests-section">
+            <div class="card mb-4 mx-2">
+
+                <h5 class="card-header">
+                    <div class="d-flex">
+                        <div class="sk-chase sk-primary">
+                            <div class="sk-chase-dot"></div>
+                            <div class="sk-chase-dot"></div>
+                            <div class="sk-chase-dot"></div>
+                            <div class="sk-chase-dot"></div>
+                            <div class="sk-chase-dot"></div>
+                            <div class="sk-chase-dot"></div>
+                        </div>
+
+                        <div class="ms-3 px-2">
+                            Pending Booking Requests
+                        </div>
+                    </div>
+                    
+                    <!-- <i class="fa fa-book me-2"></i> -->
+                    
+                </h5>
+
+                <div class="card-body demo-vertical-spacing demo-only-element">
+                    <div class="mb-1">
+                        <table class="table mb-3" id="pending-table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>DATE ADDED</th>
+                                    <th>CLIENT NAME</th>
+                                    <th>CONTROLS</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody class="table-border-bottom-0">
+                                {% for eachRequest in pending_requests %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ forloop.counter  }}</strong>
+                                    </td>
+        
+                                    <td>{{ eachRequest.date }}</td>
+
+                                    <td>{{ eachRequest.name }}</td>
+        
+                                    <td>
+
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                            <i class="fa fa-wrench"></i>
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <form action="#" id="form-{{ eachRequest.id }}">
+                                                {% csrf_token %}
+                                            </form>
+                                            
+
+                                            <a class="dropdown-item booking-approval-trigger" href="#" attached-booking="{{ eachRequest.id }}">
+                                                <i class="fa fa-check me-1"></i>
+                                                Approve
+                                            </a>
+
+                                            <hr class="dropdown-divider">
+
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa fa-trash me-1"></i>
+                                                Decline
+                                            </a>
+                                        </div>
+                                    </div>
+                                    </td>
+                                </tr>
+        
+                                {% empty %}
+        
+                                <p class="lead">No Booking Requests Made Yet</p>
+        
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    
+                        <div class="form-text">
+                            <strong>Note:</strong>
+                            <span id="error-alert-label">
+                                Bookings will be approved first before a payment link can be issued
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <hr class="my-0">
+
+                <div class="card-body">
+                    <div>
+                        <!-- here -->
+                        <button type="button" class="btn btn-label-secondary">
+                        <i class='fa fa-trash me-3'></i>
+                        Delete All
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="row w-100 mt-4">
+        <section id="booking-transactions-section">
+            <div class="col-md-12 col-12">
+                <div class="card">
+                    <h5 class="card-header">
+                        <i class='bx bx-dollar me-2'></i>
+                        Transaction History
+                    </h5>
+    
+                    <hr class="my-0">
+    
+                    <div class="card-body">
+                        <div class="mt-1">
+                        <table class="table mb-3" id="user-transactions">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>DATE</th>
+                                    <th>DETAILS</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody class="table-border-bottom-0">
+                                {% for eachRequest in complete_requests %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ forloop.counter  }}</strong>
+                                    </td>
+    
+                                    <td>{{ eachRequest.date }}</td>
+    
+    
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="fa fa-wrench"></i>
+                                            </button>
+        
+                                            <div class="dropdown-menu">
+                                                <form action="#">
+                                                    {% csrf_token %}
+                                                </form>
+        
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fa fa-eye me-1"></i>
+                                                    View
+                                                </a>
+        
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+    
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    
+                        <div class="form-text">
+                            All records of approved payments appear in this table
+                        </div>
+                        </div>
+                    </div>
+    
+    
+                </div>
+            </div>
+        </section>
+        
+    </div>
+
+    {% include "mariadmin/sections/booking-approval.html" %}
+
+    {% include "mariadmin/sections/admin-access.html" %}
+
+    {% include "mariadmin/sections/admin-permissions.html" %}
+
+{% endblock %}
+
+{% block vendor_js %}
+    <script src="{% static 'mariadmin/local-update/data-tables/js/jquery.dataTables.min.js' %}"></script>
+    
+{% endblock %}
+
+
+{% block page_js %}
+    <script>
+    $(document).ready( function () {
+        $('#transaction-table').DataTable();
+
+        $('#user-transactions').DataTable();
+
+        $('#pending-table').DataTable();
+
+        
+    } );
+    
+    </script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/admin-permissions.js' %}"></script>
+
+    <script src="{% static 'mariadmin/local-update/frest/admin/assets/js/booking-approval.js' %}"></script>
+
+{% endblock %}
+

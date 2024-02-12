@@ -49,6 +49,8 @@ from mariadmin.models import (Category, ImageAsset,
 
 from userenv.views import ProcessingUtilities
 
+from .bookings_engine import BookingUtilities
+
 def isAdmin(userInstance):
     return userInstance.is_authenticated and userInstance.is_superuser
 
@@ -558,6 +560,7 @@ def getCategoryPageCount(categoryName):
     # get pages that match that category
     matchingObjects = VendorPage.objects.filter(pageCategory=categoryName, isVisible=True)
 
+    # make a count of only valid objects whose visibility is true
     pageCount = len([
         eachObject for eachObject in matchingObjects if (eachObject.isVisibleAndHasServices() is True)
     ])
@@ -570,6 +573,7 @@ def getPageCategoryMeta():
     # get all categrories
     presentPageCategories = PageCategory.objects.all()
 
+    # get the categories and theit respective object counts
     categoriesAndCounts = [
         {
             'name': eachCategory.categoryName,
@@ -581,6 +585,7 @@ def getPageCategoryMeta():
     return categoriesAndCounts
 
 def getEventCategories():
+    # extract the present categories from the database
     presentCategories = [
         {
             'category': str(eachCategory),
@@ -594,8 +599,10 @@ def websiteHomePage(request):
     # get the banner image
     bannerImage = WebsiteHeadingImage.objects.all().first()
 
+    # get the video url attached to the home page
     videoLinkUrl = gardensTourVideoLink.objects.all().first()
     
+    # get the about data / information
     aboutImageObject = AboutImage.objects.all().first()
 
     # print("Link:", bannerImage.imageUrl)
@@ -630,6 +637,7 @@ def websiteHomePage(request):
 
         }
 
+    
     return render(request, "mariasite/pages/home.html", context=homeContext)
 
 
@@ -735,6 +743,7 @@ def extractVenueEditDetails(request):
     
 
 def viewVenueDetails(request, venueName):
+    # get the venue details context from the respective display tokens
     pageContext = {
         'header_name': f"{venueName} Details",
         'bg_image': None,
@@ -1193,26 +1202,42 @@ def getResetCodeViaEmail(request):
             # get the users name
             userName = isEmailValidObject.username
 
-            # send reset code
-            pushStatus = ResetUtilities().sendResetCode(toEmailAddress=userEmail, nameOfUser=userName)
+            try:
+                # send reset code
+                pushStatus = ResetUtilities().sendResetCode(toEmailAddress=userEmail, nameOfUser=userName)
 
+            except:
+                # when there is no internet on the users machine
+                pushStatus = None
+                
             # validate
-            if pushStatus is False:
-                # alert
-                messages.warning(request, "Check your email address 😁, you already have a reset code email and enter the code below 👇!")
+            if not pushStatus is True:
+                if pushStatus is False:
+                    # alert
+                    messages.warning(request, "Check your email address 😁, you already have a reset code email and enter the code below 👇!")
+                    
+                else:
+                    messages.error(request, "You have no internet connection 🤭 Try again later!")
 
+                
             else:
                 # proceed to the reset code page
                 pass
 
-            # add reset email and name to the cookie
-            resetResponse = redirect("messenger:collect-reset-code")
+            
+            if pushStatus is True or pushStatus is False:
+                # add reset email and name to the cookie
+                resetResponse = redirect("messenger:collect-reset-code")
 
-            # set  a cookie
-            resetResponse.set_cookie("reset_email", userEmail)
+                # set  a cookie
+                resetResponse.set_cookie("reset_email", userEmail)
+                
+            else:
+                # display the error to the user again
+                resetResponse = None
 
 
-            return resetResponse
+            return resetResponse if resetResponse else redirect("messenger:start-reset")
 
 
 
@@ -1577,6 +1602,15 @@ def manageNextOfKins(request):
     # print("data:", request.session['allowed_pages'])
 
     return render(request, "mariadmin/sections/user-access.html", context=pageContext)
+
+@login_required(login_url='messenger:home')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@user_passes_test(isAdmin)
+def manageBookingRequests(request):
+    # get all booking requests
+    pageContext = BookingUtilities().getBookingRequestsOfClient(clientAddress=None)
+    
+    return render(request, "mariadmin/sections/booking-requests.html", context=pageContext)
 
 @login_required(login_url='messenger:home')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -2268,7 +2302,7 @@ def updateUserCredentials(request):
 @login_required(login_url='messenger:home')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def updateUserAvatar(request):
-    # get teh submitted data
+    # get the submitted data
     avatarRequest = request.POST.dict()
 
     # user avatar
